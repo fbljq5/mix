@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.liangjq.mix.common.dao.RoleMapper">
+    <resultMap id="BaseResultMap" type="cn.liangjq.mix.common.entity.Role">
+        <id column="uid" jdbcType="VARCHAR" property="uid"/>
+        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="summary" jdbcType="VARCHAR" property="summary"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.liangjq.mix.common.entity.Role">
+        <result column="category_menu_uids" jdbcType="LONGVARCHAR" property="categoryMenuUids"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        uid
+        , role_name, create_time, update_time, status, summary
+    </sql>
+    <sql id="Blob_Column_List">
+        category_menu_uids
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from t_role
+        where uid = #{uid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from t_role
+        where uid = #{uid,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="cn.liangjq.mix.common.entity.Role">
+        insert into t_role (uid, role_name, create_time,
+                            update_time, status, summary,
+                            category_menu_uids)
+        values (#{uid,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, #{summary,jdbcType=VARCHAR},
+                #{categoryMenuUids,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.liangjq.mix.common.entity.Role">
+        insert into t_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="roleName != null">
+                role_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="summary != null">
+                summary,
+            </if>
+            <if test="categoryMenuUids != null">
+                category_menu_uids,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="roleName != null">
+                #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="summary != null">
+                #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryMenuUids != null">
+                #{categoryMenuUids,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.liangjq.mix.common.entity.Role">
+        update t_role
+        <set>
+            <if test="roleName != null">
+                role_name = #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="summary != null">
+                summary = #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryMenuUids != null">
+                category_menu_uids = #{categoryMenuUids,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where uid = #{uid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.liangjq.mix.common.entity.Role">
+        update t_role
+        set role_name          = #{roleName,jdbcType=VARCHAR},
+            create_time        = #{createTime,jdbcType=TIMESTAMP},
+            update_time        = #{updateTime,jdbcType=TIMESTAMP},
+            status             = #{status,jdbcType=TINYINT},
+            summary            = #{summary,jdbcType=VARCHAR},
+            category_menu_uids = #{categoryMenuUids,jdbcType=LONGVARCHAR}
+        where uid = #{uid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.liangjq.mix.common.entity.Role">
+        update t_role
+        set role_name   = #{roleName,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            status      = #{status,jdbcType=TINYINT},
+            summary     = #{summary,jdbcType=VARCHAR}
+        where uid = #{uid,jdbcType=VARCHAR}
+    </update>
+</mapper>

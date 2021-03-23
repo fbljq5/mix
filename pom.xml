@@ -30,7 +30,7 @@
         <swagger.starter.version>3.0.0</swagger.starter.version>
         <alibaba.fastjson.version>1.2.31</alibaba.fastjson.version>
         <druid.version>1.1.8</druid.version>
-        <lombok.version>1.18.10</lombok.version>
+        <lombok.version>1.18.16</lombok.version>
         <log4j.version>1.2.17</log4j.version>
         <springBootAdmin.version>2.2.1</springBootAdmin.version>
         <knife4j.version>3.0.2</knife4j.version>
