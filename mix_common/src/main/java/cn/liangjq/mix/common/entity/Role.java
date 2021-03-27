@@ -1,15 +1,16 @@
 package cn.liangjq.mix.common.entity;
 
-import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
 * @Description: 
 * @Author: liangjianqiang
-* @Date: 2021/03/23
+* @Date: 2021/03/26
 */
 @Data
 @Builder
@@ -17,37 +18,47 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Role extends BaseEntity {
     /**
-     * 角色id uid
+     * 角色ID id
      */
-    private String uid;
+    private Long id;
 
     /**
-     * 角色名 role_name
+     * 角色名称 role_name
      */
     private String roleName;
 
     /**
-     * 创建时间 create_time
+     * 角色编码 role_code
      */
-    private Date createTime;
+    private String roleCode;
 
     /**
-     * 更新时间 update_time
+     * 显示顺序 role_sort
      */
-    private Date updateTime;
+    private Integer roleSort;
 
     /**
-     * 状态 status
+     * 角色状态（0正常 1停用） status
      */
     private Byte status;
 
     /**
-     * 角色介绍 summary
+     * 是否删除（0代表存在 1代表删除） is_delete
      */
-    private String summary;
+    private Byte isDelete;
 
     /**
-     * 角色管辖的菜单的UID category_menu_uids
+     * 备注 remark
      */
-    private String categoryMenuUids;
+    private String remark;
+
+    /**
+     * 创建时间 gmt_create
+     */
+    private Date gmtCreate;
+
+    /**
+     * 更新时间 gmt_modified
+     */
+    private Date gmtModified;
 }

@@ -9,8 +9,7 @@
         <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id
-        , role_id, menu_id, gmt_create, gmt_modified
+        id, role_id, menu_id, gmt_create, gmt_modified
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select

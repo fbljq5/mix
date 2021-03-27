@@ -17,8 +17,7 @@
         <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id
-        , menu_name, parent_id, order_sort, path, component, visible, status, perms, icon,
+        id, menu_name, parent_id, order_sort, path, component, visible, status, perms, icon,
     remark, gmt_create, gmt_modified
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">

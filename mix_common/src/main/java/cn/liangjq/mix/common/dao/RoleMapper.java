@@ -1,18 +1,15 @@
 package cn.liangjq.mix.common.dao;
 
 import cn.liangjq.mix.common.entity.Role;
+import org.apache.ibatis.annotations.Mapper;
 
-/**
-* @Description: 
-* @Author: liangjianqiang
-* @Date: 2021/03/23
-*/
+@Mapper
 public interface RoleMapper {
     /**
      *
      * @mbg.generated
      */
-    int deleteByPrimaryKey(String uid);
+    int deleteByPrimaryKey(Long id);
 
     /**
      *
@@ -30,19 +27,13 @@ public interface RoleMapper {
      *
      * @mbg.generated
      */
-    Role selectByPrimaryKey(String uid);
+    Role selectByPrimaryKey(Long id);
 
     /**
      *
      * @mbg.generated
      */
     int updateByPrimaryKeySelective(Role record);
-
-    /**
-     *
-     * @mbg.generated
-     */
-    int updateByPrimaryKeyWithBLOBs(Role record);
 
     /**
      *

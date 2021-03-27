@@ -5,16 +5,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
 * @Description: 
 * @Author: liangjianqiang
-* @Date: 2021/03/23
+* @Date: 2021/03/26
 */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserRole extends BaseEntity {
+    /**
+     * 主键ID id
+     */
+    private Long id;
+
     /**
      * 用户ID user_id
      */
@@ -23,5 +30,15 @@ public class UserRole extends BaseEntity {
     /**
      * 角色ID role_id
      */
-    private Integer roleId;
+    private Long roleId;
+
+    /**
+     * 创建时间 gmt_create
+     */
+    private Date gmtCreate;
+
+    /**
+     * 修改时间 gmt_modified
+     */
+    private Date gmtModified;
 }

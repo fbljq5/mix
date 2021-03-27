@@ -1,0 +1,21 @@
+server:
+  port: 8501
+spring:
+  profiles:
+    active: dev
+  application:
+    name: mix-admin
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        server-addr: nacos:8848
+        namespace: dev
+        group: dev
+        service: mix-admin
+      config:
+        server-addr: nacos:8848
+        namespace: dev
+        group: dev
+        file-extension: yaml

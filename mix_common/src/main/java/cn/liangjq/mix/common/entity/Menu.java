@@ -5,16 +5,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
 * @Description: 
 * @Author: liangjianqiang
-* @Date: 2021/03/23
+* @Date: 2021/03/26
 */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Menu extends BaseEntity {
+    /**
+     * 菜单ID id
+     */
+    private Long id;
+
     /**
      * 菜单名称 menu_name
      */
@@ -64,4 +71,14 @@ public class Menu extends BaseEntity {
      * 备注 remark
      */
     private String remark;
+
+    /**
+     * 创建时间 gmt_create
+     */
+    private Date gmtCreate;
+
+    /**
+     * 更新时间 gmt_modified
+     */
+    private Date gmtModified;
 }

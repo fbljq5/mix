@@ -1,12 +1,9 @@
 package cn.liangjq.mix.common.dao;
 
 import cn.liangjq.mix.common.entity.RoleMenu;
+import org.apache.ibatis.annotations.Mapper;
 
-/**
-* @Description: 
-* @Author: liangjianqiang
-* @Date: 2021/03/23
-*/
+@Mapper
 public interface RoleMenuMapper {
     /**
      *
