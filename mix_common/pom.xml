@@ -35,5 +35,16 @@
             <version>8.0.23</version>
         </dependency>
 
+        <!-- sentinel流量防卫 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>9.0.29</version>
+        </dependency>
+
     </dependencies>
 </project>
