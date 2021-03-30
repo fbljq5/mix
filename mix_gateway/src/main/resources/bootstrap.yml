@@ -1,0 +1,47 @@
+server:
+  port: 8502
+spring:
+  profiles:
+    active: dev
+  application:
+    name: mix-gateway
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        server-addr: nacos:8848
+        namespace: dev
+        group: dev
+        service: mix-gateway
+      config:
+        server-addr: nacos:8848
+        namespace: dev
+        group: dev
+        file-extension: yaml
+    gateway:
+      globalcors:
+        # gateway 跨域设置
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - OPTIONS
+      # 设置与服务注册发现组件结合，这样可以采用服务名的路由策略
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: mix_admin
+          uri: lb://mix-admin
+          predicates:
+            - Path=/mix-admin/**
+
+
+
+
