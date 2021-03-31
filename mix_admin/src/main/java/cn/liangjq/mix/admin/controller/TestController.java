@@ -7,6 +7,7 @@ import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @description ： 测试
  * @date ： 2021/3/26
  */
-@RestController
+@RestController()
 @RequestMapping("/test")
 @RefreshScope
 public class TestController {
@@ -26,7 +27,7 @@ public class TestController {
     @Autowired
     private UserMapper userMapper;
 
-    @RequestMapping("/get")
+    @GetMapping("/g")
     @SentinelResource(value = "testGet", blockHandlerClass = SentinelBlockHandler.class, blockHandler = "handlerException",
             fallbackClass = SentinelBlockHandler.class, fallback = "handleError")
     public String testGet() {
