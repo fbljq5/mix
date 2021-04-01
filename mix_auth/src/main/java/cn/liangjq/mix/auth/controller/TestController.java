@@ -1,10 +1,8 @@
-package cn.liangjq.mix.admin.controller;
+package cn.liangjq.mix.auth.controller;
 
-import cn.liangjq.mix.api.service.RemoteAuthService;
-import cn.liangjq.mix.common.dao.UserMapper;
-import cn.liangjq.mix.common.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @description ： 测试
  * @date ： 2021/3/26
  */
-@RestController
-@RequestMapping("/t")
+@RestController()
+@RequestMapping("/auth")
 @RefreshScope
 public class TestController {
 
@@ -24,14 +22,10 @@ public class TestController {
     private String url;
 
     @Autowired
-    private UserMapper userMapper;
+    private DiscoveryClient discoveryClient;
 
-    @Autowired
-    private RemoteAuthService authService;
-
-    @GetMapping("/get")
-    public String testGet() {
-        User user = userMapper.selectByPrimaryKey(1L);
-        return "admin" + authService.test();
+    @GetMapping("/test")
+    public String test() {
+        return discoveryClient.getServices().toString() + url;
     }
 }

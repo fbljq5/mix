@@ -7,6 +7,8 @@
         <module>mix_admin</module>
         <module>mix_utils</module>
         <module>mix_gateway</module>
+        <module>mix_auth</module>
+        <module>mix_api</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

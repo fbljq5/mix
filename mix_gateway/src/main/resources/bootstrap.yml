@@ -37,10 +37,18 @@ spring:
         locator:
           enabled: true
       routes:
-        - id: mix_admin
+        - id: mix-admin
           uri: lb://mix-admin
           predicates:
             - Path=/mix-admin/**
+          filters:
+            - RewritePath=/mix-admin/(?<segment>.*), /$\{segment}
+        - id: mix-auth
+          uri: lb://mix-auth
+          predicates:
+            - Path=/mix-auth/**
+          filters:
+            - RewritePath=/mix-auth/(?<segment>.*), /$\{segment}
 
 
 
