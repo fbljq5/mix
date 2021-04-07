@@ -49,6 +49,12 @@ spring:
             - Path=/mix-auth/**
           filters:
             - RewritePath=/mix-auth/(?<segment>.*), /$\{segment}
+        - id: mix-monitor
+          uri: lb://mix-monitor
+          predicates:
+            - Path=/mix-monitor/**
+          filters:
+            - RewritePath=/mix-monitor/(?<segment>.*), /$\{segment}
 
 
 

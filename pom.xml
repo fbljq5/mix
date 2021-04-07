@@ -9,6 +9,7 @@
         <module>mix_gateway</module>
         <module>mix_auth</module>
         <module>mix_api</module>
+        <module>mix_monitor</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

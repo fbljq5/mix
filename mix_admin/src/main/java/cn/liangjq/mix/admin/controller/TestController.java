@@ -1,9 +1,5 @@
 package cn.liangjq.mix.admin.controller;
 
-import cn.liangjq.mix.api.service.RemoteAuthService;
-import cn.liangjq.mix.common.dao.UserMapper;
-import cn.liangjq.mix.common.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,15 +19,15 @@ public class TestController {
     @Value("${spring.datasource.url}")
     private String url;
 
-    @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
-    private RemoteAuthService authService;
+//    @Autowired
+//    private UserMapper userMapper;
+//
+//    @Autowired
+//    private RemoteAuthService authService;
 
     @GetMapping("/get")
     public String testGet() {
-        User user = userMapper.selectByPrimaryKey(1L);
-        return "admin" + authService.test();
+//        User user = userMapper.selectByPrimaryKey(1L);
+        return "admin";
     }
 }
