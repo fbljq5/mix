@@ -15,7 +15,8 @@
         <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, user_name, email, phone, password, status, is_delete, login_date, remark, gmt_create,
+        id
+        , user_name, email, phone, password, status, is_delete, login_date, remark, gmt_create,
     gmt_modified
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -162,4 +163,12 @@
             gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=BIGINT}
     </update>
+
+    <!--自定义-->
+    <select id="findUserByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user
+        where user_name = #{userName}
+    </select>
 </mapper>
