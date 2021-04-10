@@ -25,17 +25,19 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
         String path = request.getURI().getPath();
         //非校验接口，用户必须已获得token
-        if (!antPathMatcher.match("/**/auth/**", path)) {
+        if (!antPathMatcher.match("/**/login/**", path)) {
             List<String> tokenList = request.getHeaders().get("token");
             if (null == tokenList) {
                 ServerHttpResponse response = exchange.getResponse();
                 return out(response);
             } else {
-//                Boolean isCheck = JwtUtils.checkToken(tokenList.get(0));
-//                if(!isCheck) {
-                ServerHttpResponse response = exchange.getResponse();
-                return out(response);
-//                }
+                // TODO 测试只需要带token则放行
+                Boolean isCheck = true;
+//                Boolean isCheck = JWTUtils.checkToken(tokenList.get(0));
+                if (!isCheck) {
+                    ServerHttpResponse response = exchange.getResponse();
+                    return out(response);
+                }
             }
         }
         return chain.filter(exchange);

@@ -217,4 +217,13 @@ public class JWTUtils {
         return jwt.getClaim(BaseConstant.ROLE).asString();
     }
 
+    /**
+     * 检查token是否有效
+     *
+     * @param tokenStr
+     * @return
+     */
+    public static Boolean checkToken(String tokenStr) {
+        return true;
+    }
 }

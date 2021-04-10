@@ -1,11 +1,17 @@
-package cn.liangjq.mix.auth.security;
+package cn.liangjq.mix.auth.config;
 
+import cn.liangjq.mix.auth.security.DefaultPasswordEncoder;
+import cn.liangjq.mix.auth.security.JWTAuthenticationEntryPoint;
+import cn.liangjq.mix.auth.security.filter.JWTAuthenticationFilter;
+import cn.liangjq.mix.auth.security.filter.JWTAuthorizationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -18,9 +24,15 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    private DefaultPasswordEncoder defaultPasswordEncoder;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(usernamePasswordAuthenticationProvider());
+        auth.userDetailsService(userDetailsService).passwordEncoder(defaultPasswordEncoder);
     }
 
     /**
@@ -64,8 +76,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 // 匿名用户访问无权限资源时的异常
                 .authenticationEntryPoint(new JWTAuthenticationEntryPoint());
-
-
     }
 
     /**
@@ -79,11 +89,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 注册跨域配置
         source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
         return source;
-    }
-
-    @Bean
-    public UserNamePasswordAuthenticationProvider usernamePasswordAuthenticationProvider() {
-        return new UserNamePasswordAuthenticationProvider();
     }
 
 }

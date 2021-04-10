@@ -1,18 +1,21 @@
-package cn.liangjq.mix.auth.security;
+package cn.liangjq.mix.auth.security.filter;
 
+import cn.liangjq.mix.common.entity.User;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.util.StringUtils;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * @Description: 验证过滤器
@@ -25,6 +28,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
+//        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/login","POST"));
     }
 
     /**
@@ -35,19 +39,15 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             throws AuthenticationException {
         // 从输入流中获取到登录的信息
         try {
+//            User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
             String json = getRequestJsonString(request);
             JSONObject jsonObject = JSONObject.parseObject(json);
             String username = (String) jsonObject.get("username");
             String password = (String) jsonObject.get("password");
-            if (!StringUtils.hasText(username) || !StringUtils.hasText(password)) {
-                throw new BadCredentialsException(null);
-            }
-            // 创建一个token并调用authenticationManager.authenticate() 让Spring security进行验证
-            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>()));
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        throw new BadCredentialsException(null);
     }
 
     /**
@@ -56,7 +56,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
-        //TODO
+        //TODO 创建token
         System.out.println("success!!!");
     }
 

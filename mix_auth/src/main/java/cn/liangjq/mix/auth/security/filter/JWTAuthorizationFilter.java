@@ -1,4 +1,4 @@
-package cn.liangjq.mix.auth.security;
+package cn.liangjq.mix.auth.security.filter;
 
 import cn.liangjq.mix.common.constant.BaseConstant;
 import cn.liangjq.mix.utils.JWTUtils;
@@ -24,7 +24,6 @@ import java.util.Collection;
  */
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-
     public JWTAuthorizationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
@@ -35,7 +34,6 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String tokenHeader = request.getHeader(BaseConstant.HEADER_TOKEN_KEY);
-
         // 若请求头中没有Authorization信息直接放行
         if (tokenHeader == null) {
             chain.doFilter(request, response);
