@@ -8,6 +8,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -46,6 +48,16 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             e.printStackTrace();
         }
         throw new BadCredentialsException(null);
+    }
+
+    /**
+     * 登录成功，生成token，将获取的用户信息存到redis，并返回token
+     */
+    @Override
+    protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
+                                            Authentication auth) throws IOException, ServletException {
+        //TODO
+        System.out.println("success!!!");
     }
 
     /**

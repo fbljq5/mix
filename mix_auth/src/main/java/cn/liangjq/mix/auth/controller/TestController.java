@@ -24,8 +24,8 @@ public class TestController {
     @Autowired
     private DiscoveryClient discoveryClient;
 
-    @GetMapping("/test")
-    public String test() {
+    @GetMapping("/getToken")
+    public String getToken() {
         return discoveryClient.getServices().toString() + url;
     }
 }
