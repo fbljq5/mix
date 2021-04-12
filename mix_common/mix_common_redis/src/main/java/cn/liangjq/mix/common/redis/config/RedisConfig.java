@@ -1,4 +1,4 @@
-package cn.liangjq.mix.gateway.config;
+package cn.liangjq.mix.common.redis.config;
 
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;

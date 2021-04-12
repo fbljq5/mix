@@ -15,7 +15,7 @@
     <modules>
         <module>mix_common_db</module>
         <module>mix_common_base</module>
-        <module>mix_common_service</module>
+        <module>mix_common_redis</module>
     </modules>
 
     <properties>

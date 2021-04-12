@@ -1,7 +1,7 @@
 package cn.liangjq.mix.auth.security.filter;
 
 import cn.liangjq.mix.common.base.constant.BaseConstant;
-import cn.liangjq.mix.common.service.RedisUtil;
+import cn.liangjq.mix.common.redis.util.RedisUtil;
 import cn.liangjq.mix.utils.JWTUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -10,6 +10,7 @@ import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -29,6 +30,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Autowired
     RedisUtil redisUtil;
 
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {

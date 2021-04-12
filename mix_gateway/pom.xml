@@ -31,7 +31,7 @@
 
         <dependency>
             <groupId>cn.liangjq</groupId>
-            <artifactId>mix_common_service</artifactId>
+            <artifactId>mix_common_redis</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 

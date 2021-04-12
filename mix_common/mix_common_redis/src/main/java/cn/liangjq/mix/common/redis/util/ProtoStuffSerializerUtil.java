@@ -1,4 +1,4 @@
-package cn.liangjq.mix.common.service;
+package cn.liangjq.mix.common.redis.util;
 
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;

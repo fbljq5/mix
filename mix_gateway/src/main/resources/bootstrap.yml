@@ -55,7 +55,8 @@ spring:
             - Path=/mix-monitor/**
           filters:
             - RewritePath=/mix-monitor/(?<segment>.*), /$\{segment}
-
+  main:
+    allow-bean-definition-overriding: true
 
 
 

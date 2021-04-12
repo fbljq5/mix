@@ -1,4 +1,4 @@
-package cn.liangjq.mix.common.service;
+package cn.liangjq.mix.common.redis.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
