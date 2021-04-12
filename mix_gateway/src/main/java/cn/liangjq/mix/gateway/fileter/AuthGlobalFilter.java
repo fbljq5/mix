@@ -1,7 +1,7 @@
 package cn.liangjq.mix.gateway.fileter;
 
+import cn.liangjq.mix.common.service.RedisUtil;
 import cn.liangjq.mix.utils.JWTUtils;
-import cn.liangjq.mix.utils.RedisUtil;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;

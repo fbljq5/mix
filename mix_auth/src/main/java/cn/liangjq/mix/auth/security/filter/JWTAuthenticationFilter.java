@@ -1,8 +1,8 @@
 package cn.liangjq.mix.auth.security.filter;
 
 import cn.liangjq.mix.common.base.constant.BaseConstant;
+import cn.liangjq.mix.common.service.RedisUtil;
 import cn.liangjq.mix.utils.JWTUtils;
-import cn.liangjq.mix.utils.RedisUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +62,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication auth) throws IOException, ServletException {
         System.out.println(auth);
         String token = JWTUtils.createToken(auth.getName(), auth.getAuthorities().toString());
-        redisUtil.setEx(token,token, BaseConstant.EXPIRED_PERIOD, TimeUnit.MILLISECONDS);
+        redisUtil.setEx(token, token, BaseConstant.EXPIRED_PERIOD, TimeUnit.MILLISECONDS);
         this.out(res, token);
         System.out.println("success!!!");
     }
