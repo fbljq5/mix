@@ -1,10 +1,10 @@
 package cn.liangjq.mix.auth.security;
 
-import cn.liangjq.mix.common.dao.RoleMapper;
-import cn.liangjq.mix.common.dao.UserMapper;
-import cn.liangjq.mix.common.dao.UserRoleMapper;
-import cn.liangjq.mix.common.entity.User;
-import cn.liangjq.mix.common.entity.UserRole;
+import cn.liangjq.mix.common.db.dao.RoleMapper;
+import cn.liangjq.mix.common.db.dao.UserMapper;
+import cn.liangjq.mix.common.db.dao.UserRoleMapper;
+import cn.liangjq.mix.common.db.entity.User;
+import cn.liangjq.mix.common.db.entity.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

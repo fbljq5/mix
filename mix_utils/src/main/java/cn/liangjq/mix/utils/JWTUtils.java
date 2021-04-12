@@ -1,6 +1,6 @@
 package cn.liangjq.mix.utils;
 
-import cn.liangjq.mix.common.constant.BaseConstant;
+import cn.liangjq.mix.common.base.constant.BaseConstant;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -8,8 +8,8 @@ import com.auth0.jwt.interfaces.JWTVerifier;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
-import javax.security.auth.message.AuthException;
 import javax.servlet.http.HttpServletRequest;
+import java.text.DateFormat;
 import java.util.Date;
 
 
@@ -20,10 +20,7 @@ import java.util.Date;
  */
 @Slf4j
 public class JWTUtils {
-    // 过期时间
-    public static final long EXPIRITION = 1000 * 24 * 60 * 60;
 
-    private static final String SECRET = "MIX_SEC";
 
     /**
      * 从请求中获得token串
@@ -43,64 +40,23 @@ public class JWTUtils {
      *
      * @param key         毫秒数前缀
      * @param userId      生成用户id
-     * @param merchantId  生成用户商家id
-     * @param password    密码
      * @param mileSeconds token有效毫秒数
      * @return token字符串
      */
-    public static String createToken(String key, Long userId, Long merchantId, String password, Long mileSeconds) {
+    public static String createToken(String key, Long userId, String userName, Long mileSeconds) {
         // 输入数据校验
         if (!StringUtils.hasText(key)
                 || null == userId
-                || null == merchantId
                 || null == mileSeconds) {
             return null;
         }
-
-        // 登录必须提供密码，手动生成token不需要
-        if (!StringUtils.hasText(password)) {
-            return null;
-        }
-
         long finalMileSeconds = System.currentTimeMillis() + mileSeconds;
         return JWT.create()
                 .withClaim(BaseConstant.USERID, userId)
                 .withExpiresAt(new Date(finalMileSeconds))
                 // 加个随机值防止token重复
                 .withClaim("RANDOM", System.currentTimeMillis())
-                .sign(Algorithm.HMAC256(SECRET));
-    }
-
-    /**
-     * 创建token
-     *
-     * @param key
-     * @param userId
-     * @param merchantId
-     * @param password
-     * @param expiredTime
-     * @return
-     */
-    public static String createToken(String key, Long userId, Long merchantId, String password, Date expiredTime) {
-        // 输入数据校验
-        if (!StringUtils.hasText(key)
-                || null == userId
-                || null == merchantId
-                || null == expiredTime) {
-            return null;
-        }
-
-        // 登录必须提供密码，手动生成token不需要
-        if (!StringUtils.hasText(password)) {
-            return null;
-        }
-
-        return JWT.create()
-                .withClaim(BaseConstant.USERID, userId)
-                .withExpiresAt(expiredTime)
-                // 加个随机值防止token重复
-                .withClaim("RANDOM", System.currentTimeMillis())
-                .sign(Algorithm.HMAC256(SECRET));
+                .sign(Algorithm.HMAC256(BaseConstant.SECRET));
     }
 
     /**
@@ -116,14 +72,14 @@ public class JWTUtils {
                 || !StringUtils.hasText(roles)) {
             return null;
         }
-
+        System.out.println(new Date(System.currentTimeMillis() + BaseConstant.EXPIRED_PERIOD));
         return JWT.create()
                 .withClaim(BaseConstant.USER_NAME, userName)
                 .withClaim(BaseConstant.ROLE, roles)
-                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRITION))
+                .withExpiresAt(new Date(System.currentTimeMillis() + BaseConstant.EXPIRED_PERIOD))
                 // 加个随机值防止token重复
                 .withClaim("RANDOM", System.currentTimeMillis())
-                .sign(Algorithm.HMAC256(SECRET));
+                .sign(Algorithm.HMAC256(BaseConstant.SECRET));
     }
 
     /**
@@ -147,7 +103,7 @@ public class JWTUtils {
                 .withExpiresAt(new Date(System.currentTimeMillis() + expireMileseconds))
                 // 加个随机值防止token重复
                 .withClaim("RANDOM", System.currentTimeMillis())
-                .sign(Algorithm.HMAC256(SECRET));
+                .sign(Algorithm.HMAC256(BaseConstant.SECRET));
     }
 
     /**
@@ -158,7 +114,9 @@ public class JWTUtils {
      */
     public static boolean isExpire(String tokenStr) throws Exception {
         DecodedJWT jwt = JWTUtils.verify(tokenStr);
-        return jwt.getExpiresAt().compareTo(new Date()) <= 0;
+        Date expiresAt = jwt.getExpiresAt();
+        System.out.println(expiresAt);
+        return jwt.getExpiresAt().compareTo(new Date()) >= 0;
     }
 
 
@@ -169,10 +127,10 @@ public class JWTUtils {
      * @return
      */
     private static DecodedJWT verify(String tokenStr) throws Exception {
-        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(SECRET)).build();
+        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(BaseConstant.SECRET)).build();
         DecodedJWT verify = jwtVerifier.verify(tokenStr);
         if (null == verify) {
-            throw new AuthException();
+            throw new RuntimeException();
         }
         return verify;
     }
@@ -223,7 +181,11 @@ public class JWTUtils {
      * @param tokenStr
      * @return
      */
-    public static Boolean checkToken(String tokenStr) {
-        return true;
+    public static Boolean checkToken(String tokenStr) throws Exception {
+        if (!StringUtils.hasText(tokenStr)) {
+            return false;
+        }
+        // 判断是否过期
+        return JWTUtils.isExpire(tokenStr);
     }
 }

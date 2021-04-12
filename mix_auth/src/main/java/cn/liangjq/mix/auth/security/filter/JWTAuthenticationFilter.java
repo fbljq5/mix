@@ -1,14 +1,15 @@
 package cn.liangjq.mix.auth.security.filter;
 
-import cn.liangjq.mix.common.entity.User;
+import cn.liangjq.mix.common.base.constant.BaseConstant;
+import cn.liangjq.mix.utils.JWTUtils;
+import cn.liangjq.mix.utils.RedisUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Description: 验证过滤器
@@ -23,6 +25,9 @@ import java.util.ArrayList;
  * @Date: 2021/3/25
  */
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
+    @Autowired
+    RedisUtil redisUtil;
 
     private AuthenticationManager authenticationManager;
 
@@ -39,7 +44,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             throws AuthenticationException {
         // 从输入流中获取到登录的信息
         try {
-//            User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
             String json = getRequestJsonString(request);
             JSONObject jsonObject = JSONObject.parseObject(json);
             String username = (String) jsonObject.get("username");
@@ -56,8 +60,23 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
-        //TODO 创建token
+        System.out.println(auth);
+        String token = JWTUtils.createToken(auth.getName(), auth.getAuthorities().toString());
+        redisUtil.setEx(token,token, BaseConstant.EXPIRED_PERIOD, TimeUnit.MILLISECONDS);
+        this.out(res, token);
         System.out.println("success!!!");
+    }
+
+    private void out(HttpServletResponse res, String token) throws IOException {
+        // 设置编码 防止乱码问题
+        res.setCharacterEncoding("UTF-8");
+        res.setContentType("application/json; charset=utf-8");
+        // 在请求头里返回创建成功的token
+        res.setHeader("token", token);
+        // 处理编码方式 防止中文乱码
+        res.setContentType("text/json;charset=utf-8");
+        // 将反馈塞到HttpServletres中返回给前台
+        res.getWriter().write(JSON.toJSONString("登录成功"));
     }
 
     /**

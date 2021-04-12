@@ -1,4 +1,4 @@
-package cn.liangjq.mix.admin.config;
+package cn.liangjq.mix.auth.config;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -11,8 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @date ： 2021/4/1
  */
 @Configuration
-@MapperScan(basePackages = "cn.liangjq.mix.common.db.dao")
-@ComponentScan(basePackages = {"cn.liangjq.mix.api.fallback"})
-@EnableFeignClients("cn.liangjq.mix.api.service")
+@MapperScan(basePackages = {"cn.liangjq.mix.common.db.dao"})
+@ComponentScan(basePackages = {"cn.liangjq.mix.utils"})
 public class PackageScanConfig {
 }

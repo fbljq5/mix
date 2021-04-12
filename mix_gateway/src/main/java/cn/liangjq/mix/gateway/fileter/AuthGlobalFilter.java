@@ -1,6 +1,9 @@
 package cn.liangjq.mix.gateway.fileter;
 
+import cn.liangjq.mix.utils.JWTUtils;
+import cn.liangjq.mix.utils.RedisUtil;
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -15,8 +18,16 @@ import reactor.core.publisher.Mono;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+/**
+ * @Description: 网关全局过滤器
+ * @Author: liangjianqiang
+ * @Date: 2021/4/12
+ */
 @Component
 public class AuthGlobalFilter implements GlobalFilter, Ordered {
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     private AntPathMatcher antPathMatcher = new AntPathMatcher();
 
@@ -31,9 +42,21 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
                 ServerHttpResponse response = exchange.getResponse();
                 return out(response);
             } else {
-                // TODO 测试只需要带token则放行
-                Boolean isCheck = true;
-//                Boolean isCheck = JWTUtils.checkToken(tokenList.get(0));
+                String token = tokenList.get(0);
+                // TODO 查看redis 是否存在，不存在即过期
+                String tokenRedis = redisUtil.get(token);
+                if (null == tokenRedis) {
+                    ServerHttpResponse response = exchange.getResponse();
+                    return out(response);
+                }
+
+                // 判断token中数据
+                Boolean isCheck = false;
+                try {
+                    isCheck = JWTUtils.checkToken(tokenList.get(0));
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
                 if (!isCheck) {
                     ServerHttpResponse response = exchange.getResponse();
                     return out(response);

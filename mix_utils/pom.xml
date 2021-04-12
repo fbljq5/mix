@@ -23,18 +23,37 @@
             <artifactId>java-jwt</artifactId>
             <version>3.11.0</version>
         </dependency>
+
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
-            <scope>provided</scope>
+            <artifactId>servlet-api</artifactId>
+            <version>${servlet.api.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cn.liangjq</groupId>
-            <artifactId>mix_common</artifactId>
+            <artifactId>mix_common_base</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!-- 序列化相关-->
+        <dependency>
+            <groupId>com.dyuproject.protostuff</groupId>
+            <artifactId>protostuff-core</artifactId>
+            <version>${dyuproject.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dyuproject.protostuff</groupId>
+            <artifactId>protostuff-runtime</artifactId>
+            <version>${dyuproject.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>

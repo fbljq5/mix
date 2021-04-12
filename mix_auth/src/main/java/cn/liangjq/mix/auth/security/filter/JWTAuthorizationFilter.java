@@ -1,6 +1,6 @@
 package cn.liangjq.mix.auth.security.filter;
 
-import cn.liangjq.mix.common.constant.BaseConstant;
+import cn.liangjq.mix.common.base.constant.BaseConstant;
 import cn.liangjq.mix.utils.JWTUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

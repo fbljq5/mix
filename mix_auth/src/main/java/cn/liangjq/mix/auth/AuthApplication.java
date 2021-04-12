@@ -15,7 +15,6 @@ import java.util.TimeZone;
  */
 @EnableDiscoveryClient
 @SpringBootApplication
-@MapperScan(basePackages = {"cn.liangjq.mix.common.dao"})
 public class AuthApplication {
     public static void main(String[] args) {
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));

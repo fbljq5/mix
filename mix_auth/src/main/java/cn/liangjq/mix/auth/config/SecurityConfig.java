@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/druid/**"
                 ).permitAll()
                 // 对于获取token的RestApi要允许匿名访问
-                .antMatchers("/auth/**")
+                .antMatchers("/login/**")
                 .permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated()
