@@ -12,6 +12,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @MapperScan(basePackages = {"cn.liangjq.mix.common.db.dao"})
-@ComponentScan(basePackages = {"cn.liangjq.mix.common.service"})
+@ComponentScan(basePackages = {"cn.liangjq.mix.common.redis"})
 public class PackageScanConfig {
 }

@@ -1,8 +1,6 @@
 package cn.liangjq.mix.auth.security.filter;
 
-import cn.liangjq.mix.common.base.constant.BaseConstant;
 import cn.liangjq.mix.common.redis.util.RedisUtil;
-import cn.liangjq.mix.utils.JWTUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,15 +8,11 @@ import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @Description: 验证过滤器
@@ -35,7 +29,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
-//        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/login","POST"));
     }
 
     /**
@@ -54,31 +47,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * 登录成功，生成token，将获取的用户信息存到redis，并返回token
-     */
-    @Override
-    protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
-                                            Authentication auth) throws IOException, ServletException {
-        System.out.println(auth);
-        String token = JWTUtils.createToken(auth.getName(), auth.getAuthorities().toString());
-        redisUtil.setEx(token, token, BaseConstant.EXPIRED_PERIOD, TimeUnit.MILLISECONDS);
-        this.out(res, token);
-        System.out.println("success!!!");
-    }
-
-    private void out(HttpServletResponse res, String token) throws IOException {
-        // 设置编码 防止乱码问题
-        res.setCharacterEncoding("UTF-8");
-        res.setContentType("application/json; charset=utf-8");
-        // 在请求头里返回创建成功的token
-        res.setHeader("token", token);
-        // 处理编码方式 防止中文乱码
-        res.setContentType("text/json;charset=utf-8");
-        // 将反馈塞到HttpServletres中返回给前台
-        res.getWriter().write(JSON.toJSONString("登录成功"));
     }
 
     /**
