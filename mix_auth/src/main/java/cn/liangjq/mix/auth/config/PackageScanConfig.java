@@ -1,17 +1,16 @@
 package cn.liangjq.mix.auth.config;
 
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author ： liangjianqiang
- * @description ： 引进其他包
- * @date ： 2021/4/1
+ * @Author: liangjq
+ * @Description: 引进其他包
+ * @Date: 2021/4/1
  */
 @Configuration
-@MapperScan(basePackages = {"cn.liangjq.mix.common.db.dao"})
-@ComponentScan(basePackages = {"cn.liangjq.mix.common.redis"})
+@ComponentScan(basePackages = {"cn.liangjq.mix.common", "cn.liangjq.mix.utils", "cn.liangjq.mix.service.impl", "cn.liangjq.mix.service.interfaces"})
+@MapperScan(basePackages = {"cn.liangjq.mix.service.dao"})
 public class PackageScanConfig {
 }

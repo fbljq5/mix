@@ -5,12 +5,9 @@ import org.springframework.stereotype.Component;
 
 
 /**
- * <p>
- * t密码的处理方法类型
- * </p>
- *
- * @author qy
- * @since 2019-11-08
+ * @Description: 密码的处理方法类型
+ * @Author: liangjq
+ * @Date: 2021/4/14
  */
 @Component
 public class DefaultPasswordEncoder implements PasswordEncoder {
@@ -26,11 +23,13 @@ public class DefaultPasswordEncoder implements PasswordEncoder {
 
     }
 
+    @Override
     public String encode(CharSequence rawPassword) {
         return rawPassword.toString();
 //        return DigestUtils.md5DigestAsHex(rawPassword.toString().getBytes());
     }
 
+    @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
         return rawPassword.toString().equals(encodedPassword);
 //        return encodedPassword.equals(DigestUtils.md5DigestAsHex(rawPassword.toString().getBytes()));

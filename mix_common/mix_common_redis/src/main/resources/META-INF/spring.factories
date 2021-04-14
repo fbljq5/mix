@@ -1,4 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  cn.liangjq.mix.common.redis.config.RedisConfig,\
-  cn.liangjq.mix.common.redis.util.ProtoStuffSerializerUtil,\
-  cn.liangjq.mix.common.redis.util.RedisUtil

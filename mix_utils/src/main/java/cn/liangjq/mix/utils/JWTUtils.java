@@ -1,6 +1,6 @@
 package cn.liangjq.mix.utils;
 
-import cn.liangjq.mix.common.base.constant.BaseConstant;
+import cn.liangjq.mix.common.constant.Constants;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -8,32 +8,16 @@ import com.auth0.jwt.interfaces.JWTVerifier;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import java.text.DateFormat;
 import java.util.Date;
 
 
 /**
  * @Description: JWT 相关的工具方法
- * @Author: liangjianqiang
+ * @Author: liangjq
  * @Date: 2021/4/7
  */
 @Slf4j
 public class JWTUtils {
-
-
-    /**
-     * 从请求中获得token串
-     *
-     * @param request
-     * @return
-     */
-    public static String getTokenFromRequest(HttpServletRequest request) {
-        if (null == request) {
-            return null;
-        }
-        return request.getHeader(BaseConstant.HEADER_TOKEN_KEY);
-    }
 
     /**
      * 生成token
@@ -52,11 +36,31 @@ public class JWTUtils {
         }
         long finalMileSeconds = System.currentTimeMillis() + mileSeconds;
         return JWT.create()
-                .withClaim(BaseConstant.USERID, userId)
+                .withClaim(Constants.USERID, userId)
                 .withExpiresAt(new Date(finalMileSeconds))
                 // 加个随机值防止token重复
                 .withClaim("RANDOM", System.currentTimeMillis())
-                .sign(Algorithm.HMAC256(BaseConstant.SECRET));
+                .sign(Algorithm.HMAC256(Constants.SECRET));
+    }
+
+    /**
+     * 创建token
+     *
+     * @param userName
+     * @return
+     */
+    public static String createToken(String userName) {
+        // 输入数据校验
+        if (!StringUtils.hasText(userName)) {
+            return null;
+        }
+        System.out.println(new Date(System.currentTimeMillis() + Constants.EXPIRED_PERIOD));
+        return JWT.create()
+                .withClaim(Constants.USER_NAME, userName)
+                .withExpiresAt(new Date(System.currentTimeMillis() + Constants.EXPIRED_PERIOD))
+                // 加个随机值防止token重复
+                .withClaim("RANDOM", System.currentTimeMillis())
+                .sign(Algorithm.HMAC256(Constants.SECRET));
     }
 
     /**
@@ -72,14 +76,14 @@ public class JWTUtils {
                 || !StringUtils.hasText(roles)) {
             return null;
         }
-        System.out.println(new Date(System.currentTimeMillis() + BaseConstant.EXPIRED_PERIOD));
+        System.out.println(new Date(System.currentTimeMillis() + Constants.EXPIRED_PERIOD));
         return JWT.create()
-                .withClaim(BaseConstant.USER_NAME, userName)
-                .withClaim(BaseConstant.ROLE, roles)
-                .withExpiresAt(new Date(System.currentTimeMillis() + BaseConstant.EXPIRED_PERIOD))
+                .withClaim(Constants.USER_NAME, userName)
+                .withClaim(Constants.ROLE, roles)
+                .withExpiresAt(new Date(System.currentTimeMillis() + Constants.EXPIRED_PERIOD))
                 // 加个随机值防止token重复
                 .withClaim("RANDOM", System.currentTimeMillis())
-                .sign(Algorithm.HMAC256(BaseConstant.SECRET));
+                .sign(Algorithm.HMAC256(Constants.SECRET));
     }
 
     /**
@@ -98,12 +102,12 @@ public class JWTUtils {
         }
 
         return JWT.create()
-                .withClaim(BaseConstant.USER_NAME, userName)
-                .withClaim(BaseConstant.ROLE, roles)
+                .withClaim(Constants.USER_NAME, userName)
+                .withClaim(Constants.ROLE, roles)
                 .withExpiresAt(new Date(System.currentTimeMillis() + expireMileseconds))
                 // 加个随机值防止token重复
                 .withClaim("RANDOM", System.currentTimeMillis())
-                .sign(Algorithm.HMAC256(BaseConstant.SECRET));
+                .sign(Algorithm.HMAC256(Constants.SECRET));
     }
 
     /**
@@ -127,7 +131,7 @@ public class JWTUtils {
      * @return
      */
     private static DecodedJWT verify(String tokenStr) throws Exception {
-        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(BaseConstant.SECRET)).build();
+        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(Constants.SECRET)).build();
         DecodedJWT verify = jwtVerifier.verify(tokenStr);
         if (null == verify) {
             throw new RuntimeException();
@@ -152,7 +156,7 @@ public class JWTUtils {
             exception.printStackTrace();
             return null;
         }
-        return jwt.getClaim(BaseConstant.USER_NAME).asString();
+        return jwt.getClaim(Constants.USER_NAME).asString();
     }
 
     /**
@@ -172,7 +176,7 @@ public class JWTUtils {
             exception.printStackTrace();
             return null;
         }
-        return jwt.getClaim(BaseConstant.ROLE).asString();
+        return jwt.getClaim(Constants.ROLE).asString();
     }
 
     /**

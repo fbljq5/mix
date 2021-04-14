@@ -1,7 +1,7 @@
 package cn.liangjq.mix.gateway.fileter;
 
-import cn.liangjq.mix.common.redis.util.RedisUtil;
 import cn.liangjq.mix.utils.JWTUtils;
+import cn.liangjq.mix.utils.RedisUtil;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  * @Description: 网关全局过滤器
- * @Author: liangjianqiang
+ * @Author: liangjq
  * @Date: 2021/4/12
  */
 @Component
@@ -49,7 +49,6 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
                     ServerHttpResponse response = exchange.getResponse();
                     return out(response);
                 }
-
                 // 判断token中数据
                 Boolean isCheck = false;
                 try {

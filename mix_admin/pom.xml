@@ -20,7 +20,19 @@
 
         <dependency>
             <groupId>cn.liangjq</groupId>
-            <artifactId>mix_common_db</artifactId>
+            <artifactId>mix_common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.liangjq</groupId>
+            <artifactId>mix_service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.liangjq</groupId>
+            <artifactId>mix_utils</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 

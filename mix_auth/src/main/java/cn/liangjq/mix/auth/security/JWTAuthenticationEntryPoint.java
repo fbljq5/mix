@@ -8,13 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/** 
+/**
  * @Description: 认证入口点
- * 
- * @Author: liangjianqiang
- * 
- * @Date: 2021/4/7 
- */ 
+ * @Author: liangjq
+ * @Date: 2021/4/7
+ */
 public class JWTAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override

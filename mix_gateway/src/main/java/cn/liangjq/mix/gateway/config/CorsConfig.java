@@ -9,7 +9,7 @@ import org.springframework.web.util.pattern.PathPatternParser;
 
 /**
  * @Description: 跨域配置
- * @Author: liangjianqiang
+ * @Author: liangjq
  * @Date: 2021/4/10
  */
 @Configuration

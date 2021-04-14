@@ -55,8 +55,8 @@ spring:
             - Path=/mix-monitor/**
           filters:
             - RewritePath=/mix-monitor/(?<segment>.*), /$\{segment}
-  main:
-    allow-bean-definition-overriding: true
-
-
+  redis:
+    host: redis
+    port: 6379
+    password: 123456
 

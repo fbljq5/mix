@@ -1,10 +1,10 @@
 package cn.liangjq.mix.auth.security;
 
-import cn.liangjq.mix.common.db.dao.RoleMapper;
-import cn.liangjq.mix.common.db.dao.UserMapper;
-import cn.liangjq.mix.common.db.dao.UserRoleMapper;
-import cn.liangjq.mix.common.db.entity.User;
-import cn.liangjq.mix.common.db.entity.UserRole;
+import cn.liangjq.mix.common.entity.User;
+import cn.liangjq.mix.common.entity.UserRole;
+import cn.liangjq.mix.service.dao.RoleMapper;
+import cn.liangjq.mix.service.dao.UserMapper;
+import cn.liangjq.mix.service.dao.UserRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +18,7 @@ import java.util.List;
 
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
+
     @Autowired
     private UserMapper userMapper;
 

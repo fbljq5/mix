@@ -20,19 +20,18 @@
 
         <dependency>
             <groupId>cn.liangjq</groupId>
-            <artifactId>mix_common_base</artifactId>
+            <artifactId>mix_common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.liangjq</groupId>
+            <artifactId>mix_service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>cn.liangjq</groupId>
-            <artifactId>mix_common_db</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.liangjq</groupId>
-            <artifactId>mix_common_redis</artifactId>
+            <artifactId>mix_utils</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
@@ -103,12 +102,6 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-jwt</artifactId>
             <version>1.0.10.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.liangjq</groupId>
-            <artifactId>mix_utils</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

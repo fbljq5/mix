@@ -9,7 +9,7 @@ import java.util.TimeZone;
 
 /**
  * @Description: 监控中心入口
- * @Author: liangjianqiang
+ * @Author: liangjq
  * @Date: 2021/4/8
  */
 @EnableDiscoveryClient

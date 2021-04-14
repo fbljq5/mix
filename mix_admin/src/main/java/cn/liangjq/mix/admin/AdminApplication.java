@@ -9,9 +9,9 @@ import javax.annotation.PostConstruct;
 import java.util.TimeZone;
 
 /**
- * @author ： liangjq
- * @description ： admin入口
- * @date ： 2021/3/22
+ * @Author: liangjq
+ * @Description: admin入口
+ * @Date: 2021/3/22
  */
 @EnableDiscoveryClient
 @SpringBootApplication

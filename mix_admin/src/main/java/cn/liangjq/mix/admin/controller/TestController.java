@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author ： liangjianqiang
- * @description ： 测试
- * @date ： 2021/3/26
+ * @Author: liangjq
+ * @Description: 测试
+ * @Date: 2021/3/26
  */
 @RestController
 @RequestMapping("/t")
