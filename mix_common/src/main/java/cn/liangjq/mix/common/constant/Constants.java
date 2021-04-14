@@ -34,7 +34,7 @@ public class Constants {
     /**
      * 默认过期时间(10分钟)
      */
-    public static final long EXPIRED_PERIOD = 1000 * 60 * 1;
+    public static final long EXPIRED_PERIOD = 1000 * 60 * 10;
 
     /**
      * token 生成盐
