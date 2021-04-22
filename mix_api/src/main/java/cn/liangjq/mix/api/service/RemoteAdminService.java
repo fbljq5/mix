@@ -1,5 +1,6 @@
 package cn.liangjq.mix.api.service;
 
+import cn.liangjq.mix.api.fallback.RemoteAdminServiceFallbackFactory;
 import cn.liangjq.mix.common.dto.LoginVO;
 import cn.liangjq.mix.common.entity.Role;
 import cn.liangjq.mix.common.entity.User;
@@ -16,7 +17,7 @@ import java.util.List;
  * @Author: liangjq
  * @Date: 2021/4/22
  */
-@FeignClient(contextId = "remoteAdminService", value = "mix-admin")
+@FeignClient(contextId = "remoteAdminService", value = "mix-admin", fallbackFactory = RemoteAdminServiceFallbackFactory.class)
 public interface RemoteAdminService {
 
     @PostMapping("/api/user/checkLogin")

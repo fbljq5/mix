@@ -24,6 +24,3 @@ spring:
         dashboard: sentinel:8858
         #默认8719端口,如果被占用会向上扫描。
         port: 8719
-  redis:
-    host: redis
-    password: 123456

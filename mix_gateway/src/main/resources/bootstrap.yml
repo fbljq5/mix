@@ -19,44 +19,4 @@ spring:
         namespace: dev
         group: dev
         file-extension: yaml
-    gateway:
-      globalcors:
-        # gateway 跨域设置
-        cors-configurations:
-          '[/**]':
-            allowedOriginPatterns: "*"
-            allowedHeaders: "*"
-            allowCredentials: true
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - OPTIONS
-      # 设置与服务注册发现组件结合，这样可以采用服务名的路由策略
-      discovery:
-        locator:
-          enabled: true
-      routes:
-        - id: mix-admin
-          uri: lb://mix-admin
-          predicates:
-            - Path=/mix-admin/**
-          filters:
-            - RewritePath=/mix-admin/(?<segment>.*), /$\{segment}
-        - id: mix-auth
-          uri: lb://mix-auth
-          predicates:
-            - Path=/mix-auth/**
-          filters:
-            - RewritePath=/mix-auth/(?<segment>.*), /$\{segment}
-        - id: mix-monitor
-          uri: lb://mix-monitor
-          predicates:
-            - Path=/mix-monitor/**
-          filters:
-            - RewritePath=/mix-monitor/(?<segment>.*), /$\{segment}
-  redis:
-    host: redis
-    port: 6379
-    password: 123456
 

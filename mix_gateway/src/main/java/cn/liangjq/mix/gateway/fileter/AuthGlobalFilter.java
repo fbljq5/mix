@@ -53,13 +53,13 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
                     return out(response);
                 }
                 // 判断token中数据
-                Boolean isCheck = false;
+                Boolean isExpired = true;
                 try {
-                    isCheck = JWTUtils.checkToken(tokenList.get(0),jwtConfig.getSecret());
+                    isExpired = JWTUtils.isExpired(tokenList.get(0),jwtConfig.getSecret());
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
-                if (!isCheck) {
+                if (isExpired) {
                     ServerHttpResponse response = exchange.getResponse();
                     return out(response);
                 }

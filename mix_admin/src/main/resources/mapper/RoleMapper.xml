@@ -137,4 +137,14 @@
             gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=BIGINT}
     </update>
+
+    <select id="getRoleListByUserId" resultMap="BaseResultMap">
+        select role.*
+        from t_user user,
+             t_user_role ur,
+             t_role role
+        where user.id = ur.user_id
+          and ur.role_id = role.id
+          and user.id = #{userId}
+    </select>
 </mapper>
