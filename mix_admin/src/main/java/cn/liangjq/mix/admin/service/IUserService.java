@@ -1,9 +1,12 @@
-package cn.liangjq.mix.service.interfaces;
+package cn.liangjq.mix.admin.service;
 
 
 import cn.liangjq.mix.common.dto.LoginVO;
 import cn.liangjq.mix.common.entity.User;
+import cn.liangjq.mix.common.entity.UserRole;
 import cn.liangjq.mix.common.result.R;
+
+import java.util.List;
 
 /**
  * @Author: liangjq
@@ -28,4 +31,11 @@ public interface IUserService {
      */
     User getUserByName(String username);
 
+    /**
+     * 通过用户ID获得用户角色关联集合
+     *
+     * @param id
+     * @return
+     */
+    List<UserRole> listUserRoleByUserId(Long id);
 }

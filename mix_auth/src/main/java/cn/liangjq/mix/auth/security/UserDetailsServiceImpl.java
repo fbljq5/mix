@@ -1,10 +1,9 @@
 package cn.liangjq.mix.auth.security;
 
+import cn.liangjq.mix.api.service.RemoteAdminService;
 import cn.liangjq.mix.common.entity.User;
 import cn.liangjq.mix.common.entity.UserRole;
-import cn.liangjq.mix.service.dao.RoleMapper;
-import cn.liangjq.mix.service.dao.UserMapper;
-import cn.liangjq.mix.service.dao.UserRoleMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,16 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service("userDetailsService")
+@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
-    private UserRoleMapper userRoleMapper;
-
-    @Autowired
-    private RoleMapper roleMapper;
+    private RemoteAdminService remoteAdminService;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
@@ -34,18 +28,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new RuntimeException("用户不能为空");
         }
         // 调用方法查询用户
-        User user = userMapper.findUserByUsername(s);
+        User user = remoteAdminService.findUserByUsername(s);
         if (user == null) {
             throw new RuntimeException("用户不存在");
         }
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        List<UserRole> userRoles = userRoleMapper.selectByUserId(user.getId());
+        List<UserRole> userRoles = remoteAdminService.listUserRoleByUserId(user.getId());
         if (CollectionUtils.isEmpty(userRoles)) {
             return new org.springframework.security.core.userdetails.User(user.getUserName(),
                     user.getPassword(), authorities);
         }
         userRoles.forEach(userRole -> authorities.add(new SimpleGrantedAuthority("ROLE_" +
-                roleMapper.selectByPrimaryKey(userRole.getRoleId()).getRoleName())));
+                remoteAdminService.findRoleByRoleId(userRole.getRoleId()).getRoleName())));
         return new org.springframework.security.core.userdetails.User(user.getUserName(),
                 user.getPassword(), authorities);
     }

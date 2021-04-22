@@ -3,7 +3,6 @@ package cn.liangjq.mix.auth.config;
 import cn.liangjq.mix.auth.security.DefaultPasswordEncoder;
 import cn.liangjq.mix.auth.security.JWTAuthenticationEntryPoint;
 import cn.liangjq.mix.auth.security.filter.JWTAuthenticationFilter;
-import cn.liangjq.mix.auth.security.filter.JWTAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -66,8 +65,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 // 添加JWT登录拦截器
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                // 添加JWT鉴权拦截器
-                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+//                // 添加JWT鉴权拦截器
+//                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
                 .sessionManagement()
                 // 设置Session的创建策略为：Spring Security永不创建HttpSession 不使用HttpSession来获取SecurityContext
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

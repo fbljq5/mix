@@ -1,4 +1,4 @@
-package cn.liangjq.mix.service.dao;
+package cn.liangjq.mix.admin.dao;
 
 
 import cn.liangjq.mix.common.entity.User;

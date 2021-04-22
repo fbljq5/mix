@@ -25,13 +25,13 @@
         </dependency>
         <dependency>
             <groupId>cn.liangjq</groupId>
-            <artifactId>mix_service</artifactId>
+            <artifactId>mix_utils</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>cn.liangjq</groupId>
-            <artifactId>mix_utils</artifactId>
+            <artifactId>mix_api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
@@ -87,8 +87,18 @@
         </dependency>
 
         <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-okhttp</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-loadbalancer</artifactId>
         </dependency>
 
         <!-- Spring Security -->

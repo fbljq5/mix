@@ -10,7 +10,6 @@
         <module>mix_auth</module>
         <module>mix_api</module>
         <module>mix_monitor</module>
-        <module>mix_service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

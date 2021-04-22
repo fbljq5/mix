@@ -1,45 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.liangjq.mix.service.dao.UserRoleMapper">
-    <resultMap id="BaseResultMap" type="cn.liangjq.mix.common.entity.UserRole">
+<mapper namespace="cn.liangjq.mix.admin.dao.RoleMenuMapper">
+    <resultMap id="BaseResultMap" type="cn.liangjq.mix.common.entity.RoleMenu">
         <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="user_id" jdbcType="BIGINT" property="userId"/>
         <result column="role_id" jdbcType="BIGINT" property="roleId"/>
+        <result column="menu_id" jdbcType="BIGINT" property="menuId"/>
         <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
         <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id
-        , user_id, role_id, gmt_create, gmt_modified
+        id, role_id, menu_id, gmt_create, gmt_modified
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from t_user_role
+        from t_role_menu
         where id = #{id,jdbcType=BIGINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
-        from t_user_role
+        from t_role_menu
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="cn.liangjq.mix.common.entity.UserRole">
-        insert into t_user_role (id, user_id, role_id,
+    <insert id="insert" parameterType="cn.liangjq.mix.common.entity.RoleMenu">
+        insert into t_role_menu (id, role_id, menu_id,
                                  gmt_create, gmt_modified)
-        values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT},
+        values (#{id,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{menuId,jdbcType=BIGINT},
                 #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="cn.liangjq.mix.common.entity.UserRole">
-        insert into t_user_role
+    <insert id="insertSelective" parameterType="cn.liangjq.mix.common.entity.RoleMenu">
+        insert into t_role_menu
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
             </if>
-            <if test="userId != null">
-                user_id,
-            </if>
             <if test="roleId != null">
                 role_id,
+            </if>
+            <if test="menuId != null">
+                menu_id,
             </if>
             <if test="gmtCreate != null">
                 gmt_create,
@@ -52,11 +51,11 @@
             <if test="id != null">
                 #{id,jdbcType=BIGINT},
             </if>
-            <if test="userId != null">
-                #{userId,jdbcType=BIGINT},
-            </if>
             <if test="roleId != null">
                 #{roleId,jdbcType=BIGINT},
+            </if>
+            <if test="menuId != null">
+                #{menuId,jdbcType=BIGINT},
             </if>
             <if test="gmtCreate != null">
                 #{gmtCreate,jdbcType=TIMESTAMP},
@@ -66,14 +65,14 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="cn.liangjq.mix.common.entity.UserRole">
-        update t_user_role
+    <update id="updateByPrimaryKeySelective" parameterType="cn.liangjq.mix.common.entity.RoleMenu">
+        update t_role_menu
         <set>
-            <if test="userId != null">
-                user_id = #{userId,jdbcType=BIGINT},
-            </if>
             <if test="roleId != null">
                 role_id = #{roleId,jdbcType=BIGINT},
+            </if>
+            <if test="menuId != null">
+                menu_id = #{menuId,jdbcType=BIGINT},
             </if>
             <if test="gmtCreate != null">
                 gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
@@ -84,20 +83,12 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="cn.liangjq.mix.common.entity.UserRole">
-        update t_user_role
-        set user_id      = #{userId,jdbcType=BIGINT},
-            role_id      = #{roleId,jdbcType=BIGINT},
+    <update id="updateByPrimaryKey" parameterType="cn.liangjq.mix.common.entity.RoleMenu">
+        update t_role_menu
+        set role_id      = #{roleId,jdbcType=BIGINT},
+            menu_id      = #{menuId,jdbcType=BIGINT},
             gmt_create   = #{gmtCreate,jdbcType=TIMESTAMP},
             gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=BIGINT}
     </update>
-
-    <!--自定义-->
-    <select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from t_user_role
-        where user_id = #{userId}
-    </select>
 </mapper>

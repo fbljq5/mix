@@ -1,8 +1,11 @@
 package cn.liangjq.mix.gateway.fileter;
 
+import cn.liangjq.mix.common.config.JwtConfig;
+import cn.liangjq.mix.common.constant.Constants;
 import cn.liangjq.mix.utils.JWTUtils;
 import cn.liangjq.mix.utils.RedisUtil;
 import com.alibaba.fastjson.JSONObject;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -24,10 +27,11 @@ import java.util.List;
  * @Date: 2021/4/12
  */
 @Component
+@RequiredArgsConstructor
 public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
-    @Autowired
-    private RedisUtil redisUtil;
+    private final RedisUtil redisUtil;
+    private final JwtConfig jwtConfig;
 
     private AntPathMatcher antPathMatcher = new AntPathMatcher();
 
@@ -36,14 +40,13 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
         String path = request.getURI().getPath();
         //非校验接口，用户必须已获得token
-        if (!antPathMatcher.match("/**/login/**", path)) {
-            List<String> tokenList = request.getHeaders().get("token");
+        if (!antPathMatcher.match("/**/auth/login/**", path)) {
+            List<String> tokenList = request.getHeaders().get(jwtConfig.getTokenHeader());
             if (null == tokenList) {
                 ServerHttpResponse response = exchange.getResponse();
                 return out(response);
             } else {
                 String token = tokenList.get(0);
-                // TODO 查看redis 是否存在，不存在即过期
                 String tokenRedis = redisUtil.get(token);
                 if (null == tokenRedis) {
                     ServerHttpResponse response = exchange.getResponse();
@@ -52,7 +55,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
                 // 判断token中数据
                 Boolean isCheck = false;
                 try {
-                    isCheck = JWTUtils.checkToken(tokenList.get(0));
+                    isCheck = JWTUtils.checkToken(tokenList.get(0),jwtConfig.getSecret());
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
@@ -74,7 +77,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         JSONObject message = new JSONObject();
         message.put("success", false);
         message.put("code", 28004);
-        message.put("data", "鉴权失败");
+        message.put("data", "鉴权失败，请检查token是否有效");
         byte[] bits = message.toString().getBytes(StandardCharsets.UTF_8);
         DataBuffer buffer = response.bufferFactory().wrap(bits);
         //response.setStatusCode(HttpStatus.UNAUTHORIZED);

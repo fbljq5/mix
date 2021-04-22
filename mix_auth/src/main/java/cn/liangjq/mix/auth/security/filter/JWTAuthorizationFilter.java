@@ -33,14 +33,14 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String tokenHeader = request.getHeader(Constants.HEADER_TOKEN_KEY);
-        // 若请求头中没有Authorization信息直接放行
-        if (tokenHeader == null) {
-            chain.doFilter(request, response);
-            return;
-        }
-        SecurityContextHolder.getContext().setAuthentication(getAuthentication(tokenHeader));
-        super.doFilterInternal(request, response, chain);
+//        String tokenHeader = request.getHeader(Constants.HEADER_TOKEN_KEY);
+//        // 若请求头中没有Authorization信息直接放行
+//        if (tokenHeader == null) {
+//            chain.doFilter(request, response);
+//            return;
+//        }
+//        SecurityContextHolder.getContext().setAuthentication(getAuthentication(tokenHeader));
+//        super.doFilterInternal(request, response, chain);
     }
 
     /**
@@ -50,24 +50,24 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
      * @return 带用户名和密码以及权限的Authentication
      */
     private UsernamePasswordAuthenticationToken getAuthentication(String tokenHeader) {
-        // 从Token中解密获取用户名
-        String username = JWTUtils.getUserName(tokenHeader);
-        // 从Token中解密获取用户角色
-        String role = JWTUtils.getUserRole(tokenHeader);
-
-        if (StringUtils.isBlank(username) || StringUtils.isBlank(role) || "[]".equals(role)) {
-            return null;
-        }
-
-        // 将[ROLE_XXX,ROLE_YYY]格式的角色字符串转换为数组
-        String[] roles = StringUtils.strip(role, "[]").split(", ");
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        for (String s : roles) {
-            authorities.add(new SimpleGrantedAuthority(s));
-        }
-        if (username != null) {
-            return new UsernamePasswordAuthenticationToken(username, null, authorities);
-        }
+//        // 从Token中解密获取用户名
+//        String username = JWTUtils.getUserName(tokenHeader);
+//        // 从Token中解密获取用户角色
+//        String role = JWTUtils.getUserRole(tokenHeader);
+//
+//        if (StringUtils.isBlank(username) || StringUtils.isBlank(role) || "[]".equals(role)) {
+//            return null;
+//        }
+//
+//        // 将[ROLE_XXX,ROLE_YYY]格式的角色字符串转换为数组
+//        String[] roles = StringUtils.strip(role, "[]").split(", ");
+//        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+//        for (String s : roles) {
+//            authorities.add(new SimpleGrantedAuthority(s));
+//        }
+//        if (username != null) {
+//            return new UsernamePasswordAuthenticationToken(username, null, authorities);
+//        }
         return null;
     }
 }

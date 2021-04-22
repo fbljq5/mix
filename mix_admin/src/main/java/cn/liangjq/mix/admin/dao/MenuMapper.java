@@ -1,5 +1,4 @@
-package cn.liangjq.mix.service.dao;
-
+package cn.liangjq.mix.admin.dao;
 
 import cn.liangjq.mix.common.entity.Menu;
 import org.apache.ibatis.annotations.Mapper;
