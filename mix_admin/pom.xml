@@ -120,5 +120,12 @@
             <version>8.0.23</version>
         </dependency>
 
+        <!-- pagehelper 插件-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>${pagehelper-starter.version}</version>
+        </dependency>
+
     </dependencies>
 </project>

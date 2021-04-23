@@ -3,7 +3,7 @@ package cn.liangjq.mix.admin.service;
 import cn.liangjq.mix.common.entity.Role;
 
 /**
- * @author ： liangjianqiang
+ * @author ： liangjq
  * @description ： 角色服务
  * @date ： 2021/4/22
  */

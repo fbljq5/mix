@@ -4,18 +4,22 @@ import cn.liangjq.mix.admin.dao.RoleMapper;
 import cn.liangjq.mix.admin.dao.UserMapper;
 import cn.liangjq.mix.admin.dao.UserRoleMapper;
 import cn.liangjq.mix.admin.service.IUserService;
+import cn.liangjq.mix.admin.util.PageUtils;
 import cn.liangjq.mix.common.config.JwtConfig;
 import cn.liangjq.mix.common.dto.LoginVO;
+import cn.liangjq.mix.common.dto.PageResponse;
+import cn.liangjq.mix.common.dto.UserRequest;
 import cn.liangjq.mix.common.entity.Role;
 import cn.liangjq.mix.common.entity.User;
 import cn.liangjq.mix.common.entity.UserRole;
-import cn.liangjq.mix.common.entity.vo.UserVO;
+import cn.liangjq.mix.common.dto.UserVO;
 import cn.liangjq.mix.common.result.R;
 import cn.liangjq.mix.utils.JWTUtils;
 import cn.liangjq.mix.utils.MD5Utils;
 import cn.liangjq.mix.utils.RedisUtil;
 import com.alibaba.nacos.common.utils.Objects;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -32,6 +36,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements IUserService {
 
     private final UserMapper userMapper;
@@ -41,7 +46,7 @@ public class UserServiceImpl implements IUserService {
     private final JwtConfig jwtConfig;
 
     @Override
-    public R checkLoginVO(LoginVO loginVO) {
+    public R<String> checkLoginVO(LoginVO loginVO) {
         if (null == loginVO || StringUtils.isBlank(loginVO.getUsername())
                 || StringUtils.isBlank(loginVO.getPassword())) {
             return R.fail();
@@ -85,5 +90,27 @@ public class UserServiceImpl implements IUserService {
     @Override
     public List<UserRole> listUserRoleByUserId(Long id) {
         return userRoleMapper.selectByUserId(id);
+    }
+
+    @Override
+    public R<PageResponse> pageUser(UserRequest request) {
+        PageResponse pageResponse = PageUtils.setPageResult(request, () ->
+                userMapper.selectByUserRequest(request)
+                        .stream().map(this::toUserVO)
+                        .collect(Collectors.toList()));
+
+        return R.ok(pageResponse);
+    }
+
+    /**
+     * 用户信息转换成userVO信息
+     *
+     * @param user
+     * @return
+     */
+    private UserVO toUserVO(User user) {
+        UserVO userVO = new UserVO();
+        BeanUtils.copyProperties(user, userVO);
+        return userVO;
     }
 }

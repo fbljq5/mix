@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
- * @author ： liangjianqiang
+ * @author ： liangjq
  * @description ： 角色服务实现类
  * @date ： 2021/4/22
  */

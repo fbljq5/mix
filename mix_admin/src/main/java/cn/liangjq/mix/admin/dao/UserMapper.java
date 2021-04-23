@@ -1,8 +1,11 @@
 package cn.liangjq.mix.admin.dao;
 
 
+import cn.liangjq.mix.common.dto.UserRequest;
 import cn.liangjq.mix.common.entity.User;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface UserMapper {
@@ -44,4 +47,13 @@ public interface UserMapper {
      * @return
      */
     User findUserByUsername(String userName);
+
+    /**
+     * 通过请求参数查询用户信息
+     *
+     * @param request
+     * @return
+     */
+    List<User> selectByUserRequest(UserRequest request);
+
 }

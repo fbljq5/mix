@@ -1,4 +1,4 @@
-package cn.liangjq.mix.common.entity.vo;
+package cn.liangjq.mix.common.dto;
 
 import lombok.Data;
 

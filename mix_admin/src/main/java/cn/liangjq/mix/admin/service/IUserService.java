@@ -2,8 +2,10 @@ package cn.liangjq.mix.admin.service;
 
 
 import cn.liangjq.mix.common.dto.LoginVO;
+import cn.liangjq.mix.common.dto.PageResponse;
+import cn.liangjq.mix.common.dto.UserRequest;
 import cn.liangjq.mix.common.entity.UserRole;
-import cn.liangjq.mix.common.entity.vo.UserVO;
+import cn.liangjq.mix.common.dto.UserVO;
 import cn.liangjq.mix.common.result.R;
 
 import java.util.List;
@@ -38,4 +40,12 @@ public interface IUserService {
      * @return
      */
     List<UserRole> listUserRoleByUserId(Long id);
+
+    /**
+     * 分页查找用户信息
+     *
+     * @param request
+     * @return
+     */
+    R<PageResponse> pageUser(UserRequest request);
 }

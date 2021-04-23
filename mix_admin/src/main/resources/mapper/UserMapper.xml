@@ -171,4 +171,15 @@
         from t_user
         where user_name = #{userName}
     </select>
+
+    <select id="selectByUserRequest" parameterType="cn.liangjq.mix.common.dto.UserRequest" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user
+        <trim prefix="where" prefixOverrides="and">
+            <if test="username!=null">
+                user_name = #{username}
+            </if>
+        </trim>
+    </select>
 </mapper>

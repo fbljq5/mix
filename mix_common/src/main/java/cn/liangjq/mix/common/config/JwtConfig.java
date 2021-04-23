@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @Description: jwt配置
- * @Author: liangjianqiang
+ * @Author: liangjq
  * @Date: 2021/4/22
  */
 @ConfigurationProperties(prefix = "jwt.config")

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @Description: 远程管理验证服务断路器实现
- * @Author: liangjianqiang
+ * @Author: liangjq
  * @Date: 2021/4/22
  */
 @Component
