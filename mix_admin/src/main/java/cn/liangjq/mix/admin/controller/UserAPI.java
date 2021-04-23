@@ -4,8 +4,8 @@ import cn.liangjq.mix.admin.service.IRoleService;
 import cn.liangjq.mix.admin.service.IUserService;
 import cn.liangjq.mix.common.dto.LoginVO;
 import cn.liangjq.mix.common.entity.Role;
-import cn.liangjq.mix.common.entity.User;
 import cn.liangjq.mix.common.entity.UserRole;
+import cn.liangjq.mix.common.entity.vo.UserVO;
 import cn.liangjq.mix.common.result.R;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ public class UserAPI {
     }
 
     @GetMapping("/findUserByUsername")
-    public User findUserByUsername(String username) {
+    public UserVO findUserByUsername(String username) {
         return userService.getUserByName(username);
     }
 

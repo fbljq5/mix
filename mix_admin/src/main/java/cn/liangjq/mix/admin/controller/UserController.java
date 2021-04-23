@@ -3,6 +3,7 @@ package cn.liangjq.mix.admin.controller;
 import cn.liangjq.mix.admin.service.IUserService;
 import cn.liangjq.mix.common.config.JwtConfig;
 import cn.liangjq.mix.common.entity.User;
+import cn.liangjq.mix.common.entity.vo.UserVO;
 import cn.liangjq.mix.common.result.R;
 import cn.liangjq.mix.utils.JWTUtils;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +29,10 @@ public class UserController {
     private final JwtConfig jwtConfig;
 
     @GetMapping("/info")
-    public R getUserInfo(HttpServletRequest request) {
+    public R<UserVO> getUserInfo(HttpServletRequest request) {
         String tokenStr = request.getHeader(jwtConfig.getTokenHeader());
         // 根据token获取用户信息
-        User userInfo = userService.getUserByName(JWTUtils.getUserName(tokenStr, jwtConfig.getSecret()));
+        UserVO userInfo = userService.getUserByName(JWTUtils.getUserName(tokenStr, jwtConfig.getSecret()));
         return R.ok(userInfo);
     }
 

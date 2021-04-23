@@ -9,11 +9,15 @@ import cn.liangjq.mix.common.dto.LoginVO;
 import cn.liangjq.mix.common.entity.Role;
 import cn.liangjq.mix.common.entity.User;
 import cn.liangjq.mix.common.entity.UserRole;
+import cn.liangjq.mix.common.entity.vo.UserVO;
 import cn.liangjq.mix.common.result.R;
 import cn.liangjq.mix.utils.JWTUtils;
+import cn.liangjq.mix.utils.MD5Utils;
 import cn.liangjq.mix.utils.RedisUtil;
+import com.alibaba.nacos.common.utils.Objects;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -43,7 +47,10 @@ public class UserServiceImpl implements IUserService {
             return R.fail();
         }
         User user = userMapper.findUserByUsername(loginVO.getUsername());
-        if (!user.getPassword().equals(loginVO.getPassword())) {
+        if (null == user) {
+            return R.fail();
+        }
+        if (!Objects.equals(MD5Utils.getMd5(loginVO.getPassword()), user.getPassword())) {
             return R.fail();
         }
         // 获得角色列表
@@ -65,8 +72,14 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public User getUserByName(String username) {
-        return userMapper.findUserByUsername(username);
+    public UserVO getUserByName(String username) {
+        User user = userMapper.findUserByUsername(username);
+        if (null == user) {
+            return null;
+        }
+        UserVO userVO = new UserVO();
+        BeanUtils.copyProperties(user, userVO);
+        return userVO;
     }
 
     @Override

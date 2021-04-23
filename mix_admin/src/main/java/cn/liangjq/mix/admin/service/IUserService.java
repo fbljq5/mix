@@ -2,8 +2,8 @@ package cn.liangjq.mix.admin.service;
 
 
 import cn.liangjq.mix.common.dto.LoginVO;
-import cn.liangjq.mix.common.entity.User;
 import cn.liangjq.mix.common.entity.UserRole;
+import cn.liangjq.mix.common.entity.vo.UserVO;
 import cn.liangjq.mix.common.result.R;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public interface IUserService {
      * @param username
      * @return
      */
-    User getUserByName(String username);
+    UserVO getUserByName(String username);
 
     /**
      * 通过用户ID获得用户角色关联集合
