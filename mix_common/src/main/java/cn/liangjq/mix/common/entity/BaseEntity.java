@@ -14,15 +14,15 @@ public class BaseEntity {
     /**
      * 主键id
      */
-    private Long id;
+    protected Long id;
 
     /**
      * 创建时间
      */
-    private Date gmtCreate;
+    protected Date gmtCreate;
 
     /**
      * 更新时间
      */
-    private Date gmtModified;
+    protected Date gmtModified;
 }

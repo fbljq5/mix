@@ -101,4 +101,29 @@
         from t_user_role
         where user_id = #{userId}
     </select>
+
+    <delete id="deleteUserRoleAssgin" parameterType="java.lang.Long">
+        delete
+        from t_user_role
+        where user_id = #{userId}
+    </delete>
+
+    <insert id="assginUserRole">
+        insert into t_user_role
+        (user_id,
+        role_id,
+        gmt_create,
+        gmt_modified)
+        values
+        <foreach item="roleId" collection="roleIds" separator="," index="">(
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="roleId != null">
+                #{roleId},
+            </if>
+            NOW(),NOW()
+            )
+        </foreach>
+    </insert>
 </mapper>

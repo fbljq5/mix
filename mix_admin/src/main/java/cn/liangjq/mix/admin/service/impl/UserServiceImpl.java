@@ -19,6 +19,7 @@ import cn.liangjq.mix.utils.RedisUtil;
 import com.alibaba.nacos.common.utils.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -189,6 +190,29 @@ public class UserServiceImpl implements IUserService {
         user.setGmtModified(new Date());
         userMapper.updateByPrimaryKeySelective(user);
         return R.ok("修改密码成功");
+    }
+
+    @Override
+    @Transactional
+    public R<String> assignRoles(UserAssignRolesDTO userAssignRolesDTO) {
+        if (null == userAssignRolesDTO || userAssignRolesDTO.getId() == null || ArrayUtils.isEmpty(userAssignRolesDTO.getRoleIds())) {
+            return R.fail("数据不完整");
+        }
+        // 判断用户是否存在
+        User user = userMapper.selectByPrimaryKey(userAssignRolesDTO.getId());
+        if (null == user) {
+            return R.fail("用户不存在");
+        }
+        //判断角色是否都存在
+        int countIdFromDB = roleMapper.countId(userAssignRolesDTO.getRoleIds());
+        if (countIdFromDB != userAssignRolesDTO.getRoleIds().length) {
+            return R.fail("部分角色不存在,分配失败");
+        }
+        // 先删除已有的关联
+        userRoleMapper.deleteUserRoleAssgin(userAssignRolesDTO.getId());
+        // 插入新增的关联
+        userRoleMapper.assginUserRole(userAssignRolesDTO.getId(), userAssignRolesDTO.getRoleIds());
+        return R.ok("分配成功");
     }
 
     /**

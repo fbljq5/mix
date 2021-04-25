@@ -79,4 +79,12 @@ public interface IUserService {
      * @return
      */
     R<String> modifyPassword(UserModifyPwdDTO modifyPwdDTO);
+
+    /**
+     * 为指定用户分配角色
+     *
+     * @param userAssignRolesDTO
+     * @return
+     */
+    R<String> assignRoles(UserAssignRolesDTO userAssignRolesDTO);
 }

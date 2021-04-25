@@ -55,7 +55,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
                 // 判断token中数据
                 Boolean isExpired = true;
                 try {
-                    isExpired = JWTUtils.isExpired(tokenList.get(0),jwtConfig.getSecret());
+                    isExpired = JWTUtils.isExpired(tokenList.get(0), jwtConfig.getSecret());
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }

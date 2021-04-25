@@ -68,4 +68,19 @@ public interface UserRoleMapper {
      * @return
      */
     List<UserRole> selectByUserId(Long userId);
+
+    /**
+     * 删除用户已有的角色关联记录
+     *
+     * @param userId
+     */
+    void deleteUserRoleAssgin(Long userId);
+
+    /**
+     * 分配用户角色记录
+     *
+     * @param userId
+     * @param roleIds
+     */
+    void assginUserRole(Long userId, Long[] roleIds);
 }

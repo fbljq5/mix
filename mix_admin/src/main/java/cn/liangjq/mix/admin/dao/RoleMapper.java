@@ -61,4 +61,12 @@ public interface RoleMapper {
      * @return
      */
     List<Role> getRoleListByUserId(Long userId);
+
+    /**
+     * 查看指定id数组里面存在的id数量
+     *
+     * @param roleIds
+     * @return
+     */
+    int countId(Long[] roleIds);
 }
