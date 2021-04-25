@@ -3,8 +3,7 @@ package cn.liangjq.mix.admin.controller;
 import cn.liangjq.mix.admin.service.IUserService;
 import cn.liangjq.mix.common.config.JwtConfig;
 import cn.liangjq.mix.common.dto.PageResponse;
-import cn.liangjq.mix.common.dto.UserRequest;
-import cn.liangjq.mix.common.dto.UserVO;
+import cn.liangjq.mix.common.dto.user.*;
 import cn.liangjq.mix.common.result.R;
 import cn.liangjq.mix.utils.JWTUtils;
 import io.swagger.annotations.Api;
@@ -14,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * @author ： liangjq
@@ -42,8 +40,31 @@ public class UserController {
 
     @PostMapping("/list")
     @ApiOperation("分页获得用户信息")
-    public R<PageResponse> pageUserInfo(@RequestBody UserRequest request) {
+    public R<PageResponse> pageUserInfo(@RequestBody UserListRequest request) {
         return userService.pageUser(request);
     }
 
+    @PostMapping("/add")
+    @ApiOperation("新增用户")
+    public R<String> addUser(@RequestBody UserAddDTO userAddDTO) {
+        return userService.addUser(userAddDTO);
+    }
+
+    @PostMapping("/delete/{userId}")
+    @ApiOperation("删除用户")
+    public R<String> deleteUser(@PathVariable("userId") Long userId) {
+        return userService.deleteUser(userId);
+    }
+
+    @PostMapping("/update")
+    @ApiOperation("更新用户信息")
+    public R<String> updateUser(@RequestBody UserUpdateDTO updateDTO) {
+        return userService.updateUser(updateDTO);
+    }
+
+    @PostMapping("/modifyPwd")
+    @ApiOperation("修改用户密码")
+    public R<String> modifyPassword(@RequestBody UserModifyPwdDTO modifyPwdDTO) {
+        return userService.modifyPassword(modifyPwdDTO);
+    }
 }

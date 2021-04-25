@@ -1,5 +1,6 @@
-package cn.liangjq.mix.common.dto;
+package cn.liangjq.mix.common.dto.user;
 
+import cn.liangjq.mix.common.dto.PageBaseRequest;
 import lombok.Data;
 
 /**
@@ -8,7 +9,7 @@ import lombok.Data;
  * @date ： 2021/4/23
  */
 @Data
-public class UserRequest extends PageBaseRequest {
+public class UserListRequest extends PageBaseRequest {
 
     /**
      * 查询用户名

@@ -17,10 +17,6 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoleMenu extends BaseEntity {
-    /**
-     * 主键ID id
-     */
-    private Long id;
 
     /**
      * 角色ID role_id
@@ -31,14 +27,4 @@ public class RoleMenu extends BaseEntity {
      * 菜单ID menu_id
      */
     private Long menuId;
-
-    /**
-     * 创建时间 gmt_create
-     */
-    private Date gmtCreate;
-
-    /**
-     * 更新时间 gmt_modified
-     */
-    private Date gmtModified;
 }

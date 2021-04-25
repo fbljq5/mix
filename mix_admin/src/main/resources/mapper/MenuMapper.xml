@@ -26,12 +26,7 @@
         from t_menu
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete
-        from t_menu
-        where id = #{id,jdbcType=BIGINT}
-    </delete>
-    <insert id="insert" parameterType="cn.liangjq.mix.common.entity.Menu">
+    <insert id="insert" parameterType="cn.liangjq.mix.common.entity.Menu" useGeneratedKeys="true" keyProperty="id">
         insert into t_menu (id, menu_name, parent_id,
                             order_sort, path, component,
                             visible, status, perms,
@@ -43,7 +38,8 @@
                 #{icon,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
                 #{gmtModified,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="cn.liangjq.mix.common.entity.Menu">
+    <insert id="insertSelective" parameterType="cn.liangjq.mix.common.entity.Menu" useGeneratedKeys="true"
+            keyProperty="id">
         insert into t_menu
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

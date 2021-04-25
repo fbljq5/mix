@@ -17,10 +17,6 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User extends BaseEntity {
-    /**
-     * 用户ID id
-     */
-    private Long id;
 
     /**
      * 用户名称 user_name
@@ -43,14 +39,14 @@ public class User extends BaseEntity {
     private String password;
 
     /**
-     * 帐号状态（0正常 1停用） status
+     * 帐号状态（1正常 0停用） status
      */
-    private Byte status;
+    private Boolean status;
 
     /**
      * 是否已删除（0正常 1已删除） is_delete
      */
-    private Byte isDelete;
+    private Boolean isDelete;
 
     /**
      * 最后登录时间 login_date
@@ -61,14 +57,4 @@ public class User extends BaseEntity {
      * 备注 remark
      */
     private String remark;
-
-    /**
-     * 创建时间 gmt_create
-     */
-    private Date gmtCreate;
-
-    /**
-     * 更新时间 gmt_modified
-     */
-    private Date gmtModified;
 }

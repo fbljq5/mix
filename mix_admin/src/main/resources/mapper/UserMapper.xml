@@ -25,12 +25,7 @@
         from t_user
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete
-        from t_user
-        where id = #{id,jdbcType=BIGINT}
-    </delete>
-    <insert id="insert" parameterType="cn.liangjq.mix.common.entity.User">
+    <insert id="insert" parameterType="cn.liangjq.mix.common.entity.User" useGeneratedKeys="true" keyProperty="id">
         insert into t_user (id, user_name, email,
                             phone, password, status,
                             is_delete, login_date, remark,
@@ -40,7 +35,8 @@
                 #{isDelete,jdbcType=TINYINT}, #{loginDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR},
                 #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="cn.liangjq.mix.common.entity.User">
+    <insert id="insertSelective" parameterType="cn.liangjq.mix.common.entity.User" useGeneratedKeys="true"
+            keyProperty="id">
         insert into t_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -172,7 +168,8 @@
         where user_name = #{userName}
     </select>
 
-    <select id="selectByUserRequest" parameterType="cn.liangjq.mix.common.dto.UserRequest" resultMap="BaseResultMap">
+    <select id="selectByUserRequest" parameterType="cn.liangjq.mix.common.dto.user.UserListRequest"
+            resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_user
@@ -181,5 +178,24 @@
                 user_name = #{username}
             </if>
         </trim>
+    </select>
+
+    <select id="checkUserExistByUsername" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        select count(1)
+        from t_user
+        where user_name = #{username}
+    </select>
+
+    <select id="checkUserExistById" parameterType="java.lang.Long" resultType="java.lang.Boolean">
+        select count(1)
+        from t_user
+        where id = #{userId}
+    </select>
+
+    <select id="checkUserExistByIdAndName" resultType="java.lang.Boolean">
+        select count(1)
+        from t_user
+        where user_name = #{username}
+          and id != #{userId}
     </select>
 </mapper>

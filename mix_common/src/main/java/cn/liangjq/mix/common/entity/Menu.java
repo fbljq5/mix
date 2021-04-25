@@ -17,10 +17,6 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Menu extends BaseEntity {
-    /**
-     * 菜单ID id
-     */
-    private Long id;
 
     /**
      * 菜单名称 menu_name
@@ -50,12 +46,12 @@ public class Menu extends BaseEntity {
     /**
      * 菜单显示状态（0显示 1隐藏） visible
      */
-    private Byte visible;
+    private Boolean visible;
 
     /**
      * 菜单状态（0正常 1停用） status
      */
-    private Byte status;
+    private Boolean status;
 
     /**
      * 菜单权限标识 perms
@@ -72,13 +68,4 @@ public class Menu extends BaseEntity {
      */
     private String remark;
 
-    /**
-     * 创建时间 gmt_create
-     */
-    private Date gmtCreate;
-
-    /**
-     * 更新时间 gmt_modified
-     */
-    private Date gmtModified;
 }

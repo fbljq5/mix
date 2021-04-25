@@ -3,9 +3,8 @@ package cn.liangjq.mix.admin.service;
 
 import cn.liangjq.mix.common.dto.LoginVO;
 import cn.liangjq.mix.common.dto.PageResponse;
-import cn.liangjq.mix.common.dto.UserRequest;
+import cn.liangjq.mix.common.dto.user.*;
 import cn.liangjq.mix.common.entity.UserRole;
-import cn.liangjq.mix.common.dto.UserVO;
 import cn.liangjq.mix.common.result.R;
 
 import java.util.List;
@@ -47,5 +46,37 @@ public interface IUserService {
      * @param request
      * @return
      */
-    R<PageResponse> pageUser(UserRequest request);
+    R<PageResponse> pageUser(UserListRequest request);
+
+    /**
+     * 新增用户
+     *
+     * @param userAddDTO
+     * @return
+     */
+    R<String> addUser(UserAddDTO userAddDTO);
+
+    /**
+     * 删除用户信息
+     *
+     * @param userId
+     * @return
+     */
+    R<String> deleteUser(Long userId);
+
+    /**
+     * 更新用户信息
+     *
+     * @param updateDTO
+     * @return
+     */
+    R<String> updateUser(UserUpdateDTO updateDTO);
+
+    /**
+     * 修改用户密码
+     *
+     * @param modifyPwdDTO
+     * @return
+     */
+    R<String> modifyPassword(UserModifyPwdDTO modifyPwdDTO);
 }

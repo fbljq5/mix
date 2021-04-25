@@ -3,35 +3,51 @@ package cn.liangjq.mix.admin.dao;
 import cn.liangjq.mix.common.entity.Menu;
 import org.apache.ibatis.annotations.Mapper;
 
+/**
+ * @Description: 菜单DAO
+ * @Author: liangjq
+ * @Date: 2021/4/25
+ */
 @Mapper
 public interface MenuMapper {
-    /**
-     * @mbg.generated
-     */
-    int deleteByPrimaryKey(Long id);
 
     /**
-     * @mbg.generated
+     * 新增菜单信息
+     *
+     * @param record
+     * @return
      */
     int insert(Menu record);
 
     /**
-     * @mbg.generated
+     * 新增菜单信息
+     *
+     * @param record
+     * @return
      */
     int insertSelective(Menu record);
 
     /**
-     * @mbg.generated
+     * 查找菜单信息
+     *
+     * @param id
+     * @return
      */
     Menu selectByPrimaryKey(Long id);
 
     /**
-     * @mbg.generated
+     * 更新菜单信息
+     *
+     * @param record
+     * @return
      */
     int updateByPrimaryKeySelective(Menu record);
 
     /**
-     * @mbg.generated
+     * 更新菜单信息
+     *
+     * @param record
+     * @return
      */
     int updateByPrimaryKey(Menu record);
 }

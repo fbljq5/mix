@@ -4,35 +4,60 @@ package cn.liangjq.mix.admin.dao;
 import cn.liangjq.mix.common.entity.RoleMenu;
 import org.apache.ibatis.annotations.Mapper;
 
+/**
+ * @Description: 角色菜单关联DAO
+ * @Author: liangjq
+ * @Date: 2021/4/25
+ */
 @Mapper
 public interface RoleMenuMapper {
+
     /**
-     * @mbg.generated
+     * 删除角色菜单关联记录
+     *
+     * @param id
+     * @return
      */
     int deleteByPrimaryKey(Long id);
 
     /**
-     * @mbg.generated
+     * 插入角色菜单关联记录
+     *
+     * @param record
+     * @return
      */
     int insert(RoleMenu record);
 
+
     /**
-     * @mbg.generated
+     * 插入角色菜单关联记录
+     *
+     * @param record
+     * @return
      */
     int insertSelective(RoleMenu record);
 
     /**
-     * @mbg.generated
+     * 查找角色菜单关联信息
+     *
+     * @param id
+     * @return
      */
     RoleMenu selectByPrimaryKey(Long id);
 
     /**
-     * @mbg.generated
+     * 更新角色菜单关联记录
+     *
+     * @param record
+     * @return
      */
     int updateByPrimaryKeySelective(RoleMenu record);
 
     /**
-     * @mbg.generated
+     * 更新角色菜单关联记录
+     *
+     * @param record
+     * @return
      */
     int updateByPrimaryKey(RoleMenu record);
 }

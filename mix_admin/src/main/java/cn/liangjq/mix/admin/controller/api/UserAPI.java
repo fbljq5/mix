@@ -1,11 +1,11 @@
-package cn.liangjq.mix.admin.controller;
+package cn.liangjq.mix.admin.controller.api;
 
 import cn.liangjq.mix.admin.service.IRoleService;
 import cn.liangjq.mix.admin.service.IUserService;
 import cn.liangjq.mix.common.dto.LoginVO;
 import cn.liangjq.mix.common.entity.Role;
 import cn.liangjq.mix.common.entity.UserRole;
-import cn.liangjq.mix.common.dto.UserVO;
+import cn.liangjq.mix.common.dto.user.UserVO;
 import cn.liangjq.mix.common.result.R;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ public class UserAPI {
 
     @PostMapping("/checkLogin")
     @ResponseBody
-    public R<String> checkLoginVO(@RequestBody LoginVO loginVO) {
+    public R checkLoginVO(@RequestBody LoginVO loginVO) {
         return userService.checkLoginVO(loginVO);
     }
 

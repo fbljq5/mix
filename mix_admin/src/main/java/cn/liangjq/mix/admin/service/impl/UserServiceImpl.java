@@ -8,11 +8,10 @@ import cn.liangjq.mix.admin.util.PageUtils;
 import cn.liangjq.mix.common.config.JwtConfig;
 import cn.liangjq.mix.common.dto.LoginVO;
 import cn.liangjq.mix.common.dto.PageResponse;
-import cn.liangjq.mix.common.dto.UserRequest;
+import cn.liangjq.mix.common.dto.user.*;
 import cn.liangjq.mix.common.entity.Role;
 import cn.liangjq.mix.common.entity.User;
 import cn.liangjq.mix.common.entity.UserRole;
-import cn.liangjq.mix.common.dto.UserVO;
 import cn.liangjq.mix.common.result.R;
 import cn.liangjq.mix.utils.JWTUtils;
 import cn.liangjq.mix.utils.MD5Utils;
@@ -23,8 +22,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -93,13 +94,101 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public R<PageResponse> pageUser(UserRequest request) {
+    public R<PageResponse> pageUser(UserListRequest request) {
         PageResponse pageResponse = PageUtils.setPageResult(request, () ->
                 userMapper.selectByUserRequest(request)
                         .stream().map(this::toUserVO)
                         .collect(Collectors.toList()));
 
         return R.ok(pageResponse);
+    }
+
+    @Override
+    @Transactional
+    public R<String> addUser(UserAddDTO userAddDTO) {
+        if (userAddDTO == null || StringUtils.isBlank(userAddDTO.getUserName())) {
+            return R.fail("数据有误");
+        }
+        // 判断用户名是否存在
+        boolean checkResult = userMapper.checkUserExistByUsername(userAddDTO.getUserName());
+        if (checkResult) {
+            return R.fail("用户名已存在");
+        }
+        User user = this.toUser(userAddDTO);
+        user.setStatus(true);
+        user.setIsDelete(false);
+        user.setGmtCreate(new Date());
+        user.setPassword(MD5Utils.getMd5(user.getPassword()));
+        int insert = userMapper.insert(user);
+        if (insert > 0) {
+            return R.ok("新增成功");
+        }
+        return R.fail("新增失败");
+    }
+
+    @Override
+    @Transactional
+    public R<String> deleteUser(Long userId) {
+        if (null == userId) {
+            return R.fail("id无效");
+        }
+        // 判断用户是否存在
+        User user = userMapper.selectByPrimaryKey(userId);
+        if (user == null) {
+            return R.fail("用户不存在");
+        }
+        user.setStatus(false);
+        user.setIsDelete(true);
+        user.setGmtModified(new Date());
+        int result = userMapper.updateByPrimaryKeySelective(user);
+        if (result > 0) {
+            return R.ok("删除成功");
+        }
+        return R.fail("删除失败");
+    }
+
+    @Override
+    @Transactional
+    public R<String> updateUser(UserUpdateDTO updateDTO) {
+        if (null == updateDTO || updateDTO.getId() == null) {
+            return R.fail("数据不完整");
+        }
+        //判断修改后的用户名是否重复（除了本身）
+        boolean checkResult = userMapper.checkUserExistByIdAndName(updateDTO.getId(), updateDTO.getUserName());
+        if (checkResult) {
+            return R.fail("该用户名已被占用");
+        }
+
+        //先通过id查找并判断用户是否存在
+        User user = userMapper.selectByPrimaryKey(updateDTO.getId());
+        if (null == user) {
+            return R.fail("用户不存在");
+        }
+        // 更新用户
+        BeanUtils.copyProperties(updateDTO, user);
+        user.setGmtModified(new Date());
+        int i = userMapper.updateByPrimaryKeySelective(user);
+        if (i > 0) {
+            return R.ok("更新成功");
+        }
+        return R.fail("更新失败");
+    }
+
+    @Override
+    @Transactional
+    public R<String> modifyPassword(UserModifyPwdDTO modifyPwdDTO) {
+        if (null == modifyPwdDTO || modifyPwdDTO.getId() == null) {
+            return R.fail("数据不完整");
+        }
+        //先通过id查找并判断用户是否存在
+        User user = userMapper.selectByPrimaryKey(modifyPwdDTO.getId());
+        if (null == user) {
+            return R.fail("用户不存在");
+        }
+        user.setPassword(MD5Utils.getMd5(modifyPwdDTO.getPassword()));
+        user.setGmtModified(new Date());
+        userMapper.updateByPrimaryKeySelective(user);
+        return R.ok("修改密码成功");
     }
 
     /**
@@ -112,5 +201,20 @@ public class UserServiceImpl implements IUserService {
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user, userVO);
         return userVO;
+    }
+
+    /**
+     * 数据转换，DTO 转成user
+     *
+     * @param userAddDTO
+     * @return
+     */
+    private User toUser(UserAddDTO userAddDTO) {
+        if (null == userAddDTO) {
+            return null;
+        }
+        User user = new User();
+        BeanUtils.copyProperties(userAddDTO, user);
+        return user;
     }
 }

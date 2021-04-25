@@ -21,12 +21,7 @@
         from t_role
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete
-        from t_role
-        where id = #{id,jdbcType=BIGINT}
-    </delete>
-    <insert id="insert" parameterType="cn.liangjq.mix.common.entity.Role">
+    <insert id="insert" parameterType="cn.liangjq.mix.common.entity.Role" useGeneratedKeys="true" keyProperty="id">
         insert into t_role (id, role_name, role_code,
                             role_sort, status, is_delete,
                             remark, gmt_create, gmt_modified)
@@ -34,7 +29,8 @@
                 #{roleSort,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{isDelete,jdbcType=TINYINT},
                 #{remark,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="cn.liangjq.mix.common.entity.Role">
+    <insert id="insertSelective" parameterType="cn.liangjq.mix.common.entity.Role" useGeneratedKeys="true"
+            keyProperty="id">
         insert into t_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

@@ -1,44 +1,58 @@
 package cn.liangjq.mix.admin.dao;
 
 
-import cn.liangjq.mix.common.dto.UserRequest;
+import cn.liangjq.mix.common.dto.user.UserListRequest;
 import cn.liangjq.mix.common.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+/**
+ * @Description: 用户信息DAO
+ * @Author: liangjq
+ * @Date: 2021/4/25
+ */
 @Mapper
 public interface UserMapper {
     /**
-     * @mbg.generated
-     */
-    int deleteByPrimaryKey(Long id);
-
-    /**
-     * @mbg.generated
+     * 新增用户信息
+     *
+     * @param record
+     * @return
      */
     int insert(User record);
 
     /**
-     * @mbg.generated
+     * 新增用户信息
+     *
+     * @param record
+     * @return
      */
     int insertSelective(User record);
 
     /**
-     * @mbg.generated
+     * 查找用户信息
+     *
+     * @param id
+     * @return
      */
     User selectByPrimaryKey(Long id);
 
     /**
-     * @mbg.generated
+     * 更新用户信息
+     *
+     * @param record
+     * @return
      */
     int updateByPrimaryKeySelective(User record);
 
     /**
-     * @mbg.generated
+     * 更新用户信息
+     *
+     * @param record
+     * @return
      */
     int updateByPrimaryKey(User record);
-
 
     /**
      * 通过用户名查找用户
@@ -54,6 +68,30 @@ public interface UserMapper {
      * @param request
      * @return
      */
-    List<User> selectByUserRequest(UserRequest request);
+    List<User> selectByUserRequest(UserListRequest request);
 
+    /**
+     * 通过用户名判断用户是否存在
+     *
+     * @param username
+     * @return
+     */
+    boolean checkUserExistByUsername(String username);
+
+    /**
+     * 通过用户id判断用户是否存在
+     *
+     * @param userId
+     * @return
+     */
+    boolean checkUserExistById(Long userId);
+
+    /**
+     * 判断该用户名是否被其他用户使用
+     *
+     * @param id
+     * @param username
+     * @return
+     */
+    boolean checkUserExistByIdAndName(Long id, String username);
 }

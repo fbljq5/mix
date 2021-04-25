@@ -1,4 +1,4 @@
-package cn.liangjq.mix.common.dto;
+package cn.liangjq.mix.common.dto.user;
 
 import lombok.Data;
 
@@ -33,14 +33,14 @@ public class UserVO {
     private String phone;
 
     /**
-     * 帐号状态（0正常 1停用） status
+     * 帐号状态（1正常 0停用） status
      */
-    private Byte status;
+    private Boolean status;
 
     /**
      * 是否已删除（0正常 1已删除） is_delete
      */
-    private Byte isDelete;
+    private Boolean isDelete;
 
     /**
      * 最后登录时间 login_date
