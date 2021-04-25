@@ -215,6 +215,17 @@ public class UserServiceImpl implements IUserService {
         return R.ok("分配成功");
     }
 
+    @Override
+    public R<UserUpdateDTO> findUser(Long userId) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        if (null == user) {
+            return R.fail("用户不存在");
+        }
+        UserUpdateDTO userUpdateDTO = new UserUpdateDTO();
+        BeanUtils.copyProperties(user, userUpdateDTO);
+        return R.ok(userUpdateDTO);
+    }
+
     /**
      * 用户信息转换成userVO信息
      *

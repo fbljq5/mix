@@ -60,4 +60,19 @@ public interface RoleMenuMapper {
      * @return
      */
     int updateByPrimaryKey(RoleMenu record);
+
+    /**
+     * 删除角色菜单关联关系
+     *
+     * @param roleId
+     */
+    void deleteRoleMenuAssgin(Long roleId);
+
+    /**
+     * 为角色分配菜单
+     *
+     * @param roleId
+     * @param menuIds
+     */
+    void assginRoleMenu(Long roleId, Long[] menuIds);
 }

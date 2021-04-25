@@ -16,7 +16,7 @@ public class UserAssignRolesDTO {
     private Long id;
 
     /**
-     * 密码 password
+     * 角色id数组
      */
     private Long[] roleIds;
 

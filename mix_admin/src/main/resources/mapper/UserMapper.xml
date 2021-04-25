@@ -175,7 +175,7 @@
         from t_user
         <trim prefix="where" prefixOverrides="and">
             <if test="username!=null">
-                user_name = #{username}
+                user_name LIKE CONCAT('%',#{username},'%')
             </if>
         </trim>
     </select>

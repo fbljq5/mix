@@ -87,4 +87,12 @@ public interface IUserService {
      * @return
      */
     R<String> assignRoles(UserAssignRolesDTO userAssignRolesDTO);
+
+    /**
+     * 根据用户Id获取用户信息
+     *
+     * @param userId
+     * @return
+     */
+    R<UserUpdateDTO> findUser(Long userId);
 }

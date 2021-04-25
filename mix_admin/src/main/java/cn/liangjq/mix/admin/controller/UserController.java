@@ -44,6 +44,12 @@ public class UserController {
         return userService.pageUser(request);
     }
 
+    @GetMapping("/find/{userId}")
+    @ApiOperation("更新用户信息")
+    public R<UserUpdateDTO> updateUser(@PathVariable("userId") Long userId) {
+        return userService.findUser(userId);
+    }
+
     @PostMapping("/add")
     @ApiOperation("新增用户")
     public R<String> addUser(@RequestBody UserAddDTO userAddDTO) {

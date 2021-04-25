@@ -155,4 +155,35 @@
             #{roleId}
         </foreach>
     </select>
+
+    <select id="selectByRoleListRequest" parameterType="cn.liangjq.mix.common.dto.role.RoleListRequest"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_role
+        <trim prefix="where" prefixOverrides="and">
+            <if test="roleName!=null">
+                role_name LIKE CONCAT('%',#{roleName},'%')
+            </if>
+            <if test="roleCode!=null">
+                and role_code LIKE CONCAT('%',#{roleCode},'%')
+            </if>
+        </trim>
+    </select>
+
+    <select id="checkRoleExistByRoleNameAndRoleCode" resultType="java.lang.Boolean">
+        select count(1)
+        from t_role
+        where role_name = #{roleName}
+           OR role_code = #{roleCode}
+    </select>
+
+    <select id="checkRoleExistByIdAndCodeAndName" resultType="java.lang.Boolean">
+        select count(1)
+        from t_role
+        where id != #{roleId}
+          AND (
+                role_name = #{roleName}
+                OR role_code = #{roleCode})
+    </select>
 </mapper>

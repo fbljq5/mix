@@ -50,4 +50,12 @@ public interface MenuMapper {
      * @return
      */
     int updateByPrimaryKey(Menu record);
+
+    /**
+     * 查看指定id数组里面存在的id数量
+     *
+     * @param menuIds
+     * @return
+     */
+    int countId(Long[] menuIds);
 }

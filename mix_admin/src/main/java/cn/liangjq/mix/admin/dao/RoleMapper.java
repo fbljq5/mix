@@ -1,6 +1,7 @@
 package cn.liangjq.mix.admin.dao;
 
 
+import cn.liangjq.mix.common.dto.role.RoleListRequest;
 import cn.liangjq.mix.common.entity.Role;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -69,4 +70,31 @@ public interface RoleMapper {
      * @return
      */
     int countId(Long[] roleIds);
+
+    /**
+     * 按条件查询角色列表
+     *
+     * @param request
+     * @return
+     */
+    List<Role> selectByRoleListRequest(RoleListRequest request);
+
+    /**
+     * 判断角色名称或角色编号是否被占用
+     *
+     * @param roleName
+     * @param roleCode
+     * @return
+     */
+    boolean checkRoleExistByRoleNameAndRoleCode(String roleName, String roleCode);
+
+    /**
+     * 判断除本身外是否有其他角色占用角色名称和角色编号
+     *
+     * @param roleId
+     * @param roleCode
+     * @param roleName
+     * @return
+     */
+    boolean checkRoleExistByIdAndCodeAndName(Long roleId, String roleCode, String roleName);
 }

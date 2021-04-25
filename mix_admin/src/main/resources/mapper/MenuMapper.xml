@@ -182,4 +182,15 @@
             gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=BIGINT}
     </update>
+    <!--自定义-->
+    <select id="countId" resultType="java.lang.Integer">
+        SELECT count(distinct id)
+        FROM
+        t_menu
+        WHERE
+        id IN
+        <foreach collection="menuIds" item="menuId" open="(" close=")" separator=",">
+            #{menuId}
+        </foreach>
+    </select>
 </mapper>
