@@ -5,7 +5,7 @@ import cn.liangjq.mix.common.config.JwtConfig;
 import cn.liangjq.mix.common.dto.PageResponse;
 import cn.liangjq.mix.common.dto.user.*;
 import cn.liangjq.mix.common.result.R;
-import cn.liangjq.mix.utils.JWTUtils;
+import cn.liangjq.mix.common.utils.JWTUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

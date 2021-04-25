@@ -1,4 +1,4 @@
-package cn.liangjq.mix.utils;
+package cn.liangjq.mix.common.utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.DigestUtils;

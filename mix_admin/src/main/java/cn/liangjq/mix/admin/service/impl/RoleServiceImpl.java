@@ -68,9 +68,7 @@ public class RoleServiceImpl implements IRoleService {
             return R.fail("角色已存在");
         }
         Role role = this.toRole(roleAddDTO);
-        role.setStatus(true);
-        role.setIsDelete(false);
-        role.setGmtCreate(new Date());
+        role.add();
         int insert = roleMapper.insert(role);
         if (insert > 0) {
             return R.ok("新增成功");
@@ -88,9 +86,9 @@ public class RoleServiceImpl implements IRoleService {
         if (role == null) {
             return R.fail("角色不存在");
         }
-        role.setStatus(false);
-        role.setIsDelete(true);
-        role.setGmtModified(new Date());
+        // 删除角色菜单关联记录
+        roleMenuMapper.deleteRoleMenuAssgin(roleId);
+        role.delete();
         int result = roleMapper.updateByPrimaryKeySelective(role);
         if (result > 0) {
             return R.ok("删除成功");
@@ -117,7 +115,7 @@ public class RoleServiceImpl implements IRoleService {
         }
         // 更新角色
         BeanUtils.copyProperties(updateDTO, role);
-        role.setGmtModified(new Date());
+        role.update();
         int i = roleMapper.updateByPrimaryKeySelective(role);
         if (i > 0) {
             return R.ok("更新成功");

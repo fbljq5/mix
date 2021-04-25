@@ -13,9 +13,9 @@ import cn.liangjq.mix.common.entity.Role;
 import cn.liangjq.mix.common.entity.User;
 import cn.liangjq.mix.common.entity.UserRole;
 import cn.liangjq.mix.common.result.R;
-import cn.liangjq.mix.utils.JWTUtils;
-import cn.liangjq.mix.utils.MD5Utils;
-import cn.liangjq.mix.utils.RedisUtil;
+import cn.liangjq.mix.common.utils.JWTUtils;
+import cn.liangjq.mix.common.utils.MD5Utils;
+import cn.liangjq.mix.common.utils.RedisUtil;
 import com.alibaba.nacos.common.utils.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -116,10 +116,7 @@ public class UserServiceImpl implements IUserService {
             return R.fail("用户名已存在");
         }
         User user = this.toUser(userAddDTO);
-        user.setStatus(true);
-        user.setIsDelete(false);
-        user.setGmtCreate(new Date());
-        user.setPassword(MD5Utils.getMd5(user.getPassword()));
+        user.add();
         int insert = userMapper.insert(user);
         if (insert > 0) {
             return R.ok("新增成功");
@@ -138,9 +135,9 @@ public class UserServiceImpl implements IUserService {
         if (user == null) {
             return R.fail("用户不存在");
         }
-        user.setStatus(false);
-        user.setIsDelete(true);
-        user.setGmtModified(new Date());
+        //删除用户角色关联记录
+        userRoleMapper.deleteUserRoleAssgin(userId);
+        user.delete();
         int result = userMapper.updateByPrimaryKeySelective(user);
         if (result > 0) {
             return R.ok("删除成功");

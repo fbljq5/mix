@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * @Date: 2021/4/1
  */
 @Configuration
-@ComponentScan(basePackages = {"cn.liangjq.mix.common", "cn.liangjq.mix.utils"})
+@ComponentScan(basePackages = {"cn.liangjq.mix.common","cn.liangjq.mix.common.utils"})
 @EnableFeignClients("cn.liangjq.mix.api.service")
 public class PackageScanConfig {
 }

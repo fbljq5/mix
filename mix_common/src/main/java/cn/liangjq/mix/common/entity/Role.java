@@ -47,4 +47,38 @@ public class Role extends BaseEntity {
      * 备注 remark
      */
     private String remark;
+
+    /**
+     * 新增
+     *
+     * @return
+     */
+    public final Role add() {
+        this.isDelete = false;
+        this.status = true;
+        this.setGmtCreate(new Date());
+        return this;
+    }
+
+    /**
+     * 更新
+     *
+     * @return
+     */
+    public final Role update() {
+        this.setGmtModified(new Date());
+        return this;
+    }
+
+    /**
+     * 删除
+     *
+     * @return
+     */
+    public final Role delete() {
+        this.isDelete = true;
+        this.status = false;
+        this.setGmtModified(new Date());
+        return this;
+    }
 }

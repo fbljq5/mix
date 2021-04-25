@@ -5,7 +5,6 @@
     <modules>
         <module>mix_common</module>
         <module>mix_admin</module>
-        <module>mix_utils</module>
         <module>mix_gateway</module>
         <module>mix_auth</module>
         <module>mix_api</module>

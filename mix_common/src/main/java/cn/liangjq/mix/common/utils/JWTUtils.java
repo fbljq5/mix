@@ -1,4 +1,4 @@
-package cn.liangjq.mix.utils;
+package cn.liangjq.mix.common.utils;
 
 import cn.liangjq.mix.common.constant.Constants;
 import com.auth0.jwt.JWT;

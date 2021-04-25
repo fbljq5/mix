@@ -1,12 +1,10 @@
 package cn.liangjq.mix.gateway.fileter;
 
 import cn.liangjq.mix.common.config.JwtConfig;
-import cn.liangjq.mix.common.constant.Constants;
-import cn.liangjq.mix.utils.JWTUtils;
-import cn.liangjq.mix.utils.RedisUtil;
+import cn.liangjq.mix.common.utils.JWTUtils;
+import cn.liangjq.mix.common.utils.RedisUtil;
 import com.alibaba.fastjson.JSONObject;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;

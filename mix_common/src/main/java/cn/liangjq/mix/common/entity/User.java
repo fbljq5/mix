@@ -1,5 +1,6 @@
 package cn.liangjq.mix.common.entity;
 
+import cn.liangjq.mix.common.utils.MD5Utils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -57,4 +58,50 @@ public class User extends BaseEntity {
      * 备注 remark
      */
     private String remark;
+
+    /**
+     * 新增
+     *
+     * @return
+     */
+    public final User add() {
+        this.isDelete = false;
+        this.status = true;
+        this.setGmtCreate(new Date());
+        this.setPassword((MD5Utils.getMd5(this.getPassword())));
+        return this;
+    }
+
+    /**
+     * 更新
+     *
+     * @return
+     */
+    public final User update() {
+        this.setGmtModified(new Date());
+        return this;
+    }
+
+    /**
+     * 修改密码
+     *
+     * @return
+     */
+    public final User modifyPwd() {
+        this.setGmtModified(new Date());
+        this.setPassword((MD5Utils.getMd5(this.getPassword())));
+        return this;
+    }
+
+    /**
+     * 删除
+     *
+     * @return
+     */
+    public final User delete() {
+        this.isDelete = true;
+        this.status = false;
+        this.setGmtModified(new Date());
+        return this;
+    }
 }
