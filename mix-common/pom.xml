@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <description>公共模块</description>
-    <artifactId>mix_common</artifactId>
+    <artifactId>mix-common</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

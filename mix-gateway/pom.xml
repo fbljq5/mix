@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mix_gateway</artifactId>
+    <artifactId>mix-gateway</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -25,7 +25,7 @@
 
         <dependency>
             <groupId>cn.liangjq</groupId>
-            <artifactId>mix_common</artifactId>
+            <artifactId>mix-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
