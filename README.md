@@ -35,7 +35,8 @@ maven | 项目构建管理
 技术 | 作用 | 版本
 ----|----|---
 vue | js框架 | 3
-Ant Design of Vue | UI框架 | 1.7.4
+Ant Design of Vue | UI框架 | 2.1.3 
+vue cli | vue 脚手架 | 4.5.12
 
 待补充
 
