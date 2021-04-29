@@ -1,7 +1,7 @@
 # Mix
 
 #### 介绍
-一个开源的基于SpringCloud + Vue3 + Ant Design 的前后端分离权限管理系统。
+一个开源的基于SpringCloud + Vue3 + ts + Ant Design 的前后端分离权限管理系统。
 
 Mix(混合)，因为会在学习过程中不断地在这个项目中实践所学，所以与工作项目相比，所选技术不一定是最优解，同学们可以看作是一个技术大DEMO。
 
@@ -38,7 +38,44 @@ vue | js框架 | 3
 Ant Design of Vue | UI框架 | 2.1.3 
 vue cli | vue 脚手架 | 4.5.12
 
-待补充
+未完待续
 
 
 
+##### 模块说明
+
+MIX
+
+​	|------ mix-admin     管理后台接口服务模块
+
+​	|------ mix-api	       feign接口模块
+
+​	|------ mix-auth         认证服务模块
+
+​	|------ mix-common  公共模块
+
+​	|------ mix-gateway   统一网关模块
+
+​	|------ mix-monitor    系统监控模块
+
+​	|------ mix-vue           前端代码
+
+   
+
+##### 启动说明
+
+###### 后端服务
+
+启动mix-gateway 、mix-admin、mix-auth 顺序不限
+
+
+
+###### 前端服务
+
+进入mix-vue
+
+分别执行：
+
+`yarn install`
+
+` yarn serve `
