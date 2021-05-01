@@ -42,7 +42,7 @@ vue cli | vue 脚手架 | 4.5.12
 
 
 
-##### 模块说明
+#### 模块说明
 
 MIX
 
@@ -62,20 +62,28 @@ MIX
 
    
 
-##### 启动说明
+#### 启动说明
 
-###### 后端服务
+##### 后端服务
 
-启动mix-gateway 、mix-admin、mix-auth 顺序不限
+- 安装nacos，导入nacos数据库脚本doc\sql\nacos_config.sql
+- 安装MySQL，导入数据库脚本doc\sql\mix.sql
+
+- 安装redis
+
+- 启动以下服务，顺序不限
+  - mix-gateway
+  - mix-admin
+  - mix-auth
 
 
 
-###### 前端服务
+##### 前端服务
 
 进入mix-vue
 
 分别执行：
 
-`yarn install`
+```yarn install```
 
-` yarn serve `
+```yarn serve```
