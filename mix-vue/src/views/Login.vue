@@ -2,7 +2,7 @@
   <div class="login-box">
     <div class="login-logo">
       <svg-icon icon-class="logo" />
-      <h1>MIX</h1>
+      <h1>MIX Admin</h1>
     </div>
     <a-form
       layout="horizontal"
@@ -72,7 +72,7 @@ export default defineComponent({
   width: 100vw;
   height: 100vh;
   display: flex;
-  padding-top: 240px;
+  padding-top: 20%;
   flex-direction: column;
   align-items: center;
   background: url("~@/assets/images/login-bg.jpg");
@@ -83,8 +83,8 @@ export default defineComponent({
   }
 
   h1 {
+    color: white;
     margin-left: 10px;
-    margin-bottom: 0;
   }
 }
 </style>
