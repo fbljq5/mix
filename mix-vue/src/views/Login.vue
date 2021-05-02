@@ -68,8 +68,10 @@ export default defineComponent({
         return message.warning("用户名或密码不能为空！");
       }
       state.loading = true;
-      axios.get("http://localhost:8502/mix-auth/auth/login").then((response) => {
-        console.log(response);
+      axios.post("http://127.0.0.1:8502/mix-auth/auth/login", state.formInline).then((response) => {
+        state.loading = false;
+        const data = response.data
+        console.log(data)
       });
     };
     return {
