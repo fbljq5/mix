@@ -46,6 +46,7 @@
 <script lang="ts">
 import { message } from "ant-design-vue";
 import { defineComponent, reactive, toRef, toRefs, UnwrapRef } from "vue";
+import axios from "axios";
 interface FormState {
   user: string;
   password: string;
@@ -66,7 +67,10 @@ export default defineComponent({
       if (username.trim() == "" || password.trim() == "") {
         return message.warning("用户名或密码不能为空！");
       }
-      state.loading = true
+      state.loading = true;
+      axios.get("http://localhost:8502/mix-auth/auth/login").then((response) => {
+        console.log(response);
+      });
     };
     return {
       ...toRefs(state),
