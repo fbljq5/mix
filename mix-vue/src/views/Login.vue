@@ -7,7 +7,7 @@
     <a-form
       layout="horizontal"
       :model="formInline"
-      @submit.prevent="handleSubmit"
+      @submit.prevent="handleLogin"
     >
       <a-form-item>
         <a-input
@@ -44,6 +44,7 @@
   </div>
 </template>
 <script lang="ts">
+import { message } from "ant-design-vue";
 import { defineComponent, reactive, toRef, toRefs, UnwrapRef } from "vue";
 interface FormState {
   user: string;
@@ -53,16 +54,23 @@ export default defineComponent({
   name: "Login",
 
   setup() {
-    const stat = reactive({
+    const state = reactive({
       loading: false,
       formInline: {
         username: "",
         password: "",
       },
     });
-
+    const handleLogin = async () => {
+      const { username, password } = state.formInline;
+      if (username.trim() == "" || password.trim() == "") {
+        return message.warning("用户名或密码不能为空！");
+      }
+      state.loading = true
+    };
     return {
-      ...toRefs(stat),
+      ...toRefs(state),
+      handleLogin,
     };
   },
 });
