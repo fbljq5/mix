@@ -4,16 +4,12 @@ import cn.liangjq.mix.auth.security.DefaultPasswordEncoder;
 import cn.liangjq.mix.auth.security.JWTAuthenticationEntryPoint;
 import cn.liangjq.mix.auth.security.filter.JWTAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 /**
  * @Description: SpringSecurity 配置
@@ -73,19 +69,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 // 匿名用户访问无权限资源时的异常
                 .authenticationEntryPoint(new JWTAuthenticationEntryPoint());
-    }
-
-    /**
-     * 跨域配置
-     *
-     * @return 基于URL的跨域配置信息
-     */
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        // 注册跨域配置
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-        return source;
     }
 
 }
