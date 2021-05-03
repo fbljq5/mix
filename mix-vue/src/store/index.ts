@@ -7,6 +7,12 @@ export default createStore({
   mutations: {
   },
   actions: {
+    Login({commit},userInfo){
+      const username = userInfo.username.trim()
+      const password = userInfo.password.trim()
+      
+
+    }
   },
   modules: {
   }

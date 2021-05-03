@@ -3,16 +3,19 @@ import Login from '../views/Login.vue'
 import Home from '../views/Home.vue'
 
 const routes: Array<RouteRecordRaw> = [
+
   {
     path: '/login',
-    name: 'Login',
-    component: Login
+    name: 'login',
+    component: () => import('@/views/Login.vue')
   },
+
   {
-    path: '/Home',
-    name: 'Home',
-    component: Home
-  }
+    path: '/home',
+    name: 'home',
+    component: () => import('@/views/Home.vue')
+  },
+
 ]
 
 const router = createRouter({
@@ -24,6 +27,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   document.title = `${to.meta.title}`
   const token = localStorage.getItem('MIX_TOKEN')
+  console.log(token)
   if (!token && to.path !== '/login') {
     next('/login')
   } else {
