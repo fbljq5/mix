@@ -1,12 +1,10 @@
 <template>
-  <a-layout-footer style="text-align: center">
-    MIX ADMIN
-  </a-layout-footer>
+  <div class="logo" />
 </template>
-<script>
+<script lang="ts">
 import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
-  name: "MixFooter",
+  name: "MixLogo",
 });
 </script>
