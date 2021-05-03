@@ -13,7 +13,7 @@
         <a-input
           v-model:value="formInline.username"
           size="large"
-          placeholder="admin"
+          placeholder="请输入账号"
         >
           <template #prefix><user-outlined type="user" /></template>
         </a-input>
@@ -23,7 +23,7 @@
           v-model:value="formInline.password"
           size="large"
           type="password"
-          placeholder="123456"
+          placeholder="请输入密码"
           autocomplete="new-password"
         >
           <template #prefix><lock-outlined type="user" /></template>
@@ -46,7 +46,9 @@
 <script lang="ts">
 import { message } from "ant-design-vue";
 import { defineComponent, reactive, toRef, toRefs, UnwrapRef } from "vue";
-import axios from "axios";
+import { login } from "@/api/auth/Login";
+import { useRouter } from "vue-router";
+
 interface FormState {
   user: string;
   password: string;
@@ -58,20 +60,26 @@ export default defineComponent({
     const state = reactive({
       loading: false,
       formInline: {
-        username: "",
-        password: "",
+        username: "admin",
+        password: "123456",
       },
     });
+
+    const router = useRouter();
+
     const handleLogin = async () => {
       const { username, password } = state.formInline;
       if (username.trim() == "" || password.trim() == "") {
         return message.warning("用户名或密码不能为空！");
       }
       state.loading = true;
-      axios.post("http://127.0.0.1:8502/mix-auth/auth/login", state.formInline).then((response) => {
+      login(state.formInline).then((response) => {
         state.loading = false;
-        const data = response.data
-        console.log(data)
+        const res = response.data;
+        if (res.code == 200) {
+          localStorage.setItem("MIX_TOKEN", res.data);
+          router.push("/Home");
+        }
       });
     };
     return {
