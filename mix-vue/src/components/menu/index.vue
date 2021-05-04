@@ -1,57 +1,55 @@
 <template>
   <a-menu theme="dark" v-model:selectedKeys="selectedKeys" mode="inline">
     <a-menu-item key="1">
-      <pie-chart-outlined />
-      <span>Option 1111</span>
-    </a-menu-item>
-    <a-menu-item key="2">
-      <desktop-outlined />
-      <span>Option 2</span>
+      <router-link to="/welcome">欢迎</router-link>
     </a-menu-item>
     <a-sub-menu key="sub1">
       <template #title>
         <span>
           <user-outlined />
-          <span>User</span>
+          <span>权限管理</span>
         </span>
       </template>
-      <a-menu-item key="3">Tom</a-menu-item>
-      <a-menu-item key="4">Bill</a-menu-item>
-      <a-menu-item key="5">Alex</a-menu-item>
+      <a-menu-item key="2">用户管理 </a-menu-item>
+      <a-menu-item key="3">角色管理 </a-menu-item>
+      <a-menu-item key="4">菜单管理</a-menu-item>
     </a-sub-menu>
     <a-sub-menu key="sub2">
       <template #title>
         <span>
-          <team-outlined />
-          <span>Team</span>
+          <eye-outlined />
+          <span>监控中心</span>
         </span>
       </template>
-      <a-menu-item key="6">Team 1</a-menu-item>
-      <a-menu-item key="8">Team 2</a-menu-item>
+      <a-menu-item key="5">服务器监控</a-menu-item>
+      <a-menu-item key="6">注册中心监控</a-menu-item>
     </a-sub-menu>
-    <a-menu-item key="9">
-      <file-outlined />
-      <span>File</span>
-    </a-menu-item>
+    <a-sub-menu key="sub3">
+      <template #title>
+        <span>
+          <setting-outlined />
+          <span>系统管理</span>
+        </span>
+      </template>
+      <a-menu-item key="7">参数配置</a-menu-item>
+      <a-menu-item key="8">接口管理</a-menu-item>
+      <a-menu-item key="9">日志管理</a-menu-item>
+    </a-sub-menu>
   </a-menu>
 </template>
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
 import {
-  PieChartOutlined,
-  DesktopOutlined,
   UserOutlined,
-  TeamOutlined,
-  FileOutlined,
+  SettingOutlined,
+  EyeOutlined,
 } from "@ant-design/icons-vue";
 export default defineComponent({
   name: "MixMenu",
   components: {
-    PieChartOutlined,
-    DesktopOutlined,
     UserOutlined,
-    TeamOutlined,
-    FileOutlined
+    SettingOutlined,
+    EyeOutlined,
   },
 });
 </script>

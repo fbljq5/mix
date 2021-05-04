@@ -1,31 +1,30 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Login from '../views/Login.vue'
-import Home from '../views/Home.vue'
 
 const routes: Array<RouteRecordRaw> = [
 
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/views/Login.vue')
+    component: () => import('@/views/Login.vue'),
   },
 
   {
-    path: '/home',
-    name: 'home',
-    component: () => import('@/views/Home.vue')
+    path: '/',
+    component: () => import('@/components/layout/layout.vue'),
+    redirect: '/dashboard',
+    name: '首页',
+    children: [
+      {
+        path: 'dashboard',
+        component: () => import('@/views/Dashboard.vue'),
+        meta: { title: '主页' }
+      },
+      {
+        path: 'welcome',
+        component: () => import('@/views/Welcome.vue'),
+        meta: { title: '欢迎' }
+      }]
   },
-
-  
-  {
-    path: '/welcome',
-    name: 'welcome',
-    component: () =>
-    import(
-      /* webpackChunkName: "dashboard-welcome" */ '@/components/layout/layout.vue'
-    )
-  },
-
 ]
 
 const router = createRouter({
