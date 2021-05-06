@@ -38,6 +38,12 @@ public class UserController {
         return R.ok(userInfo);
     }
 
+    @ApiOperation(value = "用户退出登录", notes = "用户退出登录")
+    @PostMapping("/logout")
+    public R logout() {
+        return userService.logout();
+    }
+
     @PostMapping("/list")
     @ApiOperation("分页获得用户信息")
     public R<PageResponse> pageUserInfo(@RequestBody UserListRequest request) {

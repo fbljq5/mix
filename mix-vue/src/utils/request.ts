@@ -28,7 +28,7 @@ export class Request {
                 // 后台根据携带的token判断用户的登录情况，并返回给我们对应的状态码
                 const token = localStorage.getItem('MIX_TOKEN');
                 if (token) {
-                    config.headers.Authorization = token;
+                    config.headers['mix-token'] = token;
                 }
                 return config
             },

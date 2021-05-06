@@ -46,7 +46,7 @@
 <script lang="ts">
 import { message } from "ant-design-vue";
 import { defineComponent, reactive, toRef, toRefs, UnwrapRef } from "vue";
-import { login } from "@/api/auth/Login";
+import { login } from "@/api/auth/auth";
 import { useRouter } from "vue-router";
 
 interface FormState {

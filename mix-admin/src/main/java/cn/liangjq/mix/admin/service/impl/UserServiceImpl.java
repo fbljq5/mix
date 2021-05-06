@@ -223,6 +223,12 @@ public class UserServiceImpl implements IUserService {
         return R.ok(userUpdateDTO);
     }
 
+    @Override
+    public R logout() {
+        //TODO
+        return R.ok();
+    }
+
     /**
      * 用户信息转换成userVO信息
      *

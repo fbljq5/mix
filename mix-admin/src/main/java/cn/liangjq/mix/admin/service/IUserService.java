@@ -95,4 +95,11 @@ public interface IUserService {
      * @return
      */
     R<UserUpdateDTO> findUser(Long userId);
+
+    /**
+     * 登出
+     *
+     * @return
+     */
+    R logout();
 }
