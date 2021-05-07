@@ -224,8 +224,18 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public R logout() {
-        //TODO
+    public R logout(String token) {
+        // 移除redis中的token
+        redisUtil.delete(token);
+        return R.ok();
+    }
+
+    @Override
+    public R checkToken(String tokenStr) {
+        String tokenOfRedis = redisUtil.get(tokenStr);
+        if (null == tokenOfRedis) {
+            return R.fail("token不存在或已过期");
+        }
         return R.ok();
     }
 

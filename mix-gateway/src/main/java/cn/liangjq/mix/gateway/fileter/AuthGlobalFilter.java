@@ -37,30 +37,32 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         String path = request.getURI().getPath();
+        // 登录不需要校验token
+        if (antPathMatcher.match("/**/auth/login/**", path)) {
+            return chain.filter(exchange);
+        }
         //非校验接口，用户必须已获得token
-        if (!antPathMatcher.match("/**/auth/login/**", path)) {
-            List<String> tokenList = request.getHeaders().get(jwtConfig.getTokenHeader());
-            if (null == tokenList) {
+        List<String> tokenList = request.getHeaders().get(jwtConfig.getTokenHeader());
+        if (null == tokenList) {
+            ServerHttpResponse response = exchange.getResponse();
+            return out(response);
+        } else {
+            String token = tokenList.get(0);
+            String tokenRedis = redisUtil.get(token);
+            if (null == tokenRedis) {
                 ServerHttpResponse response = exchange.getResponse();
                 return out(response);
-            } else {
-                String token = tokenList.get(0);
-                String tokenRedis = redisUtil.get(token);
-                if (null == tokenRedis) {
-                    ServerHttpResponse response = exchange.getResponse();
-                    return out(response);
-                }
-                // 判断token中数据
-                Boolean isExpired = true;
-                try {
-                    isExpired = JWTUtils.isExpired(tokenList.get(0), jwtConfig.getSecret());
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
-                if (isExpired) {
-                    ServerHttpResponse response = exchange.getResponse();
-                    return out(response);
-                }
+            }
+            // 判断token中数据
+            Boolean isExpired = true;
+            try {
+                isExpired = JWTUtils.isExpired(tokenList.get(0), jwtConfig.getSecret());
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            if (isExpired) {
+                ServerHttpResponse response = exchange.getResponse();
+                return out(response);
             }
         }
         return chain.filter(exchange);

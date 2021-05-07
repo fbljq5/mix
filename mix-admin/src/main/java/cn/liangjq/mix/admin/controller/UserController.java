@@ -40,8 +40,16 @@ public class UserController {
 
     @ApiOperation(value = "用户退出登录", notes = "用户退出登录")
     @PostMapping("/logout")
-    public R logout() {
-        return userService.logout();
+    public R logout(HttpServletRequest request) {
+        String tokenStr = request.getHeader(jwtConfig.getTokenHeader());
+        return userService.logout(tokenStr);
+    }
+
+    @ApiOperation(value = "校验token是否有效", notes = "校验token是否有效")
+    @PostMapping("/checkToken")
+    public R checkToken(HttpServletRequest request) {
+        String tokenStr = request.getHeader(jwtConfig.getTokenHeader());
+        return userService.checkToken(tokenStr);
     }
 
     @PostMapping("/list")

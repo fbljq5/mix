@@ -101,5 +101,13 @@ public interface IUserService {
      *
      * @return
      */
-    R logout();
+    R logout(String token);
+
+    /**
+     * 校验token是否有效
+     *
+     * @param tokenStr
+     * @return
+     */
+    R checkToken(String tokenStr);
 }

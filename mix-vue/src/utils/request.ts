@@ -7,7 +7,7 @@ export class Request {
     public static init() {
         this.axiosInstance = axios.create({
             baseURL: '',
-            timeout: 6000
+            timeout: 60000
         });
         this.initInterceptors();
         return axios;
