@@ -7,9 +7,16 @@
         v-model:selectedKeys="selectedKeys"
         :style="{ lineHeight: '64px' }"
       >
-        <a @click.prevent="doLogout" class="logoutBtn"
-          ><poweroff-outlined /> 退出登录</a
-        >
+        <a-dropdown>
+          <a class="ant-dropdown-link"> 张三 </a>
+          <template #overlay>
+            <a-menu>
+              <a-menu-item>
+                <a @click.prevent="doLogout">退出登录</a>
+              </a-menu-item>
+            </a-menu>
+          </template>
+        </a-dropdown>
       </a-menu>
     </a-layout-header>
   </div>
@@ -17,7 +24,7 @@
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
 import { message, Modal } from "ant-design-vue";
-import { logout } from "@/api/admin/user";
+import { logout, getUserInfo } from "@/api/admin/user";
 import { useRouter, useRoute } from "vue-router";
 export default defineComponent({
   name: "MixHeader",
@@ -25,6 +32,8 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const route = useRoute();
+    let userInfo;
+
     // 退出登录
     const doLogout = () => {
       Modal.confirm({
@@ -45,8 +54,8 @@ export default defineComponent({
                   },
                 })
                 .finally(() => location.reload());
-            }else{
-              message.error('登出失败');
+            } else {
+              message.error("登出失败");
             }
           });
         },

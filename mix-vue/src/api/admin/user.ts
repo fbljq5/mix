@@ -13,3 +13,10 @@ export function logout() {
         method: 'post'
     })
 }
+
+export function getUserInfo() {
+    return Request.axiosInstance({
+        url: 'http://127.0.0.1:8502/mix-admin/user/info',
+        method: 'get'
+    })
+}
