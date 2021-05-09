@@ -20,11 +20,6 @@ const routes: Array<RouteRecordRaw> = [
         path: 'dashboard',
         component: () => import('@/views/Dashboard.vue'),
         meta: { title: '主页' }
-      },
-      {
-        path: 'welcome',
-        component: () => import('@/views/Welcome.vue'),
-        meta: { title: '欢迎' }
       }]
   },
 ]

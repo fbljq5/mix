@@ -1,6 +1,6 @@
 <template>
   <a-menu theme="dark" v-model:selectedKeys="selectedKeys" mode="inline">
-    <a-menu-item key="1">
+    <a-menu-item key="1" v-if="false">
       <router-link to="/welcome">欢迎</router-link>
     </a-menu-item>
     <a-sub-menu key="sub1">
