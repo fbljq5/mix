@@ -6,7 +6,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/views/Login.vue'),
+    component: () => import('@/views/login/index.vue'),
     meta: { title: '登录' }
   },
 
@@ -18,8 +18,23 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/views/Dashboard.vue'),
+        component: () => import('@/views/dashboard/index.vue'),
         meta: { title: '主页' }
+      }]
+  },
+
+  {
+    path: '/auth',
+    component: () => import('@/components/layout/layout.vue'),
+    redirect: '/auth/user',
+    name: '权限管理',
+    meta: { title: '权限管理' },
+    children: [
+      {
+        path: 'user',
+        name: '用户管理',
+        component: () => import('@/views/auth/user.vue'),
+        meta: { title: '用户管理' }
       }]
   },
 ]

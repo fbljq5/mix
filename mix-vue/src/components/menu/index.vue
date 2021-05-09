@@ -1,7 +1,7 @@
 <template>
   <a-menu theme="dark" v-model:selectedKeys="selectedKeys" mode="inline">
     <a-menu-item key="1" v-if="false">
-      <router-link to="/welcome">欢迎</router-link>
+      <router-link to="/dashboard">仪表盘</router-link>
     </a-menu-item>
     <a-sub-menu key="sub1">
       <template #title>
@@ -10,7 +10,9 @@
           <span>权限管理</span>
         </span>
       </template>
-      <a-menu-item key="2">用户管理 </a-menu-item>
+      <a-menu-item key="2">
+        <router-link to="/auth/user">用户管理</router-link>
+      </a-menu-item>
       <a-menu-item key="3">角色管理 </a-menu-item>
       <a-menu-item key="4">菜单管理</a-menu-item>
     </a-sub-menu>
