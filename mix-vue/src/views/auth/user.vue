@@ -4,34 +4,58 @@
       <a-breadcrumb-item>权限管理</a-breadcrumb-item>
       <a-breadcrumb-item>用户管理</a-breadcrumb-item>
     </a-breadcrumb>
-    <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
-      用户管理
-    </div>
+    <a-button type="default" style="margin:10px">新增用户</a-button>
+    <a-table
+      :columns="columns"
+      :row-key="(record) => record.login.uuid"
+      :data-source="dataSource"
+      :pagination="pagination"
+      :loading="loading"
+      @change="handleTableChange"
+    >
+      <template #name="{ text }">{{ text.first }} {{ text.last }}</template>
+    </a-table>
   </a-layout-content>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, computed } from "vue";
+import { usePagination } from "vue-request";
+const columns = [
+  {
+    title: "用户名",
+    dataIndex: "name",
+    sorter: true,
+    width: "20%",
+    slots: {
+      customRender: "name",
+    },
+  },
+  {
+    title: "Email",
+    dataIndex: "email",
+  },
+  {
+    title: "手机号码",
+    width: "20%",
+  },
+
+  {
+    title: "最近登录日期",
+    width: "20%",
+  },
+  {
+    title: "备注",
+    width: "20%",
+  },
+];
 export default defineComponent({
   components: {},
-  data() {
+  setup() {
     return {
-      collapsed: ref<boolean>(false),
-      selectedKeys: ref<string[]>(["1"]),
+      columns,
     };
   },
 });
 </script>
 <style>
-#components-layout-demo-side .logo {
-  height: 32px;
-  margin: 16px;
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.site-layout .site-layout-background {
-  background: #fff;
-}
-[data-theme="dark"] .site-layout .site-layout-background {
-  background: #141414;
-}
 </style>
