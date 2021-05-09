@@ -7,8 +7,10 @@
         v-model:selectedKeys="selectedKeys"
         :style="{ lineHeight: '64px' }"
       >
-        <a-dropdown>
-          <a class="ant-dropdown-link"> 张三 </a>
+        <a-dropdown :trigger="['click']">
+          <a class="ant-dropdown-link" style="margin-left: 95%">{{
+            userInfo.userName
+          }}</a>
           <template #overlay>
             <a-menu>
               <a-menu-item>
@@ -22,7 +24,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
+import { defineComponent, reactive } from "vue";
 import { message, Modal } from "ant-design-vue";
 import { logout, getUserInfo } from "@/api/admin/user";
 import { useRouter, useRoute } from "vue-router";
@@ -32,7 +34,16 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const route = useRoute();
-    let userInfo;
+    let userInfo = reactive({
+      id: 0,
+      userName: "",
+    });
+
+    getUserInfo().then((response) => {
+      let user = response.data.data;
+      userInfo.id = user.id;
+      userInfo.userName = user.userName;
+    });
 
     // 退出登录
     const doLogout = () => {
@@ -64,6 +75,7 @@ export default defineComponent({
 
     return {
       doLogout,
+      userInfo,
     };
   },
 });
