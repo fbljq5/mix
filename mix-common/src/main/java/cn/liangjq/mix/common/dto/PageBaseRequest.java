@@ -13,11 +13,11 @@ public class PageBaseRequest {
     /**
      * 页大小
      */
-    protected Integer size;
+    protected Integer pageSize;
 
     /**
      * 当前页
      */
-    protected Integer page;
+    protected Integer current;
 
 }

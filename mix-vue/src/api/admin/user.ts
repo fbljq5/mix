@@ -20,3 +20,11 @@ export function getUserInfo() {
         method: 'get'
     })
 }
+
+export function getUserList(parameter: any) {
+    return Request.axiosInstance({
+        url: "http://127.0.0.1:8502/mix-admin/user/list",
+        method: "post",
+        data: parameter
+    })
+}

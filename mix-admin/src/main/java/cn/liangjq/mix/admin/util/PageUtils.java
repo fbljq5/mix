@@ -23,8 +23,8 @@ public class PageUtils {
     public static PageResponse setPageResult(PageBaseRequest pageRequest, PageSelectFun fun) {
 
         //设置 页码/页距
-        Integer page = pageRequest.getPage();
-        Integer size = pageRequest.getSize();
+        Integer page = pageRequest.getCurrent();
+        Integer size = pageRequest.getPageSize();
         if (null == page || null == size) {
             PageHelper.startPage(0, 0, true, null, true);
         } else {
