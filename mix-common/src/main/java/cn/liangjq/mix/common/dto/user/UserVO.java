@@ -45,7 +45,7 @@ public class UserVO {
     /**
      * 最后登录时间 login_date
      */
-    private Date loginDate;
+    private String loginDate;
 
     /**
      * 备注 remark
@@ -55,10 +55,10 @@ public class UserVO {
     /**
      * 创建时间 gmt_create
      */
-    private Date gmtCreate;
+    private String gmtCreate;
 
     /**
      * 更新时间 gmt_modified
      */
-    private Date gmtModified;
+    private String gmtModified;
 }

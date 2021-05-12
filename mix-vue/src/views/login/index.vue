@@ -1,8 +1,8 @@
 <template>
   <div class="login-box">
     <div class="login-logo">
-      <svg-icon icon-class="logo" />
-      <h1>MIX Admin</h1>
+      <!-- <img src="~@/assets/images/logo.png" style="width: 50%" /> -->
+      <h1>MIX 权限管理系统</h1>
     </div>
     <a-form
       layout="horizontal"
@@ -97,17 +97,9 @@ export default defineComponent({
   padding-top: 20%;
   flex-direction: column;
   align-items: center;
-  background: url("~@/assets/images/login-bg.jpg");
-  background-size: 100%;
-
-  img {
-    height: 48px;
-  }
-
-  h1 {
-    color: white;
-    margin-left: 10px;
-  }
+  background-size: 100% 100%;
+  background-color: #d9afd9;
+  background-image: linear-gradient(0deg, #d9afd9 0%, #97d9e1 100%);
 }
 </style>
 

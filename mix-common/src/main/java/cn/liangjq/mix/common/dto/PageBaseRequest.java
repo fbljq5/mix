@@ -18,6 +18,6 @@ public class PageBaseRequest {
     /**
      * 当前页
      */
-    protected Integer current;
+    protected Integer page;
 
 }

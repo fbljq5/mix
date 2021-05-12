@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.client.utils.DateUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -248,6 +249,16 @@ public class UserServiceImpl implements IUserService {
     private UserVO toUserVO(User user) {
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user, userVO);
+        if (user.getLoginDate() != null) {
+            userVO.setLoginDate(DateUtils.formatDate(user.getLoginDate(), "yyyy-MM-dd HH:mm"));
+        }
+        if (user.getGmtCreate() != null) {
+            userVO.setGmtCreate(DateUtils.formatDate(user.getGmtCreate(), "yyyy-MM-dd HH:mm"));
+        }
+        if (user.getGmtModified() != null) {
+            userVO.setGmtModified(DateUtils.formatDate(user.getGmtModified(), "yyyy-MM-dd HH:mm"));
+        }
+
         return userVO;
     }
 
