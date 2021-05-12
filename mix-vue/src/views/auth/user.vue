@@ -60,25 +60,16 @@ const columns = [
   },
 ];
 
-// const queryData = (params: any) => {
-//   getUserList(params).then((response) => {
-//     console.log(response.data);
-//     return response.data.data;
-//   });
-//   return '';
-// };
-
-// const queryData = (params:any) => {
-//   console.log(`https://randomuser.me/api?noinfo&${new URLSearchParams(params)}`)
-//   return `https://randomuser.me/api?noinfo&${new URLSearchParams(params)}`;
-// };
+// 总的数据数
+let total = 0;
 
 const queryData = async (params: any) => {
   let res;
   await getUserList(params).then((response) => {
+    console.log(response.data.data);
     console.log(response.data.data.list);
     res = response.data.data.list;
-    console.log(res);
+    total = response.data.data.totalSize;
   });
   return res;
 };
@@ -97,7 +88,7 @@ export default defineComponent({
     );
 
     const pagination = computed(() => ({
-      total: 200,
+      total: total,
       current: current.value,
       pageSize: pageSize.value,
     }));
