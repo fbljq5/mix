@@ -98,10 +98,10 @@ public class UserServiceImpl implements IUserService {
     @Override
     public R<PageResponse> pageUser(UserListRequest request) {
         PageResponse pageResponse = PageUtils.setPageResult(request, () ->
-                userMapper.selectByUserRequest(request)
-                        .stream().map(this::toUserVO)
-                        .collect(Collectors.toList()));
-
+                userMapper.selectByUserRequest(request));
+        List<User> userList = (List<User>) pageResponse.getList();
+        List<UserVO> userVOList = userList.stream().map(this::toUserVO).collect(Collectors.toList());
+        pageResponse.setList(userVOList);
         return R.ok(pageResponse);
     }
 
