@@ -180,6 +180,19 @@
         </trim>
     </select>
 
+
+    <select id="selectByUserRequest_COUNT" parameterType="cn.liangjq.mix.common.dto.user.UserListRequest"
+            resultType="java.lang.Long">
+        select
+        count(1)
+        from t_user
+        <trim prefix="where" prefixOverrides="and">
+            <if test="username!=null">
+                user_name LIKE CONCAT('%',#{username},'%')
+            </if>
+        </trim>
+    </select>
+
     <select id="checkUserExistByUsername" parameterType="java.lang.String" resultType="java.lang.Boolean">
         select count(1)
         from t_user

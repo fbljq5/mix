@@ -23,12 +23,12 @@ public class PageUtils {
     public static PageResponse setPageResult(PageBaseRequest pageRequest, PageSelectFun fun) {
 
         //设置 页码/页距
-        Integer page = pageRequest.getPage();
+        Integer current = pageRequest.getPage();
         Integer pageSize = pageRequest.getPageSize();
-        if (null == page || null == pageSize) {
+        if (null == current || null == pageSize) {
             PageHelper.startPage(0, 0, true, null, true);
         } else {
-            PageHelper.startPage(page, pageSize);
+            PageHelper.startPage(current, pageSize);
         }
         //待插入的代码片段 即要查询的语句
         List<?> select = fun.queryList();

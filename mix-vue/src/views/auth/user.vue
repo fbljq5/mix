@@ -4,7 +4,7 @@
       <a-breadcrumb-item>权限管理</a-breadcrumb-item>
       <a-breadcrumb-item>用户管理</a-breadcrumb-item>
     </a-breadcrumb>
-    <a-button type="default" style="margin: 10px">新增用户</a-button>
+    <a-button type="default" style="float:right;margin:10px">新增用户</a-button>
     <a-table
       :columns="columns"
       :row-key="(record) => record.id"
