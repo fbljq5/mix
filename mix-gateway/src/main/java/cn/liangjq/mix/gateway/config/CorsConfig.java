@@ -17,12 +17,13 @@ public class CorsConfig {
     @Bean
     public CorsWebFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedMethod("*");
+        config.addAllowedMethod(CorsConfiguration.ALL);
         config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-
+        config.addAllowedHeader(CorsConfiguration.ALL);
+        config.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource(new PathPatternParser());
         source.registerCorsConfiguration("/**", config);
+
 
         return new CorsWebFilter(source);
     }

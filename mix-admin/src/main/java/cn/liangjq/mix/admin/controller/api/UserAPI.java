@@ -27,8 +27,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserAPI {
 
-    private Logger logger = LoggerFactory.getLogger(UserAPI.class);
-
     private final IUserService userService;
     private final IRoleService roleService;
 

@@ -16,11 +16,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class RemoteAdminServiceFallbackFactory implements FallbackFactory<RemoteAdminService> {
 
-    private Logger logger = LoggerFactory.getLogger(RemoteAdminServiceFallbackFactory.class);
-
     @Override
     public RemoteAdminService create(Throwable cause) {
-        logger.error("fallback 原因：" + cause.getMessage());
+        log.error("fallback 原因：" + cause.getMessage());
         return new RemoteAdminServiceFallbackImpl();
     }
 }
