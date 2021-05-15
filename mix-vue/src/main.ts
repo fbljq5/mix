@@ -6,10 +6,16 @@ import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 import { Request } from '@/utils/request'
 import VueAxios from 'vue-axios'
+import * as Icons from '@ant-design/icons-vue';
 
-createApp(App)
-    .use(store)
+const app = createApp(App);
+app.use(store)
     .use(router)
     .use(Antd)
     .use(VueAxios, Request.init())
     .mount('#app')
+// 全局使用图表
+const icons: any = Icons;
+for (const i in icons) {
+    app.component(i, icons[i]);
+}

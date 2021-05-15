@@ -4,7 +4,18 @@
       <a-breadcrumb-item>权限管理</a-breadcrumb-item>
       <a-breadcrumb-item>用户管理</a-breadcrumb-item>
     </a-breadcrumb>
-    <a-button type="default" style="float:right;margin:10px">新增用户</a-button>
+    <div>
+      <a-button type="default" style="margin: 0 20px 20px 0px"
+        >新增用户</a-button
+      >
+      <a-input-search
+        v-model:value="value"
+        placeholder="请输入用户名"
+        enter-button
+        @search="onSearch"
+        style="width: 30%; margin: 0 20px 20px 0px"
+      />
+    </div>
     <a-table
       :columns="columns"
       :row-key="(record) => record.id"
@@ -28,46 +39,47 @@ const columns = [
     sorter: true,
     width: "20%",
     slots: {
-      customRender: "name"
+      customRender: "name",
     },
   },
   {
     title: "Email",
-    dataIndex: "email"
+    dataIndex: "email",
   },
   {
     title: "手机号码",
     width: "20%",
-    dataIndex: "phone"
+    dataIndex: "phone",
   },
 
   {
     title: "最近登录时间",
     width: "20%",
-    dataIndex: "loginDate"
+    dataIndex: "loginDate",
   },
 
   {
     title: "创建时间",
     width: "20%",
-    dataIndex: "gmtCreate"
+    dataIndex: "gmtCreate",
   },
 
   {
     title: "备注",
     width: "20%",
-    dataIndex: "remark"
+    dataIndex: "remark",
   },
 ];
 
 // 总的数据数
 let total = 0;
 
+let username = ref("");
+
 const queryData = async (params: any) => {
   let res;
+  console.log(params);
   await getUserList(params).then((response) => {
-    console.log(response.data.data);
-    console.log(response.data.data.list);
     res = response.data.data.list;
     total = response.data.data.totalSize;
   });
@@ -107,12 +119,17 @@ export default defineComponent({
       });
     };
 
+    const onSearch = () => {
+      handleTableChange;
+    };
+
     return {
       dataSource,
       pagination,
       loading,
       columns,
       handleTableChange,
+      onSearch,
     };
   },
 });
