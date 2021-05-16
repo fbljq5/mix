@@ -42,7 +42,7 @@
   </a-layout-content>
 </template>
 <script lang="ts">
-import { defineComponent, ref, computed } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import { usePagination } from "vue-request";
 import { message } from "ant-design-vue";
 import { getUserList } from "@/api/admin/user";
@@ -116,6 +116,23 @@ export default defineComponent({
       });
     };
 
+    /**
+     * 表格点击页码时触发
+     */
+    const handleTableChange = (pagination: any) => {
+      handleQuery({
+        page: pagination.current,
+        size: pagination.pageSize,
+      });
+    };
+
+    onMounted(() => {
+      handleQuery({
+        page: 1,
+        pageSize: pagination.value.pageSize,
+      });
+    });
+
     return {
       pagination,
       loading,
@@ -123,6 +140,7 @@ export default defineComponent({
       userList,
       handleQuery,
       param,
+      handleTableChange,
     };
   },
 });
