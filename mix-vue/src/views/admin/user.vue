@@ -4,6 +4,32 @@
       <a-breadcrumb-item>权限管理</a-breadcrumb-item>
       <a-breadcrumb-item>用户管理</a-breadcrumb-item>
     </a-breadcrumb>
+
+    <p>
+      <a-form layout="inline" :model="param">
+        <a-form-item>
+          <a-input v-model:value="param.name" placeholder="名称"> </a-input>
+        </a-form-item>
+        <a-form-item>
+          <a-button
+            type="primary"
+            @click="
+              handleQuery({
+                page: 1,
+                pageSize: pagination.pageSize,
+                username: param.name,
+              })
+            "
+          >
+            查询
+          </a-button>
+        </a-form-item>
+        <a-form-item>
+          <a-button type="primary" @click="add()"> 新增 </a-button>
+        </a-form-item>
+      </a-form>
+    </p>
+
     <a-table
       :columns="columns"
       :row-key="(record) => record.id"
@@ -18,6 +44,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from "vue";
 import { usePagination } from "vue-request";
+import { message } from "ant-design-vue";
 import { getUserList } from "@/api/admin/user";
 const columns = [
   {
@@ -58,21 +85,6 @@ const columns = [
   },
 ];
 
-// 总的数据数
-let total = 0;
-
-let username = ref("");
-
-const queryData = async (params: any) => {
-  let res;
-  console.log(params);
-  await getUserList(params).then((response) => {
-    res = response.data.data.list;
-    total = response.data.data.totalSize;
-  });
-  return res;
-};
-
 export default defineComponent({
   setup() {
     const param = ref();
@@ -83,49 +95,34 @@ export default defineComponent({
       pageSize: 10,
       total: 0,
     });
-
     const loading = ref(false);
 
-    // const { data: dataSource, run, loading, current, pageSize } = usePagination(
-    //   queryData,
-    //   {
-    //     formatResult: (res: any) => res,
-    //     pagination: {
-    //       currentKey: "page",
-    //       pageSizeKey: "pageSize",
-    //     },
-    //   }
-    // );
-
-    // const pagination = computed(() => ({
-    //   total: total,
-    //   current: current.value,
-    //   pageSize: pageSize.value,
-    // }));
-
-    // const handleTableChange = (
-    //   pag: { pageSize: any; current: any },
-    //   filters: any,
-    //   sorter: { field: any; order: any }
-    // ) => {
-    //   run({
-    //     pageSize: pag.pageSize,
-    //     page: pag?.current,
-    //     sortField: sorter.field,
-    //     sortOrder: sorter.order,
-    //     ...filters,
-    //   });
-    // };
-
-    // const onSearch = () => {
-    //   handleTableChange;
-    // };
+    const handleQuery = (param: any) => {
+      loading.value = true;
+      userList.value = [];
+      getUserList(param).then((response) => {
+        loading.value = false;
+        const res = response.data;
+        console.log(res);
+        if (res.code === 200) {
+          userList.value = res.data.list;
+          // 重置分页按钮
+          pagination.value.current = param.page;
+          pagination.value.total = res.data.totalSize;
+          console.log(res.totalSize);
+        } else {
+          message.error(res.data.message);
+        }
+      });
+    };
 
     return {
       pagination,
       loading,
       columns,
-      userList
+      userList,
+      handleQuery,
+      param,
     };
   },
 });
