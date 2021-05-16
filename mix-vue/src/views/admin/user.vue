@@ -43,7 +43,6 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
-import { usePagination } from "vue-request";
 import { message } from "ant-design-vue";
 import { getUserList } from "@/api/admin/user";
 const columns = [
@@ -122,7 +121,8 @@ export default defineComponent({
     const handleTableChange = (pagination: any) => {
       handleQuery({
         page: pagination.current,
-        size: pagination.pageSize,
+        pageSize: pagination.pageSize,
+        username:param.value.name
       });
     };
 
