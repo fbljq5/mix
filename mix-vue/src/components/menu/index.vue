@@ -11,7 +11,7 @@
         </span>
       </template>
       <a-menu-item key="2">
-        <router-link to="/auth/user">用户管理</router-link>
+        <router-link to="/admin/user">用户管理</router-link>
       </a-menu-item>
       <a-menu-item key="3">角色管理 </a-menu-item>
       <a-menu-item key="4">菜单管理</a-menu-item>

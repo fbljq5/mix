@@ -4,27 +4,14 @@
       <a-breadcrumb-item>权限管理</a-breadcrumb-item>
       <a-breadcrumb-item>用户管理</a-breadcrumb-item>
     </a-breadcrumb>
-    <div>
-      <a-button type="default" style="margin: 0 20px 20px 0px"
-        >新增用户</a-button
-      >
-      <a-input-search
-        v-model:value="value"
-        placeholder="请输入用户名"
-        enter-button
-        @search="onSearch"
-        style="width: 30%; margin: 0 20px 20px 0px"
-      />
-    </div>
     <a-table
       :columns="columns"
       :row-key="(record) => record.id"
-      :data-source="dataSource"
+      :data-source="userList"
       :pagination="pagination"
       :loading="loading"
       @change="handleTableChange"
     >
-      <!-- <template #name="{ text }">{{ text.first }} {{ text.last }}</template> -->
     </a-table>
   </a-layout-content>
 </template>
@@ -88,48 +75,57 @@ const queryData = async (params: any) => {
 
 export default defineComponent({
   setup() {
-    const { data: dataSource, run, loading, current, pageSize } = usePagination(
-      queryData,
-      {
-        formatResult: (res: any) => res,
-        pagination: {
-          currentKey: "page",
-          pageSizeKey: "pageSize",
-        },
-      }
-    );
+    const param = ref();
+    param.value = {};
+    const userList = ref();
+    const pagination = ref({
+      current: 1,
+      pageSize: 10,
+      total: 0,
+    });
 
-    const pagination = computed(() => ({
-      total: total,
-      current: current.value,
-      pageSize: pageSize.value,
-    }));
+    const loading = ref(false);
 
-    const handleTableChange = (
-      pag: { pageSize: any; current: any },
-      filters: any,
-      sorter: { field: any; order: any }
-    ) => {
-      run({
-        pageSize: pag.pageSize,
-        page: pag?.current,
-        sortField: sorter.field,
-        sortOrder: sorter.order,
-        ...filters,
-      });
-    };
+    // const { data: dataSource, run, loading, current, pageSize } = usePagination(
+    //   queryData,
+    //   {
+    //     formatResult: (res: any) => res,
+    //     pagination: {
+    //       currentKey: "page",
+    //       pageSizeKey: "pageSize",
+    //     },
+    //   }
+    // );
 
-    const onSearch = () => {
-      handleTableChange;
-    };
+    // const pagination = computed(() => ({
+    //   total: total,
+    //   current: current.value,
+    //   pageSize: pageSize.value,
+    // }));
+
+    // const handleTableChange = (
+    //   pag: { pageSize: any; current: any },
+    //   filters: any,
+    //   sorter: { field: any; order: any }
+    // ) => {
+    //   run({
+    //     pageSize: pag.pageSize,
+    //     page: pag?.current,
+    //     sortField: sorter.field,
+    //     sortOrder: sorter.order,
+    //     ...filters,
+    //   });
+    // };
+
+    // const onSearch = () => {
+    //   handleTableChange;
+    // };
 
     return {
-      dataSource,
       pagination,
       loading,
       columns,
-      handleTableChange,
-      onSearch,
+      userList
     };
   },
 });

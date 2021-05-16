@@ -1,31 +1,35 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import { checkToken } from '@/api/admin/user'
+import Login from '@/views/login/index.vue'
+import Dashboard from '@/views/dashboard/index.vue'
+import Layout from '@/components/layout/layout.vue'
+import User from '@/views/admin/user.vue'
 
 const routes: Array<RouteRecordRaw> = [
 
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/views/login/index.vue'),
+    component: Login,
     meta: { title: '登录' }
   },
 
   {
     path: '/',
-    component: () => import('@/components/layout/layout.vue'),
+    component: Layout,
     redirect: '/dashboard',
     name: '首页',
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/views/dashboard/index.vue'),
+        component: Dashboard,
         meta: { title: '主页' }
       }]
   },
 
   {
-    path: '/auth',
-    component: () => import('@/components/layout/layout.vue'),
+    path: '/admin',
+    component: Layout,
     redirect: '/auth/user',
     name: '权限管理',
     meta: { title: '权限管理' },
@@ -33,7 +37,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'user',
         name: '用户管理',
-        component: () => import('@/views/auth/user.vue'),
+        component: User,
         meta: { title: '用户管理' }
       }]
   },
