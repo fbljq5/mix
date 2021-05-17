@@ -28,3 +28,10 @@ export function getUserList(parameter: any) {
         data: parameter
     })
 }
+
+export function deleteUser(id: any) {
+    return Request.axiosInstance({
+        url: "/mix-admin/user/delete/" + id,
+        method: "post"
+    })
+}

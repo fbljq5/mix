@@ -177,32 +177,23 @@
             <if test="username!=null">
                 user_name LIKE CONCAT('%',#{username},'%')
             </if>
+            and is_delete = 0 and status = 1
         </trim>
     </select>
-
-
-    <select id="selectByUserRequest_COUNT" parameterType="cn.liangjq.mix.common.dto.user.UserListRequest"
-            resultType="java.lang.Long">
-        select
-        count(1)
-        from t_user
-        <trim prefix="where" prefixOverrides="and">
-            <if test="username!=null">
-                user_name LIKE CONCAT('%',#{username},'%')
-            </if>
-        </trim>
-    </select>
-
     <select id="checkUserExistByUsername" parameterType="java.lang.String" resultType="java.lang.Boolean">
         select count(1)
         from t_user
         where user_name = #{username}
+          and is_delete = 0
+          and status = 1
     </select>
 
     <select id="checkUserExistById" parameterType="java.lang.Long" resultType="java.lang.Boolean">
         select count(1)
         from t_user
         where id = #{userId}
+          and is_delete = 0
+          and status = 1
     </select>
 
     <select id="checkUserExistByIdAndName" resultType="java.lang.Boolean">
@@ -210,5 +201,7 @@
         from t_user
         where user_name = #{username}
           and id != #{userId}
+          and is_delete = 0
+          and status = 1
     </select>
 </mapper>
