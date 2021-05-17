@@ -35,3 +35,12 @@ export function deleteUser(id: any) {
         method: "post"
     })
 }
+
+export function saveOrUpdateUser(userVO:any){
+    console.log("userVO",userVO)
+    return Request.axiosInstance({
+        url: "/mix-admin/user/add/",
+        method: "post",
+        data: userVO
+    })
+}

@@ -179,6 +179,7 @@
             </if>
             and is_delete = 0 and status = 1
         </trim>
+        order by gmt_create desc
     </select>
     <select id="checkUserExistByUsername" parameterType="java.lang.String" resultType="java.lang.Boolean">
         select count(1)
