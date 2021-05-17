@@ -79,6 +79,8 @@ export default defineComponent({
         if (res.code == 200) {
           localStorage.setItem("MIX_TOKEN", res.data);
           router.push("/");
+        }else{
+          message.error(res.msg);
         }
       });
     };

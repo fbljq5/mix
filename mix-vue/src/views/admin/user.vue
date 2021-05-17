@@ -6,10 +6,12 @@
     </a-breadcrumb>
 
     <p>
-      <a-form layout="inline" :model="param">
+      <a-form layout="inline" :model="param" ref="formRef">
         <a-form-item>
-          <a-input v-model:value="param.name" placeholder="查询用户名"> </a-input>
+          <a-input v-model:value="param.name" placeholder="查询用户名">
+          </a-input>
         </a-form-item>
+
         <a-form-item>
           <a-button
             type="primary"
@@ -23,6 +25,9 @@
           >
             查询
           </a-button>
+        </a-form-item>
+        <a-form-item>
+          <a-button @click="resetForm">重置</a-button>
         </a-form-item>
         <a-form-item>
           <a-button type="default" @click="add()"> 新增 </a-button>
@@ -106,6 +111,7 @@ const columns = [
 
 export default defineComponent({
   setup() {
+    const formRef = ref();
     const param = ref();
     param.value = {};
     const userList = ref();
@@ -115,6 +121,14 @@ export default defineComponent({
       total: 0,
     });
     const loading = ref(false);
+
+    const resetForm = () => {
+      param.value.name = "";
+      handleQuery({
+        page: 1,
+        pageSize: pagination.value.pageSize,
+      });
+    };
 
     const handleQuery = (param: any) => {
       loading.value = true;
@@ -183,6 +197,7 @@ export default defineComponent({
       param,
       handleTableChange,
       handleDelete,
+      resetForm,
     };
   },
 });
