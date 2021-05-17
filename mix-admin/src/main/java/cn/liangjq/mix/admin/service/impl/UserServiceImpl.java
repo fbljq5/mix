@@ -56,16 +56,16 @@ public class UserServiceImpl implements IUserService {
         }
         User user = userMapper.findUserByUsername(loginVO.getUsername());
         if (null == user) {
-            return R.fail();
+            return R.fail("用户名或密码有误");
         }
         if (!Objects.equals(MD5Utils.getMd5(loginVO.getPassword()), user.getPassword())) {
-            return R.fail();
+            return R.fail("用户名或密码有误");
         }
         // 获得角色列表
         List<Role> roleList = roleMapper.getRoleListByUserId(user.getId());
         List<String> roleNameList = roleList.stream().map(Role::getRoleName).collect(Collectors.toList());
         if (CollectionUtils.isEmpty(roleNameList)) {
-            return R.fail();
+            return R.fail("当前用户没有角色权限");
         }
         // 账号密码校验成功
         // 生成token
@@ -73,9 +73,13 @@ public class UserServiceImpl implements IUserService {
                 jwtConfig.getExpiresSecond(), jwtConfig.getSecret());
 
         if (StringUtils.isBlank(token)) {
-            return R.fail();
+            return R.fail("token不能为空");
         }
         redisUtil.setEx(token, token, jwtConfig.getExpiresSecond(), TimeUnit.SECONDS);
+        //更新用户最近登录信息
+        user.setLoginDate(new Date());
+        user.login();
+        userMapper.updateByPrimaryKeySelective(user);
         return R.ok(token);
     }
 
@@ -137,7 +141,8 @@ public class UserServiceImpl implements IUserService {
             return R.fail("用户不存在");
         }
         //删除用户角色关联记录
-        userRoleMapper.deleteUserRoleAssgin(userId);
+        // TODO 暂时不删除角色关联
+        //userRoleMapper.deleteUserRoleAssgin(userId);
         user.delete();
         int result = userMapper.updateByPrimaryKeySelective(user);
         if (result > 0) {

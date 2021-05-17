@@ -83,6 +83,16 @@ public class User extends BaseEntity {
     }
 
     /**
+     * 用户登录逻辑
+     *
+     * @return
+     */
+    public final User login() {
+        this.setLoginDate(new Date());
+        return this;
+    }
+
+    /**
      * 修改密码
      *
      * @return
