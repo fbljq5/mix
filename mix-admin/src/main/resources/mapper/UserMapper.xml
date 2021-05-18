@@ -201,7 +201,7 @@
         select count(1)
         from t_user
         where user_name = #{username}
-          and id != #{userId}
+          and id != #{id}
           and is_delete = 0
           and status = 1
     </select>

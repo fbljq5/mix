@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.http.client.utils.DateUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -170,7 +171,10 @@ public class UserServiceImpl implements IUserService {
         }
         // 更新用户
         BeanUtils.copyProperties(updateDTO, user);
-        user.setGmtModified(new Date());
+        if (StringUtils.isNotBlank(updateDTO.getPassword())) {
+            user.modifyPwd();
+        }
+        user.update();
         int i = userMapper.updateByPrimaryKeySelective(user);
         if (i > 0) {
             return R.ok("更新成功");
@@ -255,13 +259,13 @@ public class UserServiceImpl implements IUserService {
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user, userVO);
         if (user.getLoginDate() != null) {
-            userVO.setLoginDate(DateUtils.formatDate(user.getLoginDate(), "yyyy-MM-dd HH:mm"));
+            userVO.setLoginDate(DateFormatUtils.format(user.getLoginDate(), "yyyy-MM-dd HH:mm"));
         }
         if (user.getGmtCreate() != null) {
-            userVO.setGmtCreate(DateUtils.formatDate(user.getGmtCreate(), "yyyy-MM-dd HH:mm"));
+            userVO.setGmtCreate(DateFormatUtils.format(user.getGmtCreate(), "yyyy-MM-dd HH:mm"));
         }
         if (user.getGmtModified() != null) {
-            userVO.setGmtModified(DateUtils.formatDate(user.getGmtModified(), "yyyy-MM-dd HH:mm"));
+            userVO.setGmtModified(DateFormatUtils.format(user.getGmtModified(), "yyyy-MM-dd HH:mm"));
         }
 
         return userVO;

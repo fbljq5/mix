@@ -98,7 +98,6 @@ public class User extends BaseEntity {
      * @return
      */
     public final User modifyPwd() {
-        this.setGmtModified(new Date());
         this.setPassword((MD5Utils.getMd5(this.getPassword())));
         return this;
     }

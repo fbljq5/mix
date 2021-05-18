@@ -87,7 +87,8 @@
 <script lang="ts">
 import {defineComponent, ref, onMounted} from "vue";
 import {message} from "ant-design-vue";
-import {getUserList, deleteUser, saveOrUpdateUser} from "@/api/admin/user";
+import {getUserList, deleteUser, saveUser, updateUser} from "@/api/admin/user";
+import {Tool} from '@/utils/tool';
 
 const columns = [
   {
@@ -96,7 +97,7 @@ const columns = [
     sorter: true,
     width: "20%",
     slots: {
-      customRender: "name",
+      customRender: "userName",
     },
   },
   {
@@ -209,12 +210,13 @@ export default defineComponent({
       });
     };
 
-
     const user = ref()
     const modelVisible = ref(false);
     const modalLoading = ref(false);
+    // 编辑
     const edit = (record: any) => {
       modelVisible.value = true;
+      user.value = Tool.copy(record);
     };
     const add = () => {
       modelVisible.value = true;
@@ -223,9 +225,15 @@ export default defineComponent({
 
     const handleSaveOrUpdate = () => {
       modalLoading.value = true;
-      console.log("userValue",user.value.userName)
-      saveOrUpdateUser(user.value).then(response => {
+      let promise;
+      if (Tool.isNotEmpty(user.value.id)) {
+        promise = updateUser(user.value)
+      } else {
+        promise = saveUser(user.value)
+      }
+      promise.then(response => {
         let res = response.data;
+        console.log("res", res);
         if (res.code === 200) {
           message.success("操作成功");
           modalLoading.value = false;

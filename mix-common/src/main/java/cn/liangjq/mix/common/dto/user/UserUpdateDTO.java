@@ -35,4 +35,9 @@ public class UserUpdateDTO {
      */
     private String remark;
 
+    /**
+     * 密码 password
+     */
+    private String password;
+
 }
