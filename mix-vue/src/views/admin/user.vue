@@ -65,7 +65,17 @@
       <a-form-item label="用户名">
         <a-input v-model:value="user.userName"></a-input>
       </a-form-item>
-
+      <a-form-item label="角色">
+        <a-select
+            mode="multiple"
+            placeholder="请选择角色"
+            @change="handleRoleChange"
+        >
+          <a-select-option v-for="i in 25" :key="(i + 9).toString(36) + i">
+            {{ (i + 9).toString(36) + i }}
+          </a-select-option>
+        </a-select>
+      </a-form-item>
       <a-form-item label="邮箱地址">
         <a-input v-model:value="user.email"></a-input>
       </a-form-item>
@@ -213,6 +223,10 @@ export default defineComponent({
     const user = ref()
     const modelVisible = ref(false);
     const modalLoading = ref(false);
+    const handleRoleChange = (data:any)=>{
+      console.log(data);
+      user.value.roleIds = data;
+    }
     // 编辑
     const edit = (record: any) => {
       modelVisible.value = true;
@@ -245,7 +259,7 @@ export default defineComponent({
           message.error(res.msg);
           modalLoading.value = false;
         }
-      }).catch(err =>{
+      }).catch(err => {
         modalLoading.value = false;
       })
     }
@@ -273,6 +287,7 @@ export default defineComponent({
       edit,
       add,
       handleSaveOrUpdate,
+      handleRoleChange
     };
   },
 });
