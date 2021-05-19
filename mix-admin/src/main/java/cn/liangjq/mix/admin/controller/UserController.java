@@ -10,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,7 +67,7 @@ public class UserController {
 
     @PostMapping("/add")
     @ApiOperation("新增用户")
-    public R<String> addUser(@RequestBody UserAddDTO userAddDTO) {
+    public R<String> addUser(@Validated @RequestBody UserAddDTO userAddDTO) {
         return userService.addUser(userAddDTO);
     }
 
@@ -78,7 +79,7 @@ public class UserController {
 
     @PostMapping("/update")
     @ApiOperation("更新用户信息")
-    public R<String> updateUser(@RequestBody UserUpdateDTO updateDTO) {
+    public R<String> updateUser(@Validated @RequestBody UserUpdateDTO updateDTO) {
         return userService.updateUser(updateDTO);
     }
 
