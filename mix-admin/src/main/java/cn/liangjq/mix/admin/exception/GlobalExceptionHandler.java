@@ -9,13 +9,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.stream.Collectors;
 
-/** 
- * @Description: 全局异常处理器 
- * 
+/**
+ * @Description: 全局异常处理器
  * @Author: liangjianqiang
- *
- * @Date: 2021/5/19 
- */ 
+ * @Date: 2021/5/19
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
