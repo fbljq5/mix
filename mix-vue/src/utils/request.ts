@@ -68,8 +68,11 @@ export class Request {
     }
 
     private static errorHandler(res: any) {
-        console.log(res)
+        console.log('errorRes',res)
         switch (res.status) {
+            case 400:
+                message.error(res.data.msg);
+                break;
             case 401:
                 break;
             case 403:

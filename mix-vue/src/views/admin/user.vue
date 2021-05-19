@@ -233,7 +233,6 @@ export default defineComponent({
       }
       promise.then(response => {
         let res = response.data;
-        console.log("res", res);
         if (res.code === 200) {
           message.success("操作成功");
           modalLoading.value = false;
@@ -246,6 +245,8 @@ export default defineComponent({
           message.error(res.msg);
           modalLoading.value = false;
         }
+      }).catch(err =>{
+        modalLoading.value = false;
       })
     }
 

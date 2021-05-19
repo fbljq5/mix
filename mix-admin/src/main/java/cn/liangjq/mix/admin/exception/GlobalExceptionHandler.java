@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
         String failMessage = e.getBindingResult().getFieldErrors()
                 .stream()
                 .map(fieldError -> {
-                    return String.format("[%s: %s]\n", fieldError.getField(), fieldError.getDefaultMessage());
+                    return String.format("[%s]\n", fieldError.getDefaultMessage());
                 }).collect(Collectors.joining());
         return R.fail(failMessage);
     }
