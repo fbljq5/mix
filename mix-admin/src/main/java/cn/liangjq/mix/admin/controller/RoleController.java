@@ -2,16 +2,15 @@ package cn.liangjq.mix.admin.controller;
 
 import cn.liangjq.mix.admin.service.IRoleService;
 import cn.liangjq.mix.common.dto.PageResponse;
-import cn.liangjq.mix.common.dto.role.RoleAddDTO;
-import cn.liangjq.mix.common.dto.role.RoleAssignMenusDTO;
-import cn.liangjq.mix.common.dto.role.RoleListRequest;
-import cn.liangjq.mix.common.dto.role.RoleUpdateDTO;
+import cn.liangjq.mix.common.dto.role.*;
 import cn.liangjq.mix.common.result.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author ： liangjq
@@ -27,10 +26,16 @@ public class RoleController {
 
     private final IRoleService roleService;
 
+    @PostMapping("/page")
+    @ApiOperation("分页获得角色信息")
+    public R<PageResponse> pageRoleInfo(@RequestBody RolePageRequest request) {
+        return roleService.pageRole(request);
+    }
+
     @PostMapping("/list")
     @ApiOperation("分页获得角色信息")
-    public R<PageResponse> pageRoleInfo(@RequestBody RoleListRequest request) {
-        return roleService.pageRole(request);
+    public R<List<RoleListDTO>> pageRoleInfo(Long userId) {
+        return roleService.listRole(userId);
     }
 
     @GetMapping("/find/{roleId}")

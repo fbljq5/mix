@@ -1,12 +1,11 @@
 package cn.liangjq.mix.admin.service;
 
 import cn.liangjq.mix.common.dto.PageResponse;
-import cn.liangjq.mix.common.dto.role.RoleAddDTO;
-import cn.liangjq.mix.common.dto.role.RoleAssignMenusDTO;
-import cn.liangjq.mix.common.dto.role.RoleListRequest;
-import cn.liangjq.mix.common.dto.role.RoleUpdateDTO;
+import cn.liangjq.mix.common.dto.role.*;
 import cn.liangjq.mix.common.entity.Role;
 import cn.liangjq.mix.common.result.R;
+
+import java.util.List;
 
 /**
  * @author ： liangjq
@@ -37,7 +36,7 @@ public interface IRoleService {
      * @param request
      * @return
      */
-    R<PageResponse> pageRole(RoleListRequest request);
+    R<PageResponse> pageRole(RolePageRequest request);
 
     /**
      * 新增角色信息
@@ -71,4 +70,11 @@ public interface IRoleService {
      */
     R<String> assignMenus(RoleAssignMenusDTO roleAssignMenusDTO);
 
+    /**
+     * 获得角色列表，如果有userid则需要标记是否拥有该角色
+     *
+     * @param userId
+     * @return
+     */
+    R<List<RoleListDTO>> listRole(Long userId);
 }

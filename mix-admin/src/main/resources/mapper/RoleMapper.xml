@@ -13,7 +13,8 @@
         <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, role_name, role_code, role_sort, status, is_delete, remark, gmt_create, gmt_modified
+        id
+        , role_name, role_code, role_sort, status, is_delete, remark, gmt_create, gmt_modified
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -156,7 +157,7 @@
         </foreach>
     </select>
 
-    <select id="selectByRoleListRequest" parameterType="cn.liangjq.mix.common.dto.role.RoleListRequest"
+    <select id="selectByRoleListRequest" parameterType="cn.liangjq.mix.common.dto.role.RolePageRequest"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -183,7 +184,14 @@
         from t_role
         where id != #{roleId}
           AND (
-                role_name = #{roleName}
-                OR role_code = #{roleCode})
+            role_name = #{roleName}
+           OR role_code = #{roleCode})
     </select>
+
+    <select id="list" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_role
+    </select>
+
 </mapper>

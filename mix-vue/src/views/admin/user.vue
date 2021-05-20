@@ -71,9 +71,9 @@
             placeholder="请选择角色"
             @change="handleRoleChange"
         >
-          <a-select-option v-for="i in 25" :key="(i + 9).toString(36) + i">
-            {{ (i + 9).toString(36) + i }}
-          </a-select-option>
+<!--          <a-select-option v-for="{role,key} in roleList" :key="{{key}}">-->
+<!--            {{role.roleName}}-->
+<!--          </a-select-option>-->
         </a-select>
       </a-form-item>
       <a-form-item label="邮箱地址">
@@ -98,6 +98,7 @@
 import {defineComponent, ref, onMounted} from "vue";
 import {message} from "ant-design-vue";
 import {getUserList, deleteUser, saveUser, updateUser} from "@/api/admin/user";
+import {listRole} from '@/api/admin/role'
 import {Tool} from '@/utils/tool';
 
 const columns = [
@@ -223,18 +224,20 @@ export default defineComponent({
     const user = ref()
     const modelVisible = ref(false);
     const modalLoading = ref(false);
-    const handleRoleChange = (data:any)=>{
-      console.log(data);
-      user.value.roleIds = data;
+    const roleList = ref();
+    const handleRoleChange = (data: any) => {
+      user.value.roleIds = data.toString();
     }
     // 编辑
     const edit = (record: any) => {
       modelVisible.value = true;
       user.value = Tool.copy(record);
+      roleList.value = listRole(record.id);
     };
     const add = () => {
       modelVisible.value = true;
       user.value = {};
+      roleList.value = listRole;
     };
 
     const handleSaveOrUpdate = () => {
@@ -287,7 +290,8 @@ export default defineComponent({
       edit,
       add,
       handleSaveOrUpdate,
-      handleRoleChange
+      handleRoleChange,
+      roleList
     };
   },
 });

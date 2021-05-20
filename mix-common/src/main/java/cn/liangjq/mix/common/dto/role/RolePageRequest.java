@@ -9,7 +9,7 @@ import lombok.Data;
  * @date ： 2021/4/23
  */
 @Data
-public class RoleListRequest extends PageBaseRequest {
+public class RolePageRequest extends PageBaseRequest {
 
     /**
      * 角色名称 role_name

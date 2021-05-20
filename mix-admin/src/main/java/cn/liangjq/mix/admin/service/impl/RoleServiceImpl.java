@@ -9,13 +9,14 @@ import cn.liangjq.mix.common.dto.PageResponse;
 import cn.liangjq.mix.common.dto.role.*;
 import cn.liangjq.mix.common.entity.Role;
 import cn.liangjq.mix.common.result.R;
+import com.alibaba.nacos.common.utils.CollectionUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -46,7 +47,7 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public R<PageResponse> pageRole(RoleListRequest request) {
+    public R<PageResponse> pageRole(RolePageRequest request) {
         PageResponse pageResponse = PageUtils.setPageResult(request, () ->
                 roleMapper.selectByRoleListRequest(request)
                         .stream().map(this::toRoleVO)
@@ -144,6 +145,47 @@ public class RoleServiceImpl implements IRoleService {
         // 插入新增的关联
         roleMenuMapper.assginRoleMenu(roleAssignMenusDTO.getId(), roleAssignMenusDTO.getMenuIds());
         return R.ok("分配成功");
+    }
+
+    @Override
+    public R<List<RoleListDTO>> listRole(Long userId) {
+        List<Role> roleList = roleMapper.list();
+        if (null != userId) {
+            // 直接返回列表
+            List<Role> roleListByUser = roleMapper.getRoleListByUserId(userId);
+            if (CollectionUtils.isNotEmpty(roleListByUser)) {
+                List<Long> selectedIdList = roleListByUser.stream().map(Role::getId).collect(Collectors.toList());
+                return R.ok(this.transfer(roleList, selectedIdList));
+            }
+        }
+        return R.ok(this.transfer(roleList, null));
+    }
+
+    private List<RoleListDTO> transfer(List<Role> roleList, List<Long> hasRoleIdList) {
+        boolean checkHasRole = true;
+        if (null == hasRoleIdList) {
+            checkHasRole = false;
+        }
+        if (CollectionUtils.isEmpty(roleList)) {
+            return null;
+        }
+
+        List<RoleListDTO> res = roleList.stream().map(role -> {
+            return constructRoleListDTO(role, hasRoleIdList.contains(role.getId()));
+        }).collect(Collectors.toList());
+
+        return res;
+    }
+
+    public RoleListDTO constructRoleListDTO(Role role, Boolean hasRole) {
+        if (role == null) {
+            return null;
+        }
+        return RoleListDTO.builder()
+                .id(role.getId())
+                .roleName(role.getRoleName())
+                .hasRole(hasRole)
+                .build();
     }
 
     private RoleUpdateDTO toRoleUpdateDTO(Role role) {
