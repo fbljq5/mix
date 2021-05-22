@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -49,7 +50,7 @@ public class UserAddDTO {
      */
     private String remark;
 
-    @NotBlank(message = "角色不能为空")
-    private String roleIds;
+    @NotNull(message = "角色不能为空")
+    private Long[] roleIds;
 
 }

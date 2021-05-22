@@ -133,7 +133,7 @@ public class UserServiceImpl implements IUserService {
         return R.fail("新增失败");
     }
 
-    private void updateUserRole(Long userId, String roleIds) {
+    private void updateUserRole(Long userId, Long[] roleIds) {
         this.removeUserRole(userId);
         this.addUserRole(userId, roleIds);
     }
@@ -151,24 +151,16 @@ public class UserServiceImpl implements IUserService {
      * @param userId
      * @param roleIds
      */
-    private void addUserRole(Long userId, String roleIds) {
-        if (userId == null || StringUtils.isBlank(roleIds)) {
+    private void addUserRole(Long userId, Long[] roleIds) {
+        if (userId == null || null==roleIds) {
             throw new OperationException("数据有误");
         }
-        if (roleIds.contains(",")) {
-            String[] roleIdArr = roleIds.split(",");
-            for (String id : roleIdArr) {
-                this.doAddUserRole(userId, id);
-            }
-        } else {
-            this.doAddUserRole(userId, roleIds);
+        for(Long roleId:roleIds){
+            this.doAddUserRole(userId, roleId);
         }
     }
 
-    private void doAddUserRole(Long userId, String roleId) {
-        if (!StringUtils.isNumeric(roleId)) {
-            throw new OperationException("角色id格式有误");
-        }
+    private void doAddUserRole(Long userId, Long roleId) {
         userRoleMapper.insert(UserRole.builder().roleId(Long.valueOf(roleId)).userId(userId).build());
     }
 

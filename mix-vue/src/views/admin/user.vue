@@ -68,6 +68,7 @@
       <a-form-item label="角色">
         <a-select
             mode="multiple"
+            v-model:value="user.selectedRoles"
             placeholder="请选择角色"
             @change="handleRoleChange">
           <a-select-option v-for="role in roleList" :key="role.id" :value="role.id">
@@ -225,7 +226,7 @@ export default defineComponent({
     const modalLoading = ref(false);
     const roleList = ref();
     const handleRoleChange = (data: any) => {
-      user.value.roleIds = data.toString();
+      user.value.roleIds = data;
     }
     // 编辑
     const edit = async (record: any) => {
@@ -237,6 +238,14 @@ export default defineComponent({
         let res = response.data;
         if (res.code == 200) {
           roleList.value = res.data;
+          user.value.selectedRoles=[];
+          for(let index in res.data){
+            let roleTemp = res.data[index];
+            if(roleTemp.hasRole){
+              user.value.selectedRoles.push(roleTemp.id);
+            }
+          }
+          console.log("rolelIST",user.value.selectedRoles);
         }
       })
     };
