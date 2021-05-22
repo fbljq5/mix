@@ -69,11 +69,10 @@
         <a-select
             mode="multiple"
             placeholder="请选择角色"
-            @change="handleRoleChange"
-        >
-<!--          <a-select-option v-for="{role,key} in roleList" :key="{{key}}">-->
-<!--            {{role.roleName}}-->
-<!--          </a-select-option>-->
+            @change="handleRoleChange">
+          <a-select-option v-for="role in roleList" :key="role.id" :value="role.id">
+            {{ role.roleName }}
+          </a-select-option>
         </a-select>
       </a-form-item>
       <a-form-item label="邮箱地址">
@@ -229,15 +228,29 @@ export default defineComponent({
       user.value.roleIds = data.toString();
     }
     // 编辑
-    const edit = (record: any) => {
+    const edit = async (record: any) => {
+      user.value = "";
       modelVisible.value = true;
       user.value = Tool.copy(record);
-      roleList.value = listRole(record.id);
+      console.log("record", record.id)
+      await listRole({"userId": record.id}).then(response => {
+        let res = response.data;
+        if (res.code == 200) {
+          roleList.value = res.data;
+        }
+      })
     };
-    const add = () => {
+    //新增
+    const add = async () => {
       modelVisible.value = true;
       user.value = {};
       roleList.value = listRole;
+      await listRole(null).then(response => {
+        let res = response.data;
+        if (res.code == 200) {
+          roleList.value = res.data;
+        }
+      })
     };
 
     const handleSaveOrUpdate = () => {

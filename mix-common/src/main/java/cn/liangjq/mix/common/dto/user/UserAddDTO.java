@@ -14,6 +14,8 @@ import java.util.Date;
  */
 @Data
 public class UserAddDTO {
+
+    private Long id;
     /**
      * 用户名称 user_name
      */
@@ -46,5 +48,8 @@ public class UserAddDTO {
      * 备注 remark
      */
     private String remark;
+
+    @NotBlank(message = "角色不能为空")
+    private String roleIds;
 
 }

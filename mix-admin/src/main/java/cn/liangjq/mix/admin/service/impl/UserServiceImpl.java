@@ -3,6 +3,7 @@ package cn.liangjq.mix.admin.service.impl;
 import cn.liangjq.mix.admin.dao.RoleMapper;
 import cn.liangjq.mix.admin.dao.UserMapper;
 import cn.liangjq.mix.admin.dao.UserRoleMapper;
+import cn.liangjq.mix.admin.exception.OperationException;
 import cn.liangjq.mix.admin.service.IUserService;
 import cn.liangjq.mix.admin.util.PageUtils;
 import cn.liangjq.mix.common.config.JwtConfig;
@@ -124,10 +125,51 @@ public class UserServiceImpl implements IUserService {
         User user = this.toUser(userAddDTO);
         user.add();
         int insert = userMapper.insert(user);
+        this.updateUserRole(user.getId(), userAddDTO.getRoleIds());
+        // 新增角色
         if (insert > 0) {
             return R.ok("新增成功");
         }
         return R.fail("新增失败");
+    }
+
+    private void updateUserRole(Long userId, String roleIds) {
+        this.removeUserRole(userId);
+        this.addUserRole(userId, roleIds);
+    }
+
+    /**
+     * 移除用户角色关联
+     *
+     * @param userId
+     */
+    private void removeUserRole(Long userId) {
+        userRoleMapper.deleteUserRoleAssgin(userId);
+    }
+
+    /**
+     * @param userId
+     * @param roleIds
+     */
+    private void addUserRole(Long userId, String roleIds) {
+        if (userId == null || StringUtils.isBlank(roleIds)) {
+            throw new OperationException("数据有误");
+        }
+        if (roleIds.contains(",")) {
+            String[] roleIdArr = roleIds.split(",");
+            for (String id : roleIdArr) {
+                this.doAddUserRole(userId, id);
+            }
+        } else {
+            this.doAddUserRole(userId, roleIds);
+        }
+    }
+
+    private void doAddUserRole(Long userId, String roleId) {
+        if (!StringUtils.isNumeric(roleId)) {
+            throw new OperationException("角色id格式有误");
+        }
+        userRoleMapper.insert(UserRole.builder().roleId(Long.valueOf(roleId)).userId(userId).build());
     }
 
     @Override
@@ -146,6 +188,7 @@ public class UserServiceImpl implements IUserService {
         //userRoleMapper.deleteUserRoleAssgin(userId);
         user.delete();
         int result = userMapper.updateByPrimaryKeySelective(user);
+        this.removeUserRole(userId);
         if (result > 0) {
             return R.ok("删除成功");
         }
@@ -176,6 +219,7 @@ public class UserServiceImpl implements IUserService {
         }
         user.update();
         int i = userMapper.updateByPrimaryKeySelective(user);
+        this.updateUserRole(updateDTO.getId(), updateDTO.getRoleIds());
         if (i > 0) {
             return R.ok("更新成功");
         }

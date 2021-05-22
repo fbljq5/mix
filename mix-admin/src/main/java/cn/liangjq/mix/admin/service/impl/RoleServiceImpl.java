@@ -162,29 +162,25 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     private List<RoleListDTO> transfer(List<Role> roleList, List<Long> hasRoleIdList) {
-        boolean checkHasRole = true;
-        if (null == hasRoleIdList) {
-            checkHasRole = false;
-        }
+
         if (CollectionUtils.isEmpty(roleList)) {
             return null;
         }
-
         List<RoleListDTO> res = roleList.stream().map(role -> {
-            return constructRoleListDTO(role, hasRoleIdList.contains(role.getId()));
+            return constructRoleListDTO(role, hasRoleIdList);
         }).collect(Collectors.toList());
 
         return res;
     }
 
-    public RoleListDTO constructRoleListDTO(Role role, Boolean hasRole) {
+    public RoleListDTO constructRoleListDTO(Role role, List<Long> hasRoleIdList) {
         if (role == null) {
             return null;
         }
         return RoleListDTO.builder()
                 .id(role.getId())
                 .roleName(role.getRoleName())
-                .hasRole(hasRole)
+                .hasRole(hasRoleIdList==null?null:hasRoleIdList.contains(role.getId()))
                 .build();
     }
 

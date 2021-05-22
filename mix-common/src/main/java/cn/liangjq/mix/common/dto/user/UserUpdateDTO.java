@@ -58,4 +58,7 @@ public class UserUpdateDTO {
     @Length(min = 6, max = 50, message = "密码为6-50位")
     private String password;
 
+    @NotBlank(message = "角色不能为空")
+    private String roleIds;
+
 }

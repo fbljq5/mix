@@ -4,6 +4,7 @@ import cn.liangjq.mix.common.result.R;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -25,6 +26,13 @@ public class GlobalExceptionHandler {
                 .map(fieldError -> {
                     return String.format("[%s]\n", fieldError.getDefaultMessage());
                 }).collect(Collectors.joining());
+        return R.fail(failMessage);
+    }
+
+    @ExceptionHandler(OperationException.class)
+    @ResponseBody
+    public R<String> handlerOperationException(OperationException e) {
+        String failMessage = e.getMessage();
         return R.fail(failMessage);
     }
 }
