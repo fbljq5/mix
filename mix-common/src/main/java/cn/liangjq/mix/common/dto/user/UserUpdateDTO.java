@@ -52,12 +52,6 @@ public class UserUpdateDTO {
      */
     private String remark;
 
-    /**
-     * 密码 password
-     */
-    @Length(min = 6, max = 50, message = "密码为6-50位")
-    private String password;
-
     @NotNull(message = "角色不能为空")
     private Long[] roleIds;
 

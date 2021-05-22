@@ -44,7 +44,7 @@
         @change="handleTableChange"
     >
       <template v-slot:action="{ record }">
-        <a-space size="small">
+        <a-space size="large">
           <a-button type="primary" @click="edit(record)"> 编辑</a-button>
           <a-popconfirm
               title="删除后不可恢复，确认删除?"
@@ -54,6 +54,7 @@
           >
             <a-button type="danger"> 删除</a-button>
           </a-popconfirm>
+          <a-button type="default" @click="showModifyPwd(record)"> 重置密码</a-button>
         </a-space>
       </template>
     </a-table>
@@ -93,11 +94,21 @@
       </a-form-item>
     </a-form>
   </a-modal>
+
+  <a-modal v-model:visible="modifyPwdModelVisible" title="重置密码" @ok="handleModifyPassword"
+           :confirm-loading="modalLoading">
+    <label>请输入"{{ modifyPwdVO.username }}"的新密码：</label>
+    <a-form :model="modifyPwdVO" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+      <a-form-item>
+        <a-input v-model:value="modifyPwdVO.password" type="password"></a-input>
+      </a-form-item>
+    </a-form>
+  </a-modal>
 </template>
 <script lang="ts">
 import {defineComponent, ref, onMounted} from "vue";
 import {message} from "ant-design-vue";
-import {getUserList, deleteUser, saveUser, updateUser} from "@/api/admin/user";
+import {getUserList, deleteUser, saveUser, updateUser, modifyPwd} from "@/api/admin/user";
 import {listRole} from '@/api/admin/role'
 import {Tool} from '@/utils/tool';
 
@@ -106,40 +117,42 @@ const columns = [
     title: "用户名",
     dataIndex: "userName",
     sorter: true,
-    width: "20%",
+    width: "15%",
     slots: {
       customRender: "userName",
     },
   },
   {
     title: "Email",
+    width: "15%",
     dataIndex: "email",
   },
   {
     title: "手机号码",
-    width: "20%",
+    width: "10%",
     dataIndex: "phone",
   },
 
   {
     title: "最近登录时间",
-    width: "20%",
+    width: "15%",
     dataIndex: "loginDate",
   },
 
   {
     title: "创建时间",
-    width: "20%",
+    width: "15%",
     dataIndex: "gmtCreate",
   },
 
   {
     title: "备注",
-    width: "20%",
+    width: "10%",
     dataIndex: "remark",
   },
   {
     title: "操作",
+    width: "25%",
     key: "action",
     slots: {
       customRender: "action",
@@ -238,14 +251,13 @@ export default defineComponent({
         let res = response.data;
         if (res.code == 200) {
           roleList.value = res.data;
-          user.value.selectedRoles=[];
-          for(let index in res.data){
+          user.value.selectedRoles = [];
+          for (let index in res.data) {
             let roleTemp = res.data[index];
-            if(roleTemp.hasRole){
+            if (roleTemp.hasRole) {
               user.value.selectedRoles.push(roleTemp.id);
             }
           }
-          console.log("rolelIST",user.value.selectedRoles);
         }
       })
     };
@@ -261,6 +273,7 @@ export default defineComponent({
         }
       })
     };
+
 
     const handleSaveOrUpdate = () => {
       modalLoading.value = true;
@@ -289,6 +302,35 @@ export default defineComponent({
       })
     }
 
+    const modifyPwdModelVisible = ref(false);
+    const modifyPwdVO = ref({
+      id: Number,
+      username: '',
+      password: ''
+    });
+
+    // 重置密码
+    const showModifyPwd = (record: any) => {
+      modifyPwdModelVisible.value = true;
+      modifyPwdVO.value.id = record.id;
+      modifyPwdVO.value.username = record.userName;
+    }
+
+    const handleModifyPassword = () => {
+      modifyPwd(modifyPwdVO.value).then((response) => {
+        console.log("response", response);
+        let res = response.data;
+        if (res.code == 200) {
+          modifyPwdModelVisible.value = false;
+          message.success("修改成功");
+          modifyPwdVO.value.password = ''
+          modifyPwdVO.value.username = '';
+        } else {
+          message.error(res.msg);
+        }
+      })
+    }
+
     onMounted(() => {
       handleQuery({
         page: 1,
@@ -313,7 +355,11 @@ export default defineComponent({
       add,
       handleSaveOrUpdate,
       handleRoleChange,
-      roleList
+      roleList,
+      showModifyPwd,
+      modifyPwdModelVisible,
+      modifyPwdVO,
+      handleModifyPassword
     };
   },
 });

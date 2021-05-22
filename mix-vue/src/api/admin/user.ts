@@ -53,3 +53,12 @@ export function updateUser(userVO:any){
         data: userVO
     })
 }
+
+export function modifyPwd(modifyPwdVO:any){
+    console.log("modifyPwdVO",modifyPwdVO)
+    return Request.axiosInstance({
+        url: "/mix-admin/user/modifyPwd/",
+        method: "post",
+        data: modifyPwdVO
+    })
+}

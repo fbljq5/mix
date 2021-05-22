@@ -152,10 +152,10 @@ public class UserServiceImpl implements IUserService {
      * @param roleIds
      */
     private void addUserRole(Long userId, Long[] roleIds) {
-        if (userId == null || null==roleIds) {
+        if (userId == null || null == roleIds) {
             throw new OperationException("数据有误");
         }
-        for(Long roleId:roleIds){
+        for (Long roleId : roleIds) {
             this.doAddUserRole(userId, roleId);
         }
     }
@@ -175,9 +175,6 @@ public class UserServiceImpl implements IUserService {
         if (user == null) {
             return R.fail("用户不存在");
         }
-        //删除用户角色关联记录
-        // TODO 暂时不删除角色关联
-        //userRoleMapper.deleteUserRoleAssgin(userId);
         user.delete();
         int result = userMapper.updateByPrimaryKeySelective(user);
         this.removeUserRole(userId);
@@ -206,9 +203,6 @@ public class UserServiceImpl implements IUserService {
         }
         // 更新用户
         BeanUtils.copyProperties(updateDTO, user);
-        if (StringUtils.isNotBlank(updateDTO.getPassword())) {
-            user.modifyPwd();
-        }
         user.update();
         int i = userMapper.updateByPrimaryKeySelective(user);
         this.updateUserRole(updateDTO.getId(), updateDTO.getRoleIds());
