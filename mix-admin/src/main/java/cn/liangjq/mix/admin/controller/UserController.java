@@ -89,10 +89,4 @@ public class UserController {
         return userService.modifyPassword(modifyPwdDTO);
     }
 
-    @PostMapping("/assignRoles")
-    @ApiOperation("分配用户角色")
-    public R<String> author(@RequestBody UserAssignRolesDTO userAssignRolesDTO) {
-        return userService.assignRoles(userAssignRolesDTO);
-    }
-
 }

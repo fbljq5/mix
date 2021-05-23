@@ -205,4 +205,8 @@
           and is_delete = 0
           and status = 1
     </select>
+
+    <delete id="deleteById">
+        delete t_user where id = #{userId}
+    </delete>
 </mapper>

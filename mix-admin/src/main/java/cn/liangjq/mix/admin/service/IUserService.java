@@ -81,14 +81,6 @@ public interface IUserService {
     R<String> modifyPassword(UserModifyPwdDTO modifyPwdDTO);
 
     /**
-     * 为指定用户分配角色
-     *
-     * @param userAssignRolesDTO
-     * @return
-     */
-    R<String> assignRoles(UserAssignRolesDTO userAssignRolesDTO);
-
-    /**
      * 根据用户Id获取用户信息
      *
      * @param userId

@@ -114,25 +114,53 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public R<String> addUser(UserAddDTO userAddDTO) {
-        if (userAddDTO == null || StringUtils.isBlank(userAddDTO.getUserName())) {
-            return R.fail("数据有误");
-        }
+        // 校验数据合法性
+        this.checkDataValid(userAddDTO);
         // 判断用户名是否存在
-        boolean checkResult = userMapper.checkUserExistByUsername(userAddDTO.getUserName());
-        if (checkResult) {
-            return R.fail("用户名已存在");
+        this.checkUsernameExist(userAddDTO.getUserName());
+        // 新增用户
+        this.doAddUser(userAddDTO);
+        // 新增用户角色关联
+        this.updateUserRole(userAddDTO.getId(), userAddDTO.getRoleIds());
+        return R.ok("新增成功");
+    }
+
+    /**
+     * 校验数据合法性
+     * @param userAddDTO
+     */
+    private void checkDataValid(UserAddDTO userAddDTO){
+        if (userAddDTO == null || StringUtils.isBlank(userAddDTO.getUserName())) {
+            throw new OperationException("数据有误");
         }
+    }
+
+    /**
+     * 判断用户名是否存在
+     * @param username
+     */
+    private void checkUsernameExist(String username){
+        boolean checkResult = userMapper.checkUserExistByUsername(username);
+        if (checkResult) {
+            throw new OperationException("用户名已存在");
+        }
+    }
+
+    private void doAddUser(UserAddDTO userAddDTO){
         User user = this.toUser(userAddDTO);
         user.add();
         int insert = userMapper.insert(user);
-        this.updateUserRole(user.getId(), userAddDTO.getRoleIds());
-        // 新增角色
-        if (insert > 0) {
-            return R.ok("新增成功");
+        if (insert <= 0) {
+            throw new OperationException("新增失败");
         }
-        return R.fail("新增失败");
+        userAddDTO.setId(user.getId());
     }
 
+    /**
+     * 更新/新增用户角色关联
+     * @param userId
+     * @param roleIds
+     */
     private void updateUserRole(Long userId, Long[] roleIds) {
         this.removeUserRole(userId);
         this.addUserRole(userId, roleIds);
@@ -148,6 +176,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     /**
+     * 新增用户角色关联
      * @param userId
      * @param roleIds
      */
@@ -160,6 +189,11 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
+    /**
+     * 持久化用户角色关联
+     * @param userId
+     * @param roleId
+     */
     private void doAddUserRole(Long userId, Long roleId) {
         userRoleMapper.insert(UserRole.builder().roleId(Long.valueOf(roleId)).userId(userId).build());
     }
@@ -167,97 +201,150 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public R<String> deleteUser(Long userId) {
+        // 删除前校验用户信息
+        this.checkBeforeDeleteUser(userId);
+        // 删除用户信息
+        this.doDeleteUser(userId);
+        //删除用户角色关联信息
+        this.removeUserRole(userId);
+        return R.ok("删除成功");
+    }
+
+    /**
+     * 删除前校验数据
+     * @param userId
+     */
+    private void checkBeforeDeleteUser(Long userId){
         if (null == userId) {
-            return R.fail("id无效");
+            throw new OperationException("请提供ID");
         }
         // 判断用户是否存在
-        User user = userMapper.selectByPrimaryKey(userId);
-        if (user == null) {
-            return R.fail("用户不存在");
+        this.checkUserExist(userId);
+    }
+
+    /**
+     * 删除用户信息
+     * @param userId
+     */
+    private void doDeleteUser(Long userId){
+        int result = userMapper.deleteById(userId);
+        if (result <= 0) {
+            throw new OperationException("删除失败");
         }
-        user.delete();
-        int result = userMapper.updateByPrimaryKeySelective(user);
-        this.removeUserRole(userId);
-        if (result > 0) {
-            return R.ok("删除成功");
-        }
-        return R.fail("删除失败");
     }
 
     @Override
     @Transactional
     public R<String> updateUser(UserUpdateDTO updateDTO) {
+        // 校验更新数据
+        this.checkDataValid(updateDTO);
+        // 校验用户名是否重复
+        this.checkUsernameExist(updateDTO.getId(),updateDTO.getUserName());
+        // 更新用户
+        this.doUpdateUser(updateDTO);
+        // 更新用户角色关联
+        this.updateUserRole(updateDTO.getId(), updateDTO.getRoleIds());
+        return R.ok("更新成功");
+    }
+
+    /**
+     * 校验更新数据是否合法
+     * @param updateDTO
+     */
+    private void checkDataValid(UserUpdateDTO updateDTO){
         if (null == updateDTO || updateDTO.getId() == null) {
-            return R.fail("数据不完整");
-        }
-        //判断修改后的用户名是否重复（除了本身）
-        boolean checkResult = userMapper.checkUserExistByIdAndName(updateDTO.getId(), updateDTO.getUserName());
-        if (checkResult) {
-            return R.fail("该用户名已被占用");
+            throw new OperationException("更新数据不完整");
         }
 
         //先通过id查找并判断用户是否存在
-        User user = userMapper.selectByPrimaryKey(updateDTO.getId());
-        if (null == user) {
-            return R.fail("用户不存在");
+        this.checkUserExist(updateDTO.getId());
+    }
+
+    /**
+     * 更新用户前检查用户名是否重复
+     * @param userId
+     * @param username
+     */
+    private void checkUsernameExist(Long userId,String username){
+        //判断修改后的用户名是否重复（除了本身）
+        boolean checkResult = userMapper.checkUserExistByIdAndName(userId, username);
+        if (checkResult) {
+            throw new OperationException("该用户名已被占用");
         }
-        // 更新用户
+    }
+
+    /**
+     * 更新用户信息
+     * @param updateDTO
+     */
+    private void doUpdateUser(UserUpdateDTO updateDTO){
+        User user = userMapper.selectByPrimaryKey(updateDTO.getId());
         BeanUtils.copyProperties(updateDTO, user);
         user.update();
         int i = userMapper.updateByPrimaryKeySelective(user);
-        this.updateUserRole(updateDTO.getId(), updateDTO.getRoleIds());
-        if (i > 0) {
-            return R.ok("更新成功");
+        if (i <= 0) {
+            throw new OperationException("更新失败");
         }
-        return R.fail("更新失败");
     }
 
     @Override
     @Transactional
     public R<String> modifyPassword(UserModifyPwdDTO modifyPwdDTO) {
+        // 修改密码前检查数据合法性
+        this.checkDataValid(modifyPwdDTO);
+        // 修改密码
+        this.doModifyPassword(modifyPwdDTO);
+        return R.ok("修改密码成功");
+    }
+
+    /**
+     * 修改密码前检查数据合法性
+     * @param modifyPwdDTO
+     */
+    private void checkDataValid(UserModifyPwdDTO modifyPwdDTO){
         if (null == modifyPwdDTO || modifyPwdDTO.getId() == null) {
-            return R.fail("数据不完整");
+            throw new OperationException("数据不完整");
         }
         //先通过id查找并判断用户是否存在
         User user = userMapper.selectByPrimaryKey(modifyPwdDTO.getId());
         if (null == user) {
-            return R.fail("用户不存在");
+            throw new OperationException("用户不存在");
         }
-        user.setPassword(MD5Utils.getMd5(modifyPwdDTO.getPassword()));
-        user.setGmtModified(new Date());
-        userMapper.updateByPrimaryKeySelective(user);
-        return R.ok("修改密码成功");
     }
 
-    @Override
-    @Transactional
-    public R<String> assignRoles(UserAssignRolesDTO userAssignRolesDTO) {
-        if (null == userAssignRolesDTO || userAssignRolesDTO.getId() == null || ArrayUtils.isEmpty(userAssignRolesDTO.getRoleIds())) {
-            return R.fail("数据不完整");
+    /**
+     * 修改密码
+     * @param modifyPwdDTO
+     */
+    private void doModifyPassword(UserModifyPwdDTO modifyPwdDTO){
+        User user = userMapper.selectByPrimaryKey(modifyPwdDTO.getId());
+        user.setPassword(MD5Utils.getMd5(modifyPwdDTO.getPassword()));
+        user.setGmtModified(new Date());
+        int res = userMapper.updateByPrimaryKeySelective(user);
+        if(res<=0){
+            throw new OperationException("修改密码失败");
         }
-        // 判断用户是否存在
-        User user = userMapper.selectByPrimaryKey(userAssignRolesDTO.getId());
+    }
+
+    /**
+     * 检查用户是否存在
+     * @param userId
+     */
+    private void checkUserExist(Long userId){
+        if(null==userId){
+            throw new OperationException("请提供ID");
+        }
+        User user = userMapper.selectByPrimaryKey(userId);
         if (null == user) {
-            return R.fail("用户不存在");
+            throw new OperationException("用户不存在");
         }
-        //判断角色是否都存在
-        int countIdFromDB = roleMapper.countId(userAssignRolesDTO.getRoleIds());
-        if (countIdFromDB != userAssignRolesDTO.getRoleIds().length) {
-            return R.fail("部分角色不存在,分配失败");
-        }
-        // 先删除已有的关联
-        userRoleMapper.deleteUserRoleAssgin(userAssignRolesDTO.getId());
-        // 插入新增的关联
-        userRoleMapper.assginUserRole(userAssignRolesDTO.getId(), userAssignRolesDTO.getRoleIds());
-        return R.ok("分配成功");
     }
 
     @Override
     public R<UserUpdateDTO> findUser(Long userId) {
+        // 检查用户信息
+        this.checkUserExist(userId);
         User user = userMapper.selectByPrimaryKey(userId);
-        if (null == user) {
-            return R.fail("用户不存在");
-        }
         UserUpdateDTO userUpdateDTO = new UserUpdateDTO();
         BeanUtils.copyProperties(user, userUpdateDTO);
         return R.ok(userUpdateDTO);

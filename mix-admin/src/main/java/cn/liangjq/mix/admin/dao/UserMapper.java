@@ -94,4 +94,11 @@ public interface UserMapper {
      * @return
      */
     boolean checkUserExistByIdAndName(Long id, String username);
+
+    /**
+     * 删除用户信息
+     * @param userId
+     * @return
+     */
+    int deleteById(Long userId);
 }
