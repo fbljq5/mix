@@ -16,8 +16,4 @@ public class RolePageRequest extends PageBaseRequest {
      */
     private String roleName;
 
-    /**
-     * 角色编码 role_code
-     */
-    private String roleCode;
 }

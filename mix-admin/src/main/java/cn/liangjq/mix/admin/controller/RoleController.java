@@ -33,8 +33,8 @@ public class RoleController {
     }
 
     @PostMapping("/list")
-    @ApiOperation("分页获得角色信息")
-    public R<List<RoleListDTO>> pageRoleInfo(Long userId) {
+    @ApiOperation("获得所有角色信息（带有是否拥有角色布尔值）")
+    public R<List<RoleListDTO>> listRoleInfo(Long userId) {
         return roleService.listRole(userId);
     }
 
