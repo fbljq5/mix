@@ -109,7 +109,7 @@
 import {defineComponent, ref, onMounted} from "vue";
 import {message} from "ant-design-vue";
 import {getUserList, deleteUser, saveUser, updateUser, modifyPwd} from "@/api/admin/user";
-import {listRole} from '@/api/admin/role'
+import {getRoleList} from '@/api/admin/role'
 import {Tool} from '@/utils/tool';
 
 const columns = [
@@ -247,7 +247,7 @@ export default defineComponent({
       modelVisible.value = true;
       user.value = Tool.copy(record);
       console.log("record", record.id)
-      await listRole({"userId": record.id}).then(response => {
+      await getRoleList({"userId": record.id}).then(response => {
         let res = response.data;
         if (res.code == 200) {
           roleList.value = res.data;
@@ -265,8 +265,8 @@ export default defineComponent({
     const add = async () => {
       modelVisible.value = true;
       user.value = {};
-      roleList.value = listRole;
-      await listRole(null).then(response => {
+      roleList.value = getRoleList;
+      await getRoleList(null).then(response => {
         let res = response.data;
         if (res.code == 200) {
           roleList.value = res.data;

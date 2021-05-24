@@ -6,20 +6,22 @@
     <a-sub-menu key="sub1">
       <template #title>
         <span>
-          <user-outlined />
+          <user-outlined/>
           <span>权限管理</span>
         </span>
       </template>
       <a-menu-item key="2">
         <router-link to="/admin/user">用户管理</router-link>
       </a-menu-item>
-      <a-menu-item key="3">角色管理 </a-menu-item>
+      <a-menu-item key="3">
+        <router-link to="/admin/role">角色管理</router-link>
+      </a-menu-item>
       <a-menu-item key="4">菜单管理</a-menu-item>
     </a-sub-menu>
     <a-sub-menu key="sub2">
       <template #title>
         <span>
-          <eye-outlined />
+          <eye-outlined/>
           <span>监控中心</span>
         </span>
       </template>
@@ -29,7 +31,7 @@
     <a-sub-menu key="sub3">
       <template #title>
         <span>
-          <setting-outlined />
+          <setting-outlined/>
           <span>系统管理</span>
         </span>
       </template>
@@ -40,12 +42,13 @@
   </a-menu>
 </template>
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
+import {defineComponent} from "@vue/composition-api";
 import {
   UserOutlined,
   SettingOutlined,
   EyeOutlined,
 } from "@ant-design/icons-vue";
+
 export default defineComponent({
   name: "MixMenu",
   components: {

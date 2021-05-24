@@ -166,9 +166,6 @@
             <if test="roleName!=null">
                 role_name LIKE CONCAT('%',#{roleName},'%')
             </if>
-            <if test="roleCode!=null">
-                and role_code LIKE CONCAT('%',#{roleCode},'%')
-            </if>
         </trim>
     </select>
 
