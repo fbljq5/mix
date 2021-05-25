@@ -11,17 +11,19 @@ import java.io.Serializable;
  * @Date: 2021/4/14
  */
 public class R<T> implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 成功
-     */
+    // 默认成功编码
     public static final int SUCCESS = Constants.SUCCESS;
+    // 默认成功字符串
+    private static final String DEFAULT_OK_MSG = "成功";
 
-    /**
-     * 失败
-     */
+    // 默认失败编码
     public static final int FAIL = Constants.FAIL;
+    // 默认失败字符串
+    private static final String DEFAULT_FAIL_MSG = "失败";
+
 
     private int code;
 
@@ -30,11 +32,11 @@ public class R<T> implements Serializable {
     private T data;
 
     public static <T> R<T> ok() {
-        return restResult(null, SUCCESS, null);
+        return restResult(null, SUCCESS, DEFAULT_OK_MSG);
     }
 
     public static <T> R<T> ok(T data) {
-        return restResult(data, SUCCESS, null);
+        return restResult(data, SUCCESS, DEFAULT_OK_MSG);
     }
 
     public static <T> R<T> ok(T data, String msg) {
@@ -42,7 +44,7 @@ public class R<T> implements Serializable {
     }
 
     public static <T> R<T> fail() {
-        return restResult(null, FAIL, null);
+        return restResult(null, FAIL, DEFAULT_FAIL_MSG);
     }
 
     public static <T> R<T> fail(String msg) {
@@ -50,7 +52,7 @@ public class R<T> implements Serializable {
     }
 
     public static <T> R<T> fail(T data) {
-        return restResult(data, FAIL, null);
+        return restResult(data, FAIL, DEFAULT_FAIL_MSG);
     }
 
     public static <T> R<T> fail(T data, String msg) {
