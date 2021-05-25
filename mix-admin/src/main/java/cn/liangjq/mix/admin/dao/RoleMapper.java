@@ -96,7 +96,7 @@ public interface RoleMapper {
      * @param roleName
      * @return
      */
-    boolean checkRoleExistByIdAndCodeAndName(Long roleId, String roleCode, String roleName);
+    boolean checkRoleExistByIdAndCodeAndName(Long roleId, String roleName, String roleCode);
 
     /**
      * 获得所有角色
@@ -104,4 +104,12 @@ public interface RoleMapper {
      * @return
      */
     List<Role> list();
+
+    /**
+     * 删除角色
+     *
+     * @param roleId
+     * @return
+     */
+    int deleteById(Long roleId);
 }

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -28,43 +29,43 @@ public class RoleController {
 
     @PostMapping("/page")
     @ApiOperation("分页获得角色信息")
-    public R<PageResponse<RoleVO>> pageRoleInfo(@RequestBody RolePageRequest request) {
+    public R<PageResponse<RoleVO>> pageRoleInfo(@Valid @RequestBody RolePageRequest request) {
         return roleService.pageRole(request);
     }
 
     @PostMapping("/list")
     @ApiOperation("获得所有角色信息（带有是否拥有角色布尔值）")
-    public R<List<RoleListDTO>> listRoleInfo(Long userId) {
+    public R<List<RoleListDTO>> listRoleInfo(@Valid Long userId) {
         return roleService.listRole(userId);
     }
 
     @GetMapping("/find/{roleId}")
     @ApiOperation("查找角色信息")
-    public R<RoleUpdateDTO> updateRole(@PathVariable("roleId") Long roleId) {
+    public R<RoleUpdateDTO> updateRole(@Valid @PathVariable("roleId") Long roleId) {
         return roleService.findRole(roleId);
     }
 
     @PostMapping("/add")
     @ApiOperation("新增角色")
-    public R<String> addRole(@RequestBody RoleAddDTO roleAddDTO) {
+    public R<String> addRole(@Valid @RequestBody RoleAddDTO roleAddDTO) {
         return roleService.addRole(roleAddDTO);
     }
 
     @PostMapping("/delete/{roleId}")
     @ApiOperation("删除角色")
-    public R<String> deleteRole(@PathVariable("roleId") Long roleId) {
+    public R<String> deleteRole(@Valid @PathVariable("roleId") Long roleId) {
         return roleService.deleteRole(roleId);
     }
 
     @PostMapping("/update")
     @ApiOperation("更新角色信息")
-    public R<String> updateRole(@RequestBody RoleUpdateDTO updateDTO) {
+    public R<String> updateRole(@Valid @RequestBody RoleUpdateDTO updateDTO) {
         return roleService.updateRole(updateDTO);
     }
 
     @PostMapping("/assignMenus")
     @ApiOperation("分配菜单")
-    public R<String> assignMenus(@RequestBody RoleAssignMenusDTO roleAssignMenusDTO) {
+    public R<String> assignMenus(@Valid @RequestBody RoleAssignMenusDTO roleAssignMenusDTO) {
         return roleService.assignMenus(roleAssignMenusDTO);
     }
 }

@@ -2,6 +2,8 @@ package cn.liangjq.mix.common.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * @author ： liangjq
  * @description ： 分页查询基类
@@ -13,11 +15,13 @@ public class PageBaseRequest {
     /**
      * 页大小
      */
-    protected Integer pageSize;
+    @NotBlank(message = "页大小不能为空")
+    private Integer pageSize;
 
     /**
      * 当前页
      */
-    protected Integer page;
+    @NotBlank(message = "页码不能为空")
+    private Integer page;
 
 }

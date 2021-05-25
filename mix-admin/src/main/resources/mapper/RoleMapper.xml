@@ -191,4 +191,10 @@
         from t_role
     </select>
 
+    <delete id="deleteById">
+        delete
+        t_role where id =
+        #{roleId}
+    </delete>
+
 </mapper>
