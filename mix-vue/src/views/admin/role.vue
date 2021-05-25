@@ -42,6 +42,11 @@
         :loading="loading"
         @change="handleTableChange"
     >
+
+      <template v-slot:status="{ record }">
+        <a-switch v-model:checked="record.status" @change="handleStatusChange(record)"/>
+      </template>
+
       <template v-slot:action="{ record }">
         <a-space size="large">
           <a-button type="primary" @click="edit(record)"> 编辑</a-button>
@@ -49,8 +54,7 @@
               title="删除后不可恢复，确认删除?"
               ok-text="是"
               cancel-text="否"
-              @confirm="handleDelete(record.id)"
-          >
+              @confirm="handleDelete(record.id)">
             <a-button type="danger"> 删除</a-button>
           </a-popconfirm>
         </a-space>
@@ -89,13 +93,26 @@ const columns = [
     dataIndex: "roleCode",
   },
   {
+    title: "显示顺序",
+    width: "15%",
+    dataIndex: "roleSort",
+  },
+  {
     title: "是否有效",
     width: "10%",
     dataIndex: "status",
+    slots: {
+      customRender: "status",
+    },
+  },
+  {
+    title: "创建时间",
+    width: "30%",
+    dataIndex: "gmtCreate",
   },
   {
     title: "操作",
-    width: "25%",
+    width: "15%",
     key: "action",
     slots: {
       customRender: "action",
@@ -162,6 +179,10 @@ export default defineComponent({
       });
     };
 
+    const handleStatusChange = (record: any) => {
+      console.log(record)
+    }
+
     onMounted(() => {
       handleQuery({
         page: 1,
@@ -180,7 +201,8 @@ export default defineComponent({
       handleTableChange,
       add,
       edit,
-      handleDelete
+      handleDelete,
+      handleStatusChange
     }
   },
 })

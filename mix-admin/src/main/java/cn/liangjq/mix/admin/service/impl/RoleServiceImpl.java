@@ -13,6 +13,7 @@ import com.alibaba.nacos.common.utils.CollectionUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -47,8 +48,8 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public R<PageResponse> pageRole(RolePageRequest request) {
-        PageResponse pageResponse = PageUtils.setPageResult(request, () ->
+    public R<PageResponse<RoleVO>> pageRole(RolePageRequest request) {
+        PageResponse<RoleVO> pageResponse = PageUtils.setPageResult(request, () ->
                 roleMapper.selectByRoleListRequest(request)
                         .stream().map(this::toRoleVO)
                         .collect(Collectors.toList()));
@@ -180,7 +181,7 @@ public class RoleServiceImpl implements IRoleService {
         return RoleListDTO.builder()
                 .id(role.getId())
                 .roleName(role.getRoleName())
-                .hasRole(hasRoleIdList==null?null:hasRoleIdList.contains(role.getId()))
+                .hasRole(hasRoleIdList == null ? null : hasRoleIdList.contains(role.getId()))
                 .build();
     }
 
@@ -202,6 +203,8 @@ public class RoleServiceImpl implements IRoleService {
     private RoleVO toRoleVO(Role role) {
         RoleVO roleVO = new RoleVO();
         BeanUtils.copyProperties(role, roleVO);
+        roleVO.setGmtCreate(DateFormatUtils.format(role.getGmtCreate(), "yyyy-MM-dd HH:mm:ss"));
+        roleVO.setGmtModified(DateFormatUtils.format(role.getGmtModified(), "yyyy-MM-dd HH:mm:ss"));
         return roleVO;
     }
 

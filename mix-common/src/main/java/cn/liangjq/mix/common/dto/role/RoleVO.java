@@ -50,10 +50,10 @@ public class RoleVO {
     /**
      * 创建时间 gmt_create
      */
-    private Date gmtCreate;
+    private String gmtCreate;
 
     /**
      * 更新时间 gmt_modified
      */
-    private Date gmtModified;
+    private String gmtModified;
 }

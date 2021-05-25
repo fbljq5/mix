@@ -10,7 +10,7 @@ import java.util.List;
  * @date ： 2021/4/23
  */
 @Data
-public class PageResponse {
+public class PageResponse<T> {
 
     /**
      * 当前页码
@@ -31,6 +31,6 @@ public class PageResponse {
     /**
      * 数据模型
      */
-    private List<?> list;
+    private List<T> list;
 
 }

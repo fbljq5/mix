@@ -36,7 +36,7 @@ public interface IRoleService {
      * @param request
      * @return
      */
-    R<PageResponse> pageRole(RolePageRequest request);
+    R<PageResponse<RoleVO>> pageRole(RolePageRequest request);
 
     /**
      * 新增角色信息

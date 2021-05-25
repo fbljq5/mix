@@ -28,7 +28,7 @@ public class RoleController {
 
     @PostMapping("/page")
     @ApiOperation("分页获得角色信息")
-    public R<PageResponse> pageRoleInfo(@RequestBody RolePageRequest request) {
+    public R<PageResponse<RoleVO>> pageRoleInfo(@RequestBody RolePageRequest request) {
         return roleService.pageRole(request);
     }
 
