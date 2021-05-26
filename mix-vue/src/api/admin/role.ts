@@ -60,6 +60,19 @@ export function updateRole(updateDTO: any) {
 }
 
 /**
+ * 切换状态
+ * @param updateDTO
+ */
+export function switchStatus(roleSwitchStatusDTO: any) {
+    return Request.axiosInstance({
+        url: '/mix-admin/role/switchStatus',
+        method: 'post',
+        data: {"id": roleSwitchStatusDTO.id, "status": roleSwitchStatusDTO.status}
+    })
+}
+
+
+/**
  * 分配菜单
  * @param roleAssignMenusDTO
  */

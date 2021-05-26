@@ -40,8 +40,7 @@
         :data-source="roleList"
         :pagination="pagination"
         :loading="loading"
-        @change="handleTableChange"
-    >
+        @change="handleTableChange">
 
       <template v-slot:status="{ record }">
         <a-switch v-model:checked="record.status" @change="handleStatusChange(record)"/>
@@ -50,6 +49,7 @@
       <template v-slot:action="{ record }">
         <a-space size="large">
           <a-button type="primary" @click="edit(record)"> 编辑</a-button>
+          <a-button type="default" @click="assignMenus(record)"> 菜单配置</a-button>
           <a-popconfirm
               title="删除后不可恢复，确认删除?"
               ok-text="是"
@@ -61,12 +61,32 @@
       </template>
     </a-table>
   </a-layout-content>
+
+  <a-modal v-model:visible="modelVisible" title="角色表单" @ok="handleSaveOrUpdate"
+           :confirm-loading="modalLoading">
+    <a-form :model="role" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+      <a-form-item label="角色名称">
+        <a-input v-model:value="role.roleName"></a-input>
+      </a-form-item>
+      <a-form-item label="角色编码">
+        <a-input v-model:value="role.roleCode"></a-input>
+      </a-form-item>
+
+      <a-form-item label="显示顺序">
+        <a-input v-model:value="role.roleSort"></a-input>
+      </a-form-item>
+      <a-form-item label="备注">
+        <a-input v-model:value="role.remark"></a-input>
+      </a-form-item>
+    </a-form>
+  </a-modal>
 </template>
 
 <script lang="ts">
 import {defineComponent, onMounted, ref} from "vue";
-import {pageRole} from "@/api/admin/role";
+import {pageRole, addRole, deleteRole, updateRole, switchStatus, assignMenus} from "@/api/admin/role";
 import {message} from "ant-design-vue";
+import {Tool} from "@/utils/tool";
 
 const param = ref();
 const roleList = ref();
@@ -124,6 +144,7 @@ const columns = [
 export default defineComponent({
   setup() {
     param.value = {};
+
     const handleQuery = (param: any) => {
       console.log(param)
       loading.value = true;
@@ -151,13 +172,22 @@ export default defineComponent({
       });
     };
 
+    const role = ref()
+    const modelVisible = ref(false);
+    const modalLoading = ref(false);
+
     //新增
     const add = async () => {
-      console.log()
+      modelVisible.value = true;
+      role.value = {};
     };
 
     // 编辑
     const edit = async (record: any) => {
+      role.value = "";
+      modelVisible.value = true;
+      role.value = Tool.copy(record);
+      console.log("record", record.id)
       console.log(record);
     };
 
@@ -165,8 +195,51 @@ export default defineComponent({
      * 删除
      */
     const handleDelete = (id: number) => {
+      deleteRole(id).then(response => {
+        loading.value = false;
+        let res = response.data;
+        if (res.code == 200) {
+          message.success("删除成功");
+          //成功，冲重刷列表
+          handleQuery({
+            page: pagination.value.current,
+            pageSize: pagination.value.pageSize,
+          });
+        } else {
+          //删除失败
+          message.error(res.msg);
+        }
+      })
+
       console.log(id);
     };
+
+    const handleSaveOrUpdate = () => {
+      modalLoading.value = true;
+      let promise;
+      if (Tool.isNotEmpty(role.value.id)) {
+        promise = updateRole(role.value)
+      } else {
+        promise = addRole(role.value)
+      }
+      promise.then(response => {
+        let res = response.data;
+        if (res.code === 200) {
+          message.success("操作成功");
+          modalLoading.value = false;
+          modelVisible.value = false;
+          handleQuery({
+            page: pagination.value.current,
+            pageSize: pagination.value.pageSize,
+          });
+        } else {
+          message.error(res.msg);
+          modalLoading.value = false;
+        }
+      }).catch(err => {
+        modalLoading.value = false;
+      })
+    }
 
     /**
      * 表格点击页码时触发
@@ -180,7 +253,15 @@ export default defineComponent({
     };
 
     const handleStatusChange = (record: any) => {
-      console.log(record)
+      switchStatus(record).then(response => {
+        console.log(response);
+        let res = response.data;
+        if (res.code == 200) {
+          message.success("修改成功")
+        } else {
+          message.error("修改失败")
+        }
+      });
     }
 
     onMounted(() => {
@@ -199,10 +280,14 @@ export default defineComponent({
       roleList,
       loading,
       handleTableChange,
+      role,
+      modelVisible,
+      modalLoading,
       add,
       edit,
       handleDelete,
-      handleStatusChange
+      handleStatusChange,
+      handleSaveOrUpdate
     }
   },
 })

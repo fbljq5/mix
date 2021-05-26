@@ -167,6 +167,7 @@
                 role_name LIKE CONCAT('%',#{roleName},'%')
             </if>
         </trim>
+        order by role_sort
     </select>
 
     <select id="checkRoleExistByRoleNameAndRoleCode" resultType="java.lang.Boolean">
@@ -193,8 +194,9 @@
 
     <delete id="deleteById">
         delete
-        t_role where id =
-        #{roleId}
+        from t_role
+        where id =
+              #{roleId}
     </delete>
 
 </mapper>

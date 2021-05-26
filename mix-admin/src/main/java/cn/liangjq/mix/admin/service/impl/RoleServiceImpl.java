@@ -236,6 +236,29 @@ public class RoleServiceImpl implements IRoleService {
         return R.ok(this.transfer(roleList, null));
     }
 
+    @Override
+    public R<String> switchStatus(RoleSwitchStatusDTO roleSwitchStatusDTO) {
+        // 判断就是是否存在
+        this.checkRoleExist(roleSwitchStatusDTO.getId());
+        this.doSwitchStatus(roleSwitchStatusDTO.getId(), roleSwitchStatusDTO.getStatus());
+        return R.ok();
+    }
+
+    /**
+     * 更新角色状态
+     *
+     * @param roleId
+     * @param status
+     */
+    private void doSwitchStatus(Long roleId, Boolean status) {
+        Role role = Role.builder().status(status).build();
+        role.setId(roleId);
+        int result = roleMapper.updateByPrimaryKeySelective(role);
+        if (result <= 0) {
+            throw new OperationException("角色状态更新失败");
+        }
+    }
+
     /**
      * 角色数据批量转换
      *
@@ -297,8 +320,8 @@ public class RoleServiceImpl implements IRoleService {
     private RoleVO toRoleVO(Role role) {
         RoleVO roleVO = new RoleVO();
         BeanUtils.copyProperties(role, roleVO);
-        roleVO.setGmtCreate(DateFormatUtils.format(role.getGmtCreate(), "yyyy-MM-dd HH:mm:ss"));
-        roleVO.setGmtModified(DateFormatUtils.format(role.getGmtModified(), "yyyy-MM-dd HH:mm:ss"));
+        roleVO.setGmtCreate(null == role.getGmtCreate() ? null : DateFormatUtils.format(role.getGmtCreate(), "yyyy-MM-dd HH:mm:ss"));
+        roleVO.setGmtModified(null == role.getGmtModified() ? null : DateFormatUtils.format(role.getGmtModified(), "yyyy-MM-dd HH:mm:ss"));
         return roleVO;
     }
 

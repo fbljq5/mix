@@ -77,4 +77,12 @@ public interface IRoleService {
      * @return
      */
     R<List<RoleListDTO>> listRole(Long userId);
+
+    /**
+     * 切换角色状态
+     *
+     * @param roleSwitchStatusDTO
+     * @return
+     */
+    R<String> switchStatus(RoleSwitchStatusDTO roleSwitchStatusDTO);
 }

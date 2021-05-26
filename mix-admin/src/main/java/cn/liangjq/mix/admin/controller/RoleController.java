@@ -63,6 +63,12 @@ public class RoleController {
         return roleService.updateRole(updateDTO);
     }
 
+    @PostMapping("/switchStatus")
+    @ApiOperation("切换角色状态")
+    public R<String> switchStatus(@Valid @RequestBody RoleSwitchStatusDTO roleSwitchStatusDTO) {
+        return roleService.switchStatus(roleSwitchStatusDTO);
+    }
+
     @PostMapping("/assignMenus")
     @ApiOperation("分配菜单")
     public R<String> assignMenus(@Valid @RequestBody RoleAssignMenusDTO roleAssignMenusDTO) {
