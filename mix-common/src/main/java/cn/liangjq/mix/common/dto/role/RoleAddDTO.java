@@ -3,6 +3,7 @@ package cn.liangjq.mix.common.dto.role;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author ： liangjq
@@ -29,7 +30,7 @@ public class RoleAddDTO {
     /**
      * 显示顺序 role_sort
      */
-    @NotBlank(message = "显示顺序不能为空")
+    @NotNull(message = "显示顺序不能为空")
     private Integer roleSort;
 
     /**

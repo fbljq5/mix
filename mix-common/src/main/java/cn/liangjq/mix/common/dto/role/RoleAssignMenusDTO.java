@@ -3,6 +3,7 @@ package cn.liangjq.mix.common.dto.role;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author ： liangjq
@@ -15,13 +16,13 @@ public class RoleAssignMenusDTO {
     /**
      * 主键id
      */
-    @NotBlank(message = "角色ID不能为空")
+    @NotNull(message = "角色ID不能为空")
     private Long id;
 
     /**
      * 菜单ID数组
      */
-    @NotBlank(message = "菜单ID数组不能为空")
+    @NotNull(message = "菜单ID数组不能为空")
     private Long[] menuIds;
 
 }

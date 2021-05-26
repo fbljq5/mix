@@ -3,6 +3,7 @@ package cn.liangjq.mix.common.dto;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author ： liangjq
@@ -15,13 +16,13 @@ public class PageBaseRequest {
     /**
      * 页大小
      */
-    @NotBlank(message = "页大小不能为空")
+    @NotNull(message = "页大小不能为空")
     private Integer pageSize;
 
     /**
      * 当前页
      */
-    @NotBlank(message = "页码不能为空")
+    @NotNull(message = "页码不能为空")
     private Integer page;
 
 }

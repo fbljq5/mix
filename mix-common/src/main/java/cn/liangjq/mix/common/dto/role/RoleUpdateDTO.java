@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author ： liangjq
@@ -16,7 +17,7 @@ public class RoleUpdateDTO {
     /**
      * 主键id
      */
-    @NotBlank(message = "角色ID不能为空")
+    @NotNull(message = "角色ID不能为空")
     private Long id;
 
     /**
@@ -36,7 +37,7 @@ public class RoleUpdateDTO {
     /**
      * 显示顺序 role_sort
      */
-    @NotBlank(message = "显示顺序不能为空")
+    @NotNull(message = "显示顺序不能为空")
     private Integer roleSort;
 
     /**
