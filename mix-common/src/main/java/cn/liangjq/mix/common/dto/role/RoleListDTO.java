@@ -5,7 +5,7 @@ import lombok.Data;
 
 /**
  * @Description: 角色列表封装
- * @Author: liangjianqiang
+ * @Author: liangjq
  * @Date: 2021/5/21
  */
 @Data

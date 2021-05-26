@@ -9,7 +9,8 @@
         <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, role_id, menu_id, gmt_create, gmt_modified
+        id
+        , role_id, menu_id, gmt_create, gmt_modified
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -117,4 +118,9 @@
             )
         </foreach>
     </insert>
+    <select id="selectMenuIdByRoleId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select menu_id
+        from t_role_menu
+        where role_id = #{roleId}
+    </select>
 </mapper>

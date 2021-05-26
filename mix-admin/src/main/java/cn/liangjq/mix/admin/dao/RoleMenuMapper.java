@@ -4,6 +4,8 @@ package cn.liangjq.mix.admin.dao;
 import cn.liangjq.mix.common.entity.RoleMenu;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @Description: 角色菜单关联DAO
  * @Author: liangjq
@@ -75,4 +77,11 @@ public interface RoleMenuMapper {
      * @param menuIds
      */
     void assginRoleMenu(Long roleId, Long[] menuIds);
+
+    /**
+     * 通过角色id查找关联菜单集合
+     *
+     * @return
+     */
+    List<Long> selectMenuIdByRoleId(Long roleId);
 }

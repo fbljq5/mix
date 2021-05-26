@@ -5,7 +5,7 @@ import lombok.Data;
 
 /**
  * @Description: 菜单列表数据封装
- * @Author: liangjianqiang
+ * @Author: liangjq
  * @Date: 2021/5/24
  */
 @Data

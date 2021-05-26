@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 /**
  * @Description: 全局异常处理器
- * @Author: liangjianqiang
+ * @Author: liangjq
  * @Date: 2021/5/19
  */
 @RestControllerAdvice

@@ -1,7 +1,7 @@
 package cn.liangjq.mix.admin.exception;
 
 /**
- * @author ： liangjianqiang
+ * @author ： liangjq
  * @description ： 自定义操作异常
  * @date ： 2021/5/22
  */

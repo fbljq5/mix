@@ -20,7 +20,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author ： liangjianqiang
+ * @author ： liangjq
  * @description ： 日志切面
  * @date ： 2021/5/15
  */

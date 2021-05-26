@@ -3,6 +3,8 @@ package cn.liangjq.mix.admin.dao;
 import cn.liangjq.mix.common.entity.Menu;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @Description: 菜单DAO
  * @Author: liangjq
@@ -58,4 +60,10 @@ public interface MenuMapper {
      * @return
      */
     int countId(Long[] menuIds);
+
+    /**
+     * 获取所有菜单信息
+     * @return
+     */
+    List<Menu> selectAll();
 }
