@@ -85,7 +85,8 @@
            :confirm-loading="menuModalLoading">
     <a-tree checkable
             :tree-data="treeData"
-            v-model:expandedKeys="expandedKeys"
+            v-if="treeData"
+            defaultExpandAll
             v-model:checkedKeys="checkedKeys">
       <template #title0010><span style="color: #1890ff">sss</span></template>
     </a-tree>
@@ -278,7 +279,6 @@ export default defineComponent({
     const menuList = ref();
     const menuModelVisible = ref(false);
     const menuModalLoading = ref(false);
-    const expandedKeys = ref();
     const checkedKeys = ref();
     const treeData = ref();
     /**
@@ -291,7 +291,6 @@ export default defineComponent({
     const configMenu = (roleId: any) => {
       roleAssignMenusDTO.value.id = roleId
       menuModelVisible.value = true;
-      expandedKeys.value = [];
       checkedKeys.value = [];
       listMenu(roleId).then(response => {
         console.log(response)
@@ -351,7 +350,6 @@ export default defineComponent({
 
     const setSelect = (menuId: any) => {
       checkedKeys.value.push(menuId);
-      expandedKeys.value.push(menuId);
     }
 
     onMounted(() => {
@@ -382,7 +380,6 @@ export default defineComponent({
       menuModalLoading,
       configMenu,
       treeData,
-      expandedKeys,
       checkedKeys,
       handleUpdateMenu
     }
