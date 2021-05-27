@@ -80,7 +80,7 @@ export function assignMenus(roleAssignMenusDTO: any) {
     return Request.axiosInstance({
         url: '/mix-admin/role/assignMenus',
         method: 'post',
-        data: roleAssignMenusDTO
+        data: {"id":roleAssignMenusDTO.id,"menuIds":roleAssignMenusDTO.menuIds}
     })
 }
 

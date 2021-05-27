@@ -6,8 +6,7 @@ import {Request} from '@/utils/request'
  */
 export function listMenu(roleId: any) {
     return Request.axiosInstance({
-        url: '/mix-admin/menu/list',
-        method: 'post',
-        params: roleId
+        url: '/mix-admin/menu/list/' + roleId,
+        method: 'post'
     })
 }

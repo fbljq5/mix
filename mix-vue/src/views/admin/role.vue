@@ -49,7 +49,7 @@
       <template v-slot:action="{ record }">
         <a-space size="large">
           <a-button type="primary" @click="edit(record)"> 编辑</a-button>
-          <a-button type="default" @click="assignMenus(record)"> 菜单配置</a-button>
+          <a-button type="default" @click="configMenu(record.id)"> 菜单配置</a-button>
           <a-popconfirm
               title="删除后不可恢复，确认删除?"
               ok-text="是"
@@ -80,11 +80,22 @@
       </a-form-item>
     </a-form>
   </a-modal>
+
+  <a-modal v-model:visible="menuModelVisible" title="菜单配置" @ok="handleUpdateMenu()"
+           :confirm-loading="menuModalLoading">
+    <a-tree checkable
+            :tree-data="treeData"
+            v-model:expandedKeys="expandedKeys"
+            v-model:checkedKeys="checkedKeys">
+      <template #title0010><span style="color: #1890ff">sss</span></template>
+    </a-tree>
+  </a-modal>
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref} from "vue";
+import {defineComponent, onMounted, ref, watch} from "vue";
 import {pageRole, addRole, deleteRole, updateRole, switchStatus, assignMenus} from "@/api/admin/role";
+import {listMenu} from "@/api/admin/menu";
 import {message} from "ant-design-vue";
 import {Tool} from "@/utils/tool";
 
@@ -264,6 +275,85 @@ export default defineComponent({
       });
     }
 
+    const menuList = ref();
+    const menuModelVisible = ref(false);
+    const menuModalLoading = ref(false);
+    const expandedKeys = ref();
+    const checkedKeys = ref();
+    const treeData = ref();
+    /**
+     * 打开菜单配置
+     * @param roleId
+     */
+
+    const menuIds: any[] = []
+    const roleAssignMenusDTO = ref({id: Number, menuIds: menuIds})
+    const configMenu = (roleId: any) => {
+      roleAssignMenusDTO.value.id = roleId
+      menuModelVisible.value = true;
+      expandedKeys.value = [];
+      checkedKeys.value = [];
+      listMenu(roleId).then(response => {
+        console.log(response)
+        let res = response.data;
+        if (res.code == 200) {
+          let menuList = res.data;
+          treeData.value = getJsonTree(menuList, 0)
+          console.log("treeData", treeData.value)
+        } else {
+          console.log("查询菜单失败!");
+        }
+        console.log("menuList", menuList);
+      })
+    }
+
+    /**
+     * 菜单数据转换成树状结构所需数据
+     * @param data
+     * @param parentId
+     */
+    const getJsonTree = (data: any, parentId: any) => {
+      let itemArr = [];
+      for (let i = 0; i < data.length; i++) {
+        let node = data[i];
+        if (node.hasMenu === true) {
+          setSelect(node.id)
+        }
+        if (node.parentId == parentId) {
+          let newNode = {
+            title: String,
+            key: String,
+            children: Array<any>()
+          };
+          newNode.title = node.menuName;
+          newNode.key = node.id;
+          newNode.children = getJsonTree(data, node.id);
+          itemArr.push(newNode);
+        }
+      }
+      return itemArr;
+    };
+
+
+    const handleUpdateMenu = () => {
+      roleAssignMenusDTO.value.menuIds = checkedKeys.value
+      assignMenus(roleAssignMenusDTO.value).then(response => {
+        console.log(response);
+        let res = response.data;
+        if(res.code==200){
+          message.success("配置成功");
+          menuModelVisible.value = false;
+        }else{
+          message.error(res.msg);
+        }
+      })
+    }
+
+    const setSelect = (menuId: any) => {
+      checkedKeys.value.push(menuId);
+      expandedKeys.value.push(menuId);
+    }
+
     onMounted(() => {
       handleQuery({
         page: 1,
@@ -287,7 +377,14 @@ export default defineComponent({
       edit,
       handleDelete,
       handleStatusChange,
-      handleSaveOrUpdate
+      handleSaveOrUpdate,
+      menuModelVisible,
+      menuModalLoading,
+      configMenu,
+      treeData,
+      expandedKeys,
+      checkedKeys,
+      handleUpdateMenu
     }
   },
 })
