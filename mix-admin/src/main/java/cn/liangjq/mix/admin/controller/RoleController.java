@@ -29,7 +29,7 @@ public class RoleController {
 
     @PostMapping("/page")
     @ApiOperation("分页获得角色信息")
-    public R<PageResponse<RoleVO>> pageRoleInfo(@Valid @RequestBody RolePageRequest request) {
+    public R<PageResponse<RolePageDTO>> pageRoleInfo(@Valid @RequestBody RoleSearchDTO request) {
         return roleService.pageRole(request);
     }
 

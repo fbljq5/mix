@@ -10,7 +10,7 @@ import java.util.Date;
  * @date ： 2021/4/23
  */
 @Data
-public class UserVO {
+public class UserPageDTO {
 
     /**
      * 用户ID id

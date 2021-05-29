@@ -32,10 +32,10 @@ public class UserController {
 
     @GetMapping("/info")
     @ApiOperation("获得登录用户信息")
-    public R<UserVO> getUserInfo(HttpServletRequest request) {
+    public R<UserPageDTO> getUserInfo(HttpServletRequest request) {
         String tokenStr = request.getHeader(jwtConfig.getTokenHeader());
         // 根据token获取用户信息
-        UserVO userInfo = userService.getUserByName(JWTUtils.getUserName(tokenStr, jwtConfig.getSecret()));
+        UserPageDTO userInfo = userService.getUserByName(JWTUtils.getUserName(tokenStr, jwtConfig.getSecret()));
         return R.ok(userInfo);
     }
 
@@ -55,7 +55,7 @@ public class UserController {
 
     @PostMapping("/list")
     @ApiOperation("分页获得用户信息")
-    public R<PageResponse> pageUserInfo(@RequestBody UserListRequest request) {
+    public R<PageResponse> pageUserInfo(@RequestBody UserSearchDTO request) {
         return userService.pageUser(request);
     }
 

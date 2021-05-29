@@ -157,7 +157,7 @@
         </foreach>
     </select>
 
-    <select id="selectByRoleListRequest" parameterType="cn.liangjq.mix.common.dto.role.RolePageRequest"
+    <select id="selectByRoleSearchDTO" parameterType="cn.liangjq.mix.common.dto.role.RoleSearchDTO"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

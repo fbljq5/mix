@@ -10,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
  * @Date: 2021/4/14
  */
 @Data
-public class LoginVO {
+public class LoginDTO {
 
     /**
      * 登录用户名

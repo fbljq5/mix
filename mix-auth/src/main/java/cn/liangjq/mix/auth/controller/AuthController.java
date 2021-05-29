@@ -1,7 +1,7 @@
 package cn.liangjq.mix.auth.controller;
 
 import cn.liangjq.mix.api.service.RemoteAdminService;
-import cn.liangjq.mix.common.dto.LoginVO;
+import cn.liangjq.mix.common.dto.LoginDTO;
 import cn.liangjq.mix.common.result.R;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class AuthController {
 
     @ApiOperation(value = "用户登录", notes = "用户登录")
     @PostMapping("/login")
-    public R login(@RequestBody LoginVO loginVO) {
-        return remoteAdminService.checkLoginVO(loginVO);
+    public R login(@RequestBody LoginDTO loginDTO) {
+        return remoteAdminService.checkLoginVO(loginDTO);
     }
 }

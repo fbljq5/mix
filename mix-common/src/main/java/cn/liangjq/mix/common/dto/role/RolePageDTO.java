@@ -10,7 +10,7 @@ import java.util.Date;
  * @date ： 2021/4/23
  */
 @Data
-public class RoleVO {
+public class RolePageDTO {
 
     /**
      * 用户ID id

@@ -17,7 +17,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.beans.Transient;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,16 +58,16 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public R<PageResponse<RoleVO>> pageRole(RolePageRequest request) {
+    public R<PageResponse<RolePageDTO>> pageRole(RoleSearchDTO request) {
         PageResponse<Role> pageResponse = PageUtils.setPageResult(request, () ->
-                roleMapper.selectByRoleListRequest(request));
+                roleMapper.selectByRoleSearchDTO(request));
         if (null == pageResponse) {
             return null;
         }
-        List<RoleVO> roleVOList = pageResponse.getList().stream().map(this::toRoleVO).collect(Collectors.toList());
-        PageResponse<RoleVO> res = new PageResponse<>();
+        List<RolePageDTO> rolePageDTOList = pageResponse.getList().stream().map(this::toRoleVO).collect(Collectors.toList());
+        PageResponse<RolePageDTO> res = new PageResponse<>();
         BeanUtils.copyProperties(pageResponse, res);
-        res.setList(roleVOList);
+        res.setList(rolePageDTOList);
         return R.ok(res);
     }
 
@@ -317,12 +316,12 @@ public class RoleServiceImpl implements IRoleService {
      * @param role
      * @return
      */
-    private RoleVO toRoleVO(Role role) {
-        RoleVO roleVO = new RoleVO();
-        BeanUtils.copyProperties(role, roleVO);
-        roleVO.setGmtCreate(null == role.getGmtCreate() ? null : DateFormatUtils.format(role.getGmtCreate(), "yyyy-MM-dd HH:mm:ss"));
-        roleVO.setGmtModified(null == role.getGmtModified() ? null : DateFormatUtils.format(role.getGmtModified(), "yyyy-MM-dd HH:mm:ss"));
-        return roleVO;
+    private RolePageDTO toRoleVO(Role role) {
+        RolePageDTO rolePageDTO = new RolePageDTO();
+        BeanUtils.copyProperties(role, rolePageDTO);
+        rolePageDTO.setGmtCreate(null == role.getGmtCreate() ? null : DateFormatUtils.format(role.getGmtCreate(), "yyyy-MM-dd HH:mm:ss"));
+        rolePageDTO.setGmtModified(null == role.getGmtModified() ? null : DateFormatUtils.format(role.getGmtModified(), "yyyy-MM-dd HH:mm:ss"));
+        return rolePageDTO;
     }
 
     /**

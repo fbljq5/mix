@@ -168,7 +168,7 @@
         where user_name = #{userName}
     </select>
 
-    <select id="selectByUserRequest" parameterType="cn.liangjq.mix.common.dto.user.UserListRequest"
+    <select id="selectByUserRequest" parameterType="cn.liangjq.mix.common.dto.user.UserSearchDTO"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

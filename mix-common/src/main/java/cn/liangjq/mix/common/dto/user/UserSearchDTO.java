@@ -9,7 +9,7 @@ import lombok.Data;
  * @date ： 2021/4/23
  */
 @Data
-public class UserListRequest extends PageBaseRequest {
+public class UserSearchDTO extends PageBaseRequest {
 
     /**
      * 查询用户名

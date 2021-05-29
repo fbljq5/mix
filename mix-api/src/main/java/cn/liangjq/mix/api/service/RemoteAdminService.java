@@ -1,7 +1,7 @@
 package cn.liangjq.mix.api.service;
 
 import cn.liangjq.mix.api.fallback.RemoteAdminServiceFallbackFactory;
-import cn.liangjq.mix.common.dto.LoginVO;
+import cn.liangjq.mix.common.dto.LoginDTO;
 import cn.liangjq.mix.common.entity.Role;
 import cn.liangjq.mix.common.entity.User;
 import cn.liangjq.mix.common.entity.UserRole;
@@ -21,7 +21,7 @@ import java.util.List;
 public interface RemoteAdminService {
 
     @PostMapping("/api/user/checkLogin")
-    R checkLoginVO(LoginVO loginVO);
+    R checkLoginVO(LoginDTO loginDTO);
 
     @GetMapping("/api/user/findUserByUsername")
     User findUserByUsername(String username);

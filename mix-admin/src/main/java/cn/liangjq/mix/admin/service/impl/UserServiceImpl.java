@@ -7,7 +7,7 @@ import cn.liangjq.mix.admin.exception.OperationException;
 import cn.liangjq.mix.admin.service.IUserService;
 import cn.liangjq.mix.admin.util.PageUtils;
 import cn.liangjq.mix.common.config.JwtConfig;
-import cn.liangjq.mix.common.dto.LoginVO;
+import cn.liangjq.mix.common.dto.LoginDTO;
 import cn.liangjq.mix.common.dto.PageResponse;
 import cn.liangjq.mix.common.dto.user.*;
 import cn.liangjq.mix.common.entity.Role;
@@ -20,10 +20,8 @@ import cn.liangjq.mix.common.utils.RedisUtil;
 import com.alibaba.nacos.common.utils.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.http.client.utils.DateUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,16 +49,16 @@ public class UserServiceImpl implements IUserService {
     private final JwtConfig jwtConfig;
 
     @Override
-    public R<String> checkLoginVO(LoginVO loginVO) {
-        if (null == loginVO || StringUtils.isBlank(loginVO.getUsername())
-                || StringUtils.isBlank(loginVO.getPassword())) {
+    public R<String> checkLoginVO(LoginDTO loginDTO) {
+        if (null == loginDTO || StringUtils.isBlank(loginDTO.getUsername())
+                || StringUtils.isBlank(loginDTO.getPassword())) {
             return R.fail();
         }
-        User user = userMapper.findUserByUsername(loginVO.getUsername());
+        User user = userMapper.findUserByUsername(loginDTO.getUsername());
         if (null == user) {
             return R.fail("用户名或密码有误");
         }
-        if (!Objects.equals(MD5Utils.getMd5(loginVO.getPassword()), user.getPassword())) {
+        if (!Objects.equals(MD5Utils.getMd5(loginDTO.getPassword()), user.getPassword())) {
             return R.fail("用户名或密码有误");
         }
         // 获得角色列表
@@ -86,14 +84,14 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public UserVO getUserByName(String username) {
+    public UserPageDTO getUserByName(String username) {
         User user = userMapper.findUserByUsername(username);
         if (null == user) {
             return null;
         }
-        UserVO userVO = new UserVO();
-        BeanUtils.copyProperties(user, userVO);
-        return userVO;
+        UserPageDTO userPageDTO = new UserPageDTO();
+        BeanUtils.copyProperties(user, userPageDTO);
+        return userPageDTO;
     }
 
     @Override
@@ -102,12 +100,12 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public R<PageResponse> pageUser(UserListRequest request) {
+    public R<PageResponse> pageUser(UserSearchDTO request) {
         PageResponse pageResponse = PageUtils.setPageResult(request, () ->
                 userMapper.selectByUserRequest(request));
         List<User> userList = (List<User>) pageResponse.getList();
-        List<UserVO> userVOList = userList.stream().map(this::toUserVO).collect(Collectors.toList());
-        pageResponse.setList(userVOList);
+        List<UserPageDTO> userPageDTOList = userList.stream().map(this::toUserVO).collect(Collectors.toList());
+        pageResponse.setList(userPageDTOList);
         return R.ok(pageResponse);
     }
 
@@ -372,20 +370,20 @@ public class UserServiceImpl implements IUserService {
      * @param user
      * @return
      */
-    private UserVO toUserVO(User user) {
-        UserVO userVO = new UserVO();
-        BeanUtils.copyProperties(user, userVO);
+    private UserPageDTO toUserVO(User user) {
+        UserPageDTO userPageDTO = new UserPageDTO();
+        BeanUtils.copyProperties(user, userPageDTO);
         if (user.getLoginDate() != null) {
-            userVO.setLoginDate(DateFormatUtils.format(user.getLoginDate(), "yyyy-MM-dd HH:mm"));
+            userPageDTO.setLoginDate(DateFormatUtils.format(user.getLoginDate(), "yyyy-MM-dd HH:mm"));
         }
         if (user.getGmtCreate() != null) {
-            userVO.setGmtCreate(DateFormatUtils.format(user.getGmtCreate(), "yyyy-MM-dd HH:mm"));
+            userPageDTO.setGmtCreate(DateFormatUtils.format(user.getGmtCreate(), "yyyy-MM-dd HH:mm"));
         }
         if (user.getGmtModified() != null) {
-            userVO.setGmtModified(DateFormatUtils.format(user.getGmtModified(), "yyyy-MM-dd HH:mm"));
+            userPageDTO.setGmtModified(DateFormatUtils.format(user.getGmtModified(), "yyyy-MM-dd HH:mm"));
         }
 
-        return userVO;
+        return userPageDTO;
     }
 
     /**

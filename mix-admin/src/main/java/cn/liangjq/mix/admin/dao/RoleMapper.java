@@ -1,7 +1,7 @@
 package cn.liangjq.mix.admin.dao;
 
 
-import cn.liangjq.mix.common.dto.role.RolePageRequest;
+import cn.liangjq.mix.common.dto.role.RoleSearchDTO;
 import cn.liangjq.mix.common.entity.Role;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -77,7 +77,7 @@ public interface RoleMapper {
      * @param request
      * @return
      */
-    List<Role> selectByRoleListRequest(RolePageRequest request);
+    List<Role> selectByRoleSearchDTO(RoleSearchDTO request);
 
     /**
      * 判断角色名称或角色编号是否被占用

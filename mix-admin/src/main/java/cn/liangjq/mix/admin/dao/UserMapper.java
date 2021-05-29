@@ -1,7 +1,7 @@
 package cn.liangjq.mix.admin.dao;
 
 
-import cn.liangjq.mix.common.dto.user.UserListRequest;
+import cn.liangjq.mix.common.dto.user.UserSearchDTO;
 import cn.liangjq.mix.common.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -68,7 +68,7 @@ public interface UserMapper {
      * @param request
      * @return
      */
-    List<User> selectByUserRequest(UserListRequest request);
+    List<User> selectByUserRequest(UserSearchDTO request);
 
     /**
      * 通过用户名判断用户是否存在

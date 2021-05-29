@@ -1,7 +1,7 @@
 package cn.liangjq.mix.api.fallback;
 
 import cn.liangjq.mix.api.service.RemoteAdminService;
-import cn.liangjq.mix.common.dto.LoginVO;
+import cn.liangjq.mix.common.dto.LoginDTO;
 import cn.liangjq.mix.common.entity.Role;
 import cn.liangjq.mix.common.entity.User;
 import cn.liangjq.mix.common.entity.UserRole;
@@ -21,7 +21,7 @@ import java.util.List;
 public class RemoteAdminServiceFallbackImpl implements RemoteAdminService {
 
     @Override
-    public R checkLoginVO(LoginVO loginVO) {
+    public R checkLoginVO(LoginDTO loginDTO) {
         return R.fail("失败了");
     }
 

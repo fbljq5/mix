@@ -1,7 +1,7 @@
 package cn.liangjq.mix.admin.service;
 
 
-import cn.liangjq.mix.common.dto.LoginVO;
+import cn.liangjq.mix.common.dto.LoginDTO;
 import cn.liangjq.mix.common.dto.PageResponse;
 import cn.liangjq.mix.common.dto.user.*;
 import cn.liangjq.mix.common.entity.UserRole;
@@ -19,10 +19,10 @@ public interface IUserService {
     /**
      * 登录校验
      *
-     * @param loginVO
+     * @param loginDTO
      * @return
      */
-    R checkLoginVO(LoginVO loginVO);
+    R checkLoginVO(LoginDTO loginDTO);
 
     /**
      * 通过用户名获取用户信息
@@ -30,7 +30,7 @@ public interface IUserService {
      * @param username
      * @return
      */
-    UserVO getUserByName(String username);
+    UserPageDTO getUserByName(String username);
 
     /**
      * 通过用户ID获得用户角色关联集合
@@ -46,7 +46,7 @@ public interface IUserService {
      * @param request
      * @return
      */
-    R<PageResponse> pageUser(UserListRequest request);
+    R<PageResponse> pageUser(UserSearchDTO request);
 
     /**
      * 新增用户
