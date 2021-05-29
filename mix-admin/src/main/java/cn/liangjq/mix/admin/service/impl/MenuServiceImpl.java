@@ -2,10 +2,17 @@ package cn.liangjq.mix.admin.service.impl;
 
 import cn.liangjq.mix.admin.dao.MenuMapper;
 import cn.liangjq.mix.admin.dao.RoleMenuMapper;
+import cn.liangjq.mix.admin.exception.OperationException;
 import cn.liangjq.mix.admin.service.IMenuService;
-import cn.liangjq.mix.common.dto.menu.MenuListDTO;
+import cn.liangjq.mix.admin.util.PageUtils;
+import cn.liangjq.mix.common.dto.PageResponse;
+import cn.liangjq.mix.common.dto.menu.*;
+import cn.liangjq.mix.common.dto.role.RolePageDTO;
 import cn.liangjq.mix.common.entity.Menu;
+import cn.liangjq.mix.common.entity.Role;
+import cn.liangjq.mix.common.result.R;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -39,6 +46,128 @@ public class MenuServiceImpl implements IMenuService {
         return menuList.stream().map(menu -> {
             return this.constructMenuListDTO(menu, menuIdList);
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public R<PageResponse<MenuPageDTO>> pageMenu(MenuSearchDTO searchDTO) {
+        PageResponse<Menu> pageResponse = PageUtils.setPageResult(searchDTO, () ->
+                menuMapper.selectByMenuSearchDTO(searchDTO));
+        if (null == pageResponse) {
+            return null;
+        }
+        List<MenuPageDTO> menuPageDTOList = pageResponse.getList().stream().map(this::toPageDTO).collect(Collectors.toList());
+        PageResponse<MenuPageDTO> res = new PageResponse<>();
+        BeanUtils.copyProperties(pageResponse, res);
+        res.setList(menuPageDTOList);
+        return R.ok(res);
+    }
+
+    @Override
+    public R<String> addMenu(MenuAddDTO menuAddDTO) {
+        // 检查菜单名是否存在
+        this.checkMenuNameExist(menuAddDTO.getMenuName());
+        // 新增菜单
+        this.doAddMenu(menuAddDTO);
+        return R.ok();
+    }
+
+    /**
+     * 判断菜单名是否存在
+     *
+     * @param menuName
+     */
+    private void checkMenuNameExist(String menuName) {
+        Boolean checkResult = menuMapper.checkMenuExistByName(menuName);
+        if (checkResult) {
+            throw new OperationException("菜单名已存在");
+        }
+    }
+
+    /**
+     * 判断菜单名是否存在,排除指定菜单ID
+     *
+     * @param menuName
+     * @param menuId
+     */
+    private void checkMenuNameExist(String menuName, Long menuId) {
+        Boolean checkResult = menuMapper.checkMenuExistByNameAndId(menuName, menuId);
+        if (checkResult) {
+            throw new OperationException("菜单名已存在");
+        }
+    }
+
+    /**
+     * 新增菜单
+     *
+     * @param menuAddDTO
+     */
+    private void doAddMenu(MenuAddDTO menuAddDTO) {
+        Menu menu = this.toMenu(menuAddDTO);
+        int res = menuMapper.insertSelective(menu);
+        if (res <= 0) {
+            throw new OperationException("新增菜单失败");
+        }
+    }
+
+    /**
+     * 菜单新增DTO转换成菜单
+     *
+     * @param menuAddDTO
+     * @return
+     */
+    private Menu toMenu(MenuAddDTO menuAddDTO) {
+        if (null == menuAddDTO) {
+            return null;
+        }
+        Menu menu = new Menu();
+        BeanUtils.copyProperties(menuAddDTO, menu);
+        return menu;
+    }
+
+    @Override
+    public R<String> updateMenu(MenuUpdateDTO menuUpdateDTO) {
+        Menu menu = this.toMenu(menuUpdateDTO);
+        int res = menuMapper.updateByPrimaryKeySelective(menu);
+        if (res <= 0) {
+            throw new OperationException("更新菜单失败");
+        }
+        return R.ok();
+    }
+
+    /**
+     * 菜单更新DTO转换成菜单
+     *
+     * @param menuUpdateDTO
+     * @return
+     */
+    private Menu toMenu(MenuUpdateDTO menuUpdateDTO) {
+        if (null == menuUpdateDTO) {
+            return null;
+        }
+        Menu menu = new Menu();
+        BeanUtils.copyProperties(menuUpdateDTO, menu);
+        return menu;
+    }
+
+    @Override
+    public R<String> deleteMenu(Long menuId) {
+
+        return null;
+    }
+
+    /**
+     * 菜单数据转换为菜单DTO
+     *
+     * @param menu
+     * @return
+     */
+    private MenuPageDTO toPageDTO(Menu menu) {
+        if (null == menu) {
+            return null;
+        }
+        MenuPageDTO menuPageDTO = MenuPageDTO.builder().build();
+        BeanUtils.copyProperties(menu, menuPageDTO);
+        return menuPageDTO;
     }
 
     /**

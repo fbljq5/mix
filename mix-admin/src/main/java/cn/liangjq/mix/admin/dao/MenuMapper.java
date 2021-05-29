@@ -1,5 +1,6 @@
 package cn.liangjq.mix.admin.dao;
 
+import cn.liangjq.mix.common.dto.menu.MenuSearchDTO;
 import cn.liangjq.mix.common.entity.Menu;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -63,7 +64,34 @@ public interface MenuMapper {
 
     /**
      * 获取所有菜单信息
+     *
      * @return
      */
     List<Menu> selectAll();
+
+    /**
+     * 根据查询条件查询菜单信息
+     *
+     * @param searchDTO
+     * @return
+     */
+    List<Menu> selectByMenuSearchDTO(MenuSearchDTO searchDTO);
+
+
+    /**
+     * 判断菜单名称是否存在
+     *
+     * @param menuName
+     * @return
+     */
+    Boolean checkMenuExistByName(String menuName);
+
+    /**
+     * 判断菜单名称除指定菜单外是否存在
+     *
+     * @param menuName
+     * @param menuId
+     * @return
+     */
+    Boolean checkMenuExistByNameAndId(String menuName, Long menuId);
 }

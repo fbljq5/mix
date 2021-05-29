@@ -1,6 +1,8 @@
 package cn.liangjq.mix.admin.service;
 
-import cn.liangjq.mix.common.dto.menu.MenuListDTO;
+import cn.liangjq.mix.common.dto.PageResponse;
+import cn.liangjq.mix.common.dto.menu.*;
+import cn.liangjq.mix.common.result.R;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,4 +32,36 @@ public interface IMenuService {
     default List<MenuListDTO> listAllByRoleId(Long roleId) {
         return Collections.emptyList();
     }
+
+    /**
+     * 分页查询菜单信息
+     *
+     * @param searchDTO
+     * @return
+     */
+    R<PageResponse<MenuPageDTO>> pageMenu(MenuSearchDTO searchDTO);
+
+    /**
+     * 新增菜单
+     *
+     * @param menuAddDTO
+     * @return
+     */
+    R<String> addMenu(MenuAddDTO menuAddDTO);
+
+    /**
+     * 更新菜单
+     *
+     * @param menuUpdateDTO
+     * @return
+     */
+    R<String> updateMenu(MenuUpdateDTO menuUpdateDTO);
+
+    /**
+     * 删除菜单
+     *
+     * @param menuId
+     * @return
+     */
+    R<String> deleteMenu(Long menuId);
 }

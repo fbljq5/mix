@@ -1,7 +1,10 @@
 package cn.liangjq.mix.admin.controller;
 
 import cn.liangjq.mix.admin.service.IMenuService;
-import cn.liangjq.mix.common.dto.menu.MenuListDTO;
+import cn.liangjq.mix.common.dto.PageResponse;
+import cn.liangjq.mix.common.dto.menu.*;
+import cn.liangjq.mix.common.dto.role.RoleSearchDTO;
+import cn.liangjq.mix.common.dto.role.RolePageDTO;
 import cn.liangjq.mix.common.result.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -9,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -39,4 +43,27 @@ public class MenuController {
         return R.ok(list);
     }
 
+    @PostMapping("/page")
+    @ApiOperation("分页获得菜单信息")
+    public R<PageResponse<MenuPageDTO>> pageRoleInfo(@Valid @RequestBody MenuSearchDTO searchDTO) {
+        return menuService.pageMenu(searchDTO);
+    }
+
+    @PostMapping("/add")
+    @ApiOperation("新增菜单信息")
+    public R<String> addMenu(@Valid @RequestBody MenuAddDTO menuAddDTO) {
+        return menuService.addMenu(menuAddDTO);
+    }
+
+    @PutMapping("/update")
+    @ApiOperation("修改菜单信息")
+    public R<String> addMenu(@Valid @RequestBody MenuUpdateDTO menuUpdateDTO) {
+        return menuService.updateMenu(menuUpdateDTO);
+    }
+
+    @DeleteMapping("/delete/{menuId}")
+    @ApiOperation("修改菜单信息")
+    public R<String> deleteMenu(@Valid @PathVariable("menuId") Long menuId) {
+        return menuService.deleteMenu(menuId);
+    }
 }

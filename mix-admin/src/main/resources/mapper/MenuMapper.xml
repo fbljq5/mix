@@ -17,7 +17,8 @@
         <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, menu_name, parent_id, order_sort, path, component, visible, status, perms, icon,
+        id
+        , menu_name, parent_id, order_sort, path, component, visible, status, perms, icon,
     remark, gmt_create, gmt_modified
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -199,6 +200,35 @@
         <include refid="Base_Column_List"/>
         from t_menu
         order by order_sort
+    </select>
+
+    <select id="selectByMenuSearchDTO" parameterType="cn.liangjq.mix.common.dto.menu.MenuSearchDTO"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_menu
+        <trim prefix="where" prefixOverrides="and">
+            <if test="menuName!=null">
+                menu_name LIKE CONCAT('%',#{menuName},'%')
+            </if>
+            <if test="status!=null">
+                and status = #{status}
+            </if>
+        </trim>
+        order by order_sort
+    </select>
+
+    <select id="checkMenuExistByName" resultType="java.lang.Boolean">
+        select count(1)
+        from t_menu
+        where menu_name = #{menuName}
+    </select>
+
+    <select id="checkMenuExistByNameAndId" resultType="java.lang.Boolean">
+        select count(1)
+        from t_menu
+        where menu_name = #{menuName}
+          and id = #{menuId}
     </select>
 
 </mapper>
