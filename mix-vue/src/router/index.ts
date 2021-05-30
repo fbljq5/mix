@@ -5,6 +5,7 @@ import Dashboard from '@/views/dashboard/index.vue'
 import Layout from '@/components/layout/layout.vue'
 import User from '@/views/admin/user.vue'
 import Role from '@/views/admin/role.vue'
+import Menu from '@/views/admin/menu.vue'
 
 const routes: Array<RouteRecordRaw> = [
 
@@ -46,6 +47,12 @@ const routes: Array<RouteRecordRaw> = [
                 name: '角色管理',
                 component: Role,
                 meta: {title: '角色管理'}
+            },
+            {
+                path: 'menu',
+                name: '菜单管理',
+                component: Menu,
+                meta: {title: '菜单管理'}
             }]
     },
 ]

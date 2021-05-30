@@ -16,7 +16,8 @@
       <a-menu-item key="3">
         <router-link to="/admin/role">角色管理</router-link>
       </a-menu-item>
-      <a-menu-item key="4">菜单管理</a-menu-item>
+      <a-menu-item key="4">
+        <router-link to="/admin/menu">菜单管理</router-link></a-menu-item>
     </a-sub-menu>
     <a-sub-menu key="sub2">
       <template #title>
