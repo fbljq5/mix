@@ -34,21 +34,16 @@
       </a-form>
     </p>
 
-    <a-table
-        :columns="columns"
-        :row-key="(record) => record.id"
-        :data-source="menuList"
-        :pagination="pagination"
-        :loading="loading"
-        @change="handleTableChange">
-    </a-table>
+    <a-table :columns="columns" :data-source="treeData" :row-key='record=>record.id'/>
   </a-layout-content>
 
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref, watch} from "vue";
+import {defineComponent, onMounted, ref} from "vue";
 import {Tool} from "@/utils/tool";
+import {pageMenu} from "@/api/admin/menu";
+import {message} from "ant-design-vue";
 
 const param = ref();
 const menuList = ref();
@@ -112,10 +107,63 @@ export default defineComponent({
   setup() {
     param.value = {};
 
+
+    const treeData = ref();
+
     const handleQuery = (param: any) => {
       console.log(param)
       menuList.value = [];
       // TODO
+      pageMenu(param).then((response) => {
+        loading.value = false;
+        const res = response.data;
+        if (res.code == 200) {
+          let menuList = res.data.list;
+          treeData.value = getJsonTree(menuList, 0)
+          console.log("treeData", treeData.value)
+          pagination.value.current = param.page;
+          pagination.value.total = res.data.totalSize;
+        } else {
+          message.error(res.msg);
+          loading.value = false;
+        }
+      })
+    };
+
+    /**
+     * 菜单数据转换成树状结构所需数据
+     * @param data
+     * @param parentId
+     */
+    const getJsonTree = (data: any, parentId: any) => {
+      let itemArr = [];
+      for (let i = 0; i < data.length; i++) {
+        let node = data[i];
+        if (node.parentId == parentId) {
+          let newNode = {
+            key: String,
+            id: Number,
+            menuName: String,
+            icon: String,
+            orderSort: String,
+            status: String,
+            path: String,
+            gmtCreate: String,
+            children: Array<any>()
+          };
+          newNode.key = node.id;
+          newNode.id = node.id;
+          newNode.menuName = node.menuName;
+          newNode.icon = node.icon;
+          newNode.orderSort = node.orderSort;
+          newNode.status = node.status;
+          newNode.path = node.path;
+          newNode.gmtCreate = node.gmtCreate;
+          newNode.children = getJsonTree(data, node.id);
+          itemArr.push(newNode);
+        }
+      }
+      return itemArr;
     };
 
     const resetForm = () => {
@@ -172,6 +220,12 @@ export default defineComponent({
 
     const handleStatusChange = (record: any) => {
       // TODO
+      console.log(record)
+    }
+
+    const expandIcon = (props: any) => {
+      console.log("props", props)
+
     }
 
 
@@ -198,6 +252,9 @@ export default defineComponent({
       handleDelete,
       handleStatusChange,
       handleSaveOrUpdate,
+      treeData,
+      expandIcon
+
     }
   },
 })

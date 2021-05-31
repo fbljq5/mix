@@ -12,6 +12,7 @@ import cn.liangjq.mix.common.entity.Menu;
 import cn.liangjq.mix.common.entity.Role;
 import cn.liangjq.mix.common.result.R;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -167,6 +168,7 @@ public class MenuServiceImpl implements IMenuService {
         }
         MenuPageDTO menuPageDTO = MenuPageDTO.builder().build();
         BeanUtils.copyProperties(menu, menuPageDTO);
+        menuPageDTO.setGmtCreate(menu.getGmtCreate()==null?"":DateFormatUtils.format(menu.getGmtCreate(),"yyyy-MM-dd HH:mm:ss"));
         return menuPageDTO;
     }
 

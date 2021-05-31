@@ -57,6 +57,6 @@ public class MenuPageDTO {
     /**
      * 创建时间
      */
-    protected Date gmtCreate;
+    protected String gmtCreate;
 
 }
