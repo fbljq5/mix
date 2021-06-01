@@ -18,7 +18,7 @@
               handleQuery({
                 page: 1,
                 pageSize: pagination.pageSize,
-                roleName: param.name,
+                menuName: param.name,
               })
             "
           >
@@ -33,8 +33,25 @@
         </a-form-item>
       </a-form>
     </p>
-
-    <a-table :columns="columns" :data-source="treeData" :row-key='record=>record.id'/>
+    <a-table :columns="columns" :data-source="treeData" :row-key='record=>record.id'>
+      <template v-slot:icon="{ record }">
+        <div v-text="record.icon">
+        </div>
+      </template>
+      <template v-slot:action="{ record }">
+        <a-space size="large">
+          <a-button type="default" @click="add(record)"> 新增</a-button>
+          <a-button type="primary" @click="edit(record)"> 编辑</a-button>
+          <a-popconfirm
+              title="删除后不可恢复，确认删除?"
+              ok-text="是"
+              cancel-text="否"
+              @confirm="handleDelete(record.id)">
+            <a-button type="danger"> 删除</a-button>
+          </a-popconfirm>
+        </a-space>
+      </template>
+    </a-table>
   </a-layout-content>
 
 </template>
@@ -44,6 +61,8 @@ import {defineComponent, onMounted, ref} from "vue";
 import {Tool} from "@/utils/tool";
 import {pageMenu} from "@/api/admin/menu";
 import {message} from "ant-design-vue";
+import {RotateLeftOutlined  } from '@ant-design/icons-vue';
+
 
 const param = ref();
 const menuList = ref();
@@ -68,6 +87,9 @@ const columns = [
     title: "图标",
     width: "15%",
     dataIndex: "icon",
+    slots: {
+      customRender: "icon",
+    },
   },
   {
     title: "排序",
@@ -105,10 +127,8 @@ const columns = [
 
 export default defineComponent({
   setup() {
-    param.value = {};
-
-
     const treeData = ref();
+    param.value = {};
 
     const handleQuery = (param: any) => {
       console.log(param)
@@ -223,12 +243,6 @@ export default defineComponent({
       console.log(record)
     }
 
-    const expandIcon = (props: any) => {
-      console.log("props", props)
-
-    }
-
-
     onMounted(() => {
       handleQuery({
         page: 1,
@@ -253,8 +267,6 @@ export default defineComponent({
       handleStatusChange,
       handleSaveOrUpdate,
       treeData,
-      expandIcon
-
     }
   },
 })
