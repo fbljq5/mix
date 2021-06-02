@@ -35,8 +35,8 @@ maven | 项目构建管理
 技术 | 作用 | 版本
 ----|----|---
 vue | js框架 | 3
+vue-vben-admin | vue模板 | vue3,ts,vite2
 Ant Design of Vue | UI框架 | 2.1.3 
-vue cli | vue 脚手架 | 4.5.12
 
 未完待续
 
@@ -58,13 +58,9 @@ MIX
 
 ​	|------ mix-monitor    系统监控模块
 
-​	|------ mix-vue           前端代码
-
    
 
 #### 启动说明
-
-##### 后端服务
 
 - 安装nacos，导入nacos数据库脚本doc\sql\nacos_config.sql
 - 安装MySQL，导入数据库脚本doc\sql\mix.sql
@@ -75,15 +71,3 @@ MIX
   - mix-gateway
   - mix-admin
   - mix-auth
-
-
-
-##### 前端服务
-
-进入mix-vue
-
-分别执行：
-
-```yarn install```
-
-```yarn serve```
