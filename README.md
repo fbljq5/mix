@@ -30,13 +30,13 @@ maven | 项目构建管理
 未完待续
 
 
-##### 前端 （详情请看mix-vue项目）
+##### 前端 （mix-vue）
 
-技术 | 作用 | 版本
-----|----|---
-vue | js框架 | 3
-vue-vben-admin | vue模板 | vue3,ts,vite2
-Ant Design of Vue | UI框架 | 2.1.3 
+技术 | 版本
+----|---
+vue | 3
+Ant Design of Vue | 2.1.3 
+typescript | 4.1.5
 
 未完待续
 
@@ -57,6 +57,8 @@ MIX
 ​	|------ mix-gateway   统一网关模块
 
 ​	|------ mix-monitor    系统监控模块
+
+​	|------ mix-vue    前端项目
 
    
 
