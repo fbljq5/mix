@@ -8,6 +8,7 @@ import cn.liangjq.mix.admin.service.IUserService;
 import cn.liangjq.mix.admin.util.PageUtils;
 import cn.liangjq.mix.common.config.JwtConfig;
 import cn.liangjq.mix.common.dto.LoginDTO;
+import cn.liangjq.mix.common.dto.LoginResultDTO;
 import cn.liangjq.mix.common.dto.PageResponse;
 import cn.liangjq.mix.common.dto.user.*;
 import cn.liangjq.mix.common.entity.Role;
@@ -49,7 +50,7 @@ public class UserServiceImpl implements IUserService {
     private final JwtConfig jwtConfig;
 
     @Override
-    public R<String> checkLoginVO(LoginDTO loginDTO) {
+    public R<LoginResultDTO> checkLoginVO(LoginDTO loginDTO) {
         if (null == loginDTO || StringUtils.isBlank(loginDTO.getUsername())
                 || StringUtils.isBlank(loginDTO.getPassword())) {
             return R.fail();
@@ -80,7 +81,10 @@ public class UserServiceImpl implements IUserService {
         user.setLoginDate(new Date());
         user.login();
         userMapper.updateByPrimaryKeySelective(user);
-        return R.ok(token);
+        LoginResultDTO loginResultDTO = new LoginResultDTO();
+        loginResultDTO.setUserId(user.getId());
+        loginResultDTO.setToken(token);
+        return R.ok(loginResultDTO);
     }
 
     @Override

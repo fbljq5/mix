@@ -24,11 +24,11 @@ public class Constants {
     /**
      * 成功
      */
-    public static final Integer SUCCESS = 200;
+    public static final Integer SUCCESS = 0;
 
     /**
      * 失败
      */
-    public static final Integer FAIL = 401;
+    public static final Integer ERROR = 1;
 
 }
