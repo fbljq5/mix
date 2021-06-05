@@ -29,6 +29,6 @@ public class Constants {
     /**
      * 失败
      */
-    public static final Integer FAIL = 500;
+    public static final Integer FAIL = 401;
 
 }
