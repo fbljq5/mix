@@ -85,4 +85,12 @@ public interface IRoleService {
      * @return
      */
     R<String> switchStatus(RoleSwitchStatusDTO roleSwitchStatusDTO);
+
+    /**
+     * 获得指定用户的角色信息集合
+     *
+     * @param userId
+     * @return
+     */
+    List<RoleInfoDTO> getRoleInfoListByUserId(Long userId);
 }

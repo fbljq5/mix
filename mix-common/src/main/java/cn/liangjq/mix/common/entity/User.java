@@ -20,12 +20,17 @@ import java.util.Date;
 public class User extends BaseEntity {
 
     /**
-     * 用户名称 user_name
+     * 用户名称 username
      */
-    private String userName;
+    private String username;
 
     /**
-     * 邮箱 email
+     * 真实名称 real_name
+     */
+    private String realName;
+
+    /**
+     * 邮箱 emailjju
      */
     private String email;
 
@@ -33,6 +38,11 @@ public class User extends BaseEntity {
      * 电话号码 phone
      */
     private String phone;
+
+    /**
+     * 头像 avatar
+     */
+    private String avatar;
 
     /**
      * 密码 password
@@ -55,7 +65,7 @@ public class User extends BaseEntity {
     private Date loginDate;
 
     /**
-     * 备注 remark
+     * 介绍 remark
      */
     private String remark;
 

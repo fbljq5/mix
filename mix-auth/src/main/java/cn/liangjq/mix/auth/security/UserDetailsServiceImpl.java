@@ -35,12 +35,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         List<UserRole> userRoles = remoteAdminService.listUserRoleByUserId(user.getId());
         if (CollectionUtils.isEmpty(userRoles)) {
-            return new org.springframework.security.core.userdetails.User(user.getUserName(),
+            return new org.springframework.security.core.userdetails.User(user.getUsername(),
                     user.getPassword(), authorities);
         }
         userRoles.forEach(userRole -> authorities.add(new SimpleGrantedAuthority("ROLE_" +
                 remoteAdminService.findRoleByRoleId(userRole.getRoleId()).getRoleName())));
-        return new org.springframework.security.core.userdetails.User(user.getUserName(),
+        return new org.springframework.security.core.userdetails.User(user.getUsername(),
                 user.getPassword(), authorities);
     }
 }

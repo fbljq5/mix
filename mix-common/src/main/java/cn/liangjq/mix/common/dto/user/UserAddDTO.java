@@ -18,11 +18,24 @@ public class UserAddDTO {
 
     private Long id;
     /**
-     * 用户名称 user_name
+     * 用户名 username
      */
     @NotBlank(message = "用户名不能为空")
     @Length(max = 50, min = 5, message = "用户名为5-50位")
-    private String userName;
+    private String username;
+
+
+    /**
+     * 姓名 realName
+     */
+    @NotBlank(message = "姓名不能为空")
+    @Length(max = 50, min = 5, message = "姓名为5-50位")
+    private String realName;
+
+    /**
+     * 头像 avatar
+     */
+    private String avatar;
 
     /**
      * 邮箱 email
@@ -46,7 +59,7 @@ public class UserAddDTO {
     private String password;
 
     /**
-     * 备注 remark
+     * 介绍 remark
      */
     private String remark;
 

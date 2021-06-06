@@ -32,10 +32,10 @@ public class UserController {
 
     @GetMapping("/info")
     @ApiOperation("获得登录用户信息")
-    public R<UserPageDTO> getUserInfo(HttpServletRequest request) {
+    public R<UserInfoDTO> getUserInfo(HttpServletRequest request) {
         String tokenStr = request.getHeader(jwtConfig.getTokenHeader());
         // 根据token获取用户信息
-        UserPageDTO userInfo = userService.getUserByName(JWTUtils.getUserName(tokenStr, jwtConfig.getSecret()));
+        UserInfoDTO userInfo = userService.getUserByName(JWTUtils.getUsername(tokenStr, jwtConfig.getSecret()));
         return R.ok(userInfo);
     }
 

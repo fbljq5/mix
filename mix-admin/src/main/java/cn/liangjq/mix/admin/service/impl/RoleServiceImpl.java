@@ -243,6 +243,30 @@ public class RoleServiceImpl implements IRoleService {
         return R.ok();
     }
 
+    @Override
+    public List<RoleInfoDTO> getRoleInfoListByUserId(Long userId) {
+        List<Role> roleList = roleMapper.getRoleListByUserId(userId);
+        if (CollectionUtils.isEmpty(roleList)) {
+            return null;
+        }
+        List<RoleInfoDTO> resList = roleList.stream().map(this::toRoleInfoDTO).collect(Collectors.toList());
+        return resList;
+    }
+
+    /**
+     * 角色转DTO
+     *
+     * @param role
+     * @return
+     */
+    private RoleInfoDTO toRoleInfoDTO(Role role) {
+        RoleInfoDTO roleInfoDTO = RoleInfoDTO.builder()
+                .roleName(role.getRoleName())
+                .roleCode(role.getRoleCode())
+                .id(role.getId()).build();
+        return roleInfoDTO;
+    }
+
     /**
      * 更新角色状态
      *

@@ -57,10 +57,10 @@ public interface UserMapper {
     /**
      * 通过用户名查找用户
      *
-     * @param userName
+     * @param username
      * @return
      */
-    User findUserByUsername(String userName);
+    User findUserByUsername(String username);
 
     /**
      * 通过请求参数查询用户信息

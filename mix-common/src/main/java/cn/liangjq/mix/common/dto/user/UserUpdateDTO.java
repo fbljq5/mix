@@ -24,12 +24,24 @@ public class UserUpdateDTO {
     private Long id;
 
     /**
-     * 用户名称 user_name
+     * 用户名称 username
      */
     @Valid
     @NotBlank(message = "用户名不能为空")
     @Length(max = 50, min = 5, message = "用户名为5-50位")
-    private String userName;
+    private String username;
+
+    /**
+     * 姓名 realName
+     */
+    @NotBlank(message = "姓名不能为空")
+    @Length(max = 50, min = 5, message = "姓名为5-50位")
+    private String realName;
+
+    /**
+     * 头像 avatar
+     */
+    private String avatar;
 
     /**
      * 邮箱 email
@@ -47,8 +59,9 @@ public class UserUpdateDTO {
     @NotBlank(message = "手机号码不能为空")
     private String phone;
 
+
     /**
-     * 备注 remark
+     * 介绍 remark
      */
     private String remark;
 

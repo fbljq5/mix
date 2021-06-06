@@ -22,21 +22,21 @@ public class JWTUtils {
     /**
      * 创建token
      *
-     * @param userName
+     * @param username
      * @param roles
      * @param expireSeconds
      * @param secret
      * @return
      */
-    public static String createToken(String userName, String roles, Long expireSeconds, String secret) {
+    public static String createToken(String username, String roles, Long expireSeconds, String secret) {
         // 输入数据校验
-        if (StringUtils.isBlank(userName)
+        if (StringUtils.isBlank(username)
                 || StringUtils.isBlank(roles)) {
             return null;
         }
 
         return JWT.create()
-                .withClaim(Constants.USER_NAME, userName)
+                .withClaim(Constants.USER_NAME, username)
                 .withClaim(Constants.ROLE, roles)
                 .withExpiresAt(new Date(System.currentTimeMillis() + expireSeconds * 1000))
                 // 加个随机值防止token重复
@@ -82,7 +82,7 @@ public class JWTUtils {
      * @param tokenStr
      * @return
      */
-    public static String getUserName(String tokenStr, String secret) {
+    public static String getUsername(String tokenStr, String secret) {
         if (StringUtils.isBlank(tokenStr)) {
             return null;
         }

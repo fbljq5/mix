@@ -30,7 +30,7 @@ public interface IUserService {
      * @param username
      * @return
      */
-    UserPageDTO getUserByName(String username);
+    UserInfoDTO getUserByName(String username);
 
     /**
      * 通过用户ID获得用户角色关联集合

@@ -18,9 +18,19 @@ public class UserPageDTO {
     private Long id;
 
     /**
-     * 用户名称 user_name
+     * 用户名称 username
      */
-    private String userName;
+    private String username;
+
+    /**
+     * 真实名称 real_name
+     */
+    private String realName;
+
+    /**
+     * 头像 avatar
+     */
+    private String avatar;
 
     /**
      * 邮箱 email
@@ -48,7 +58,7 @@ public class UserPageDTO {
     private String loginDate;
 
     /**
-     * 备注 remark
+     * 介绍 remark
      */
     private String remark;
 

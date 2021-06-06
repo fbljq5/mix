@@ -17,49 +17,27 @@ public class UserInfoDTO {
     private Long id;
 
     /**
-     * 用户名称 user_name
+     * 用户名称 username
      */
-    private String userName;
+    private String username;
 
     /**
-     * 邮箱 email
+     * 真实名称 real_name
      */
-    private String email;
+    private String realName;
 
     /**
-     * 电话号码 phone
+     * 头像 avatar
      */
-    private String phone;
+    private String avatar;
 
     /**
-     * 帐号状态（1正常 0停用） status
-     */
-    private Boolean status;
-
-    /**
-     * 是否已删除（0正常 1已删除） is_delete
-     */
-    private Boolean isDelete;
-
-    /**
-     * 最后登录时间 login_date
-     */
-    private String loginDate;
-
-    /**
-     * 备注 remark
+     * 介绍 remark
      */
     private String remark;
 
     /**
-     * 创建时间 gmt_create
+     * 角色集合 roles
      */
-    private String gmtCreate;
-
-    /**
-     * 更新时间 gmt_modified
-     */
-    private String gmtModified;
-
     private RoleInfoDTO[] roles;
 }

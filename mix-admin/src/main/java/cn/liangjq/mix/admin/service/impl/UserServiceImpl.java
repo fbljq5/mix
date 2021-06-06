@@ -4,12 +4,14 @@ import cn.liangjq.mix.admin.dao.RoleMapper;
 import cn.liangjq.mix.admin.dao.UserMapper;
 import cn.liangjq.mix.admin.dao.UserRoleMapper;
 import cn.liangjq.mix.admin.exception.OperationException;
+import cn.liangjq.mix.admin.service.IRoleService;
 import cn.liangjq.mix.admin.service.IUserService;
 import cn.liangjq.mix.admin.util.PageUtils;
 import cn.liangjq.mix.common.config.JwtConfig;
 import cn.liangjq.mix.common.dto.LoginDTO;
 import cn.liangjq.mix.common.dto.LoginResultDTO;
 import cn.liangjq.mix.common.dto.PageResponse;
+import cn.liangjq.mix.common.dto.role.RoleInfoDTO;
 import cn.liangjq.mix.common.dto.user.*;
 import cn.liangjq.mix.common.entity.Role;
 import cn.liangjq.mix.common.entity.User;
@@ -48,6 +50,7 @@ public class UserServiceImpl implements IUserService {
     private final UserRoleMapper userRoleMapper;
     private final RedisUtil redisUtil;
     private final JwtConfig jwtConfig;
+    private final IRoleService roleService;
 
     @Override
     public R<LoginResultDTO> checkLoginVO(LoginDTO loginDTO) {
@@ -70,7 +73,7 @@ public class UserServiceImpl implements IUserService {
         }
         // 账号密码校验成功
         // 生成token
-        String token = JWTUtils.createToken(user.getUserName(), StringUtils.join(roleNameList, ","),
+        String token = JWTUtils.createToken(user.getUsername(), StringUtils.join(roleNameList, ","),
                 jwtConfig.getExpiresSecond(), jwtConfig.getSecret());
 
         if (StringUtils.isBlank(token)) {
@@ -88,15 +91,22 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public UserPageDTO getUserByName(String username) {
+    public UserInfoDTO getUserByName(String username) {
         User user = userMapper.findUserByUsername(username);
         if (null == user) {
             return null;
         }
-        UserPageDTO userPageDTO = new UserPageDTO();
-        BeanUtils.copyProperties(user, userPageDTO);
-        return userPageDTO;
+        UserInfoDTO userInfoDTO = new UserInfoDTO();
+        BeanUtils.copyProperties(user, userInfoDTO);
+        // 获取角色列表并组装
+        List<RoleInfoDTO> roleInfoDTOList = roleService.getRoleInfoListByUserId(user.getId());
+        if (!CollectionUtils.isEmpty(roleInfoDTOList)) {
+            RoleInfoDTO[] roleInfoArr = new RoleInfoDTO[roleInfoDTOList.size()];
+            userInfoDTO.setRoles(roleInfoDTOList.toArray(roleInfoArr));
+        }
+        return userInfoDTO;
     }
+
 
     @Override
     public List<UserRole> listUserRoleByUserId(Long id) {
@@ -119,7 +129,7 @@ public class UserServiceImpl implements IUserService {
         // 校验数据合法性
         this.checkDataValid(userAddDTO);
         // 判断用户名是否存在
-        this.checkUsernameExist(userAddDTO.getUserName());
+        this.checkUsernameExist(userAddDTO.getUsername());
         // 新增用户
         this.doAddUser(userAddDTO);
         // 新增用户角色关联
@@ -129,26 +139,28 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 校验数据合法性
+     *
      * @param userAddDTO
      */
-    private void checkDataValid(UserAddDTO userAddDTO){
-        if (userAddDTO == null || StringUtils.isBlank(userAddDTO.getUserName())) {
+    private void checkDataValid(UserAddDTO userAddDTO) {
+        if (userAddDTO == null || StringUtils.isBlank(userAddDTO.getUsername())) {
             throw new OperationException("数据有误");
         }
     }
 
     /**
      * 判断用户名是否存在
+     *
      * @param username
      */
-    private void checkUsernameExist(String username){
+    private void checkUsernameExist(String username) {
         boolean checkResult = userMapper.checkUserExistByUsername(username);
         if (checkResult) {
             throw new OperationException("用户名已存在");
         }
     }
 
-    private void doAddUser(UserAddDTO userAddDTO){
+    private void doAddUser(UserAddDTO userAddDTO) {
         User user = this.toUser(userAddDTO);
         user.add();
         int insert = userMapper.insert(user);
@@ -160,6 +172,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 更新/新增用户角色关联
+     *
      * @param userId
      * @param roleIds
      */
@@ -179,6 +192,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 新增用户角色关联
+     *
      * @param userId
      * @param roleIds
      */
@@ -193,6 +207,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 持久化用户角色关联
+     *
      * @param userId
      * @param roleId
      */
@@ -214,9 +229,10 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 删除前校验数据
+     *
      * @param userId
      */
-    private void checkBeforeDeleteUser(Long userId){
+    private void checkBeforeDeleteUser(Long userId) {
         if (null == userId) {
             throw new OperationException("请提供ID");
         }
@@ -226,9 +242,10 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 删除用户信息
+     *
      * @param userId
      */
-    private void doDeleteUser(Long userId){
+    private void doDeleteUser(Long userId) {
         int result = userMapper.deleteById(userId);
         if (result <= 0) {
             throw new OperationException("删除失败");
@@ -241,7 +258,7 @@ public class UserServiceImpl implements IUserService {
         // 校验更新数据
         this.checkDataValid(updateDTO);
         // 校验用户名是否重复
-        this.checkUsernameExist(updateDTO.getId(),updateDTO.getUserName());
+        this.checkUsernameExist(updateDTO.getId(), updateDTO.getUsername());
         // 更新用户
         this.doUpdateUser(updateDTO);
         // 更新用户角色关联
@@ -251,9 +268,10 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 校验更新数据是否合法
+     *
      * @param updateDTO
      */
-    private void checkDataValid(UserUpdateDTO updateDTO){
+    private void checkDataValid(UserUpdateDTO updateDTO) {
         if (null == updateDTO || updateDTO.getId() == null) {
             throw new OperationException("更新数据不完整");
         }
@@ -264,10 +282,11 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 更新用户前检查用户名是否重复
+     *
      * @param userId
      * @param username
      */
-    private void checkUsernameExist(Long userId,String username){
+    private void checkUsernameExist(Long userId, String username) {
         //判断修改后的用户名是否重复（除了本身）
         boolean checkResult = userMapper.checkUserExistByIdAndName(userId, username);
         if (checkResult) {
@@ -277,9 +296,10 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 更新用户信息
+     *
      * @param updateDTO
      */
-    private void doUpdateUser(UserUpdateDTO updateDTO){
+    private void doUpdateUser(UserUpdateDTO updateDTO) {
         User user = userMapper.selectByPrimaryKey(updateDTO.getId());
         BeanUtils.copyProperties(updateDTO, user);
         user.update();
@@ -301,9 +321,10 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 修改密码前检查数据合法性
+     *
      * @param modifyPwdDTO
      */
-    private void checkDataValid(UserModifyPwdDTO modifyPwdDTO){
+    private void checkDataValid(UserModifyPwdDTO modifyPwdDTO) {
         if (null == modifyPwdDTO || modifyPwdDTO.getId() == null) {
             throw new OperationException("数据不完整");
         }
@@ -316,24 +337,26 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 修改密码
+     *
      * @param modifyPwdDTO
      */
-    private void doModifyPassword(UserModifyPwdDTO modifyPwdDTO){
+    private void doModifyPassword(UserModifyPwdDTO modifyPwdDTO) {
         User user = userMapper.selectByPrimaryKey(modifyPwdDTO.getId());
         user.setPassword(MD5Utils.getMd5(modifyPwdDTO.getPassword()));
         user.setGmtModified(new Date());
         int res = userMapper.updateByPrimaryKeySelective(user);
-        if(res<=0){
+        if (res <= 0) {
             throw new OperationException("修改密码失败");
         }
     }
 
     /**
      * 检查用户是否存在
+     *
      * @param userId
      */
-    private void checkUserExist(Long userId){
-        if(null==userId){
+    private void checkUserExist(Long userId) {
+        if (null == userId) {
             throw new OperationException("请提供ID");
         }
         User user = userMapper.selectByPrimaryKey(userId);
