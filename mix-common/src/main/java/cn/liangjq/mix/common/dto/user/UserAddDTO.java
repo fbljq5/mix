@@ -24,14 +24,6 @@ public class UserAddDTO {
     @Length(max = 50, min = 5, message = "用户名为5-50位")
     private String username;
 
-
-    /**
-     * 姓名 realName
-     */
-    @NotBlank(message = "姓名不能为空")
-    @Length(max = 50, min = 5, message = "姓名为5-50位")
-    private String realName;
-
     /**
      * 头像 avatar
      */
@@ -40,7 +32,6 @@ public class UserAddDTO {
     /**
      * 邮箱 email
      */
-    @NotBlank(message = "邮箱不能为空")
     @Email(message = "邮箱格式不正确")
     @Length(max = 50, message = "邮箱最多50位")
     private String email;

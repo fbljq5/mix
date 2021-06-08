@@ -23,11 +23,6 @@ public class UserPageDTO {
     private String username;
 
     /**
-     * 真实名称 real_name
-     */
-    private String realName;
-
-    /**
      * 头像 avatar
      */
     private String avatar;

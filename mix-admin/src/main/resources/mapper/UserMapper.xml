@@ -4,7 +4,6 @@
     <resultMap id="BaseResultMap" type="cn.liangjq.mix.common.entity.User">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
-        <result column="real_name" jdbcType="VARCHAR" property="realName"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
         <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
@@ -18,7 +17,7 @@
     </resultMap>
     <sql id="Base_Column_List">
         id
-        , username, real_name, email, phone, avatar, password, is_delete, status, login_date,
+        , username, email, phone, avatar, password, is_delete, status, login_date,
     remark, gmt_create, gmt_modified
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -33,9 +32,6 @@
         <set>
             <if test="username != null">
                 username = #{username,jdbcType=VARCHAR},
-            </if>
-            <if test="realName != null">
-                real_name = #{realName,jdbcType=VARCHAR},
             </if>
             <if test="email != null">
                 email = #{email,jdbcType=VARCHAR},
@@ -73,7 +69,6 @@
     <update id="updateByPrimaryKey" parameterType="cn.liangjq.mix.common.entity.User">
         update t_user
         set username     = #{username,jdbcType=VARCHAR},
-            real_name    = #{realName,jdbcType=VARCHAR},
             email        = #{email,jdbcType=VARCHAR},
             phone        = #{phone,jdbcType=VARCHAR},
             avatar       = #{avatar,jdbcType=VARCHAR},
@@ -81,7 +76,7 @@
             is_delete    = #{isDelete,jdbcType=TINYINT},
             status       = #{status,jdbcType=TINYINT},
             login_date   = #{loginDate,jdbcType=TIMESTAMP},
-            remark         = #{remark,jdbcType=VARCHAR},
+            remark       = #{remark,jdbcType=VARCHAR},
             gmt_create   = #{gmtCreate,jdbcType=TIMESTAMP},
             gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=BIGINT}
@@ -89,12 +84,12 @@
 
     <!--自定义-->
     <insert id="insert" parameterType="cn.liangjq.mix.common.entity.User" useGeneratedKeys="true" keyProperty="id">
-        insert into t_user (id, username, real_name,
+        insert into t_user (id, username,
                             email, phone, avatar,
                             password, is_delete, status,
                             login_date, remark, gmt_create,
                             gmt_modified)
-        values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR},
+        values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR},
                 #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR},
                 #{password,jdbcType=VARCHAR}, #{isDelete,jdbcType=TINYINT}, #{status,jdbcType=TINYINT},
                 #{loginDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
@@ -109,9 +104,6 @@
             </if>
             <if test="username != null">
                 username,
-            </if>
-            <if test="realName != null">
-                real_name,
             </if>
             <if test="email != null">
                 email,
@@ -150,9 +142,6 @@
             </if>
             <if test="username != null">
                 #{username,jdbcType=VARCHAR},
-            </if>
-            <if test="realName != null">
-                #{realName,jdbcType=VARCHAR},
             </if>
             <if test="email != null">
                 #{email,jdbcType=VARCHAR},
@@ -234,7 +223,8 @@
 
     <delete id="deleteById">
         delete
-        t_user where id =
-        #{userId}
+        from t_user
+        where id =
+              #{userId}
     </delete>
 </mapper>

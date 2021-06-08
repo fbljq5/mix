@@ -11,7 +11,7 @@
  Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 06/06/2021 22:28:43
+ Date: 09/06/2021 06:47:42
 */
 
 SET NAMES utf8mb4;
@@ -36,7 +36,7 @@ CREATE TABLE `t_menu`  (
   `gmt_create` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `gmt_modified` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_menu
@@ -124,7 +124,6 @@ DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user`  (
   `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户名称',
-  `real_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '真实名称\r\n',
   `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '邮箱',
   `phone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '电话号码',
   `avatar` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '头像',
@@ -141,26 +140,24 @@ CREATE TABLE `t_user`  (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES (1, 'admin', '管理员大佬', '4@qq.com', '32', '/src/assets/images/header.jpg', 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-06-06 21:15:29', '这家伙很懒，没有留下什么介绍', '2021-03-24 16:11:45', '2021-05-27 06:39:57');
-INSERT INTO `t_user` VALUES (8, 'admin1', NULL, '4', '32', NULL, '96e79218965eb72c92a549dd5a330112', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-05-22 18:30:38');
-INSERT INTO `t_user` VALUES (9, 'admin2', NULL, '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
-INSERT INTO `t_user` VALUES (10, 'admin3', NULL, '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
-INSERT INTO `t_user` VALUES (11, 'admin4', NULL, '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
-INSERT INTO `t_user` VALUES (12, 'admin5', NULL, '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
-INSERT INTO `t_user` VALUES (13, 'admin6', NULL, '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
-INSERT INTO `t_user` VALUES (14, 'admin7', NULL, '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
-INSERT INTO `t_user` VALUES (15, 'admin8', NULL, '4', '32', NULL, '96e79218965eb72c92a549dd5a330112', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-05-22 18:33:19');
-INSERT INTO `t_user` VALUES (16, 'admin9', NULL, '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
-INSERT INTO `t_user` VALUES (17, 'admin11111', NULL, '4@qq.com', '32', NULL, 'c4ca4238a0b923820dcc509a6f75849b', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-05-20 06:42:37');
-INSERT INTO `t_user` VALUES (18, 'admin11', NULL, '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
-INSERT INTO `t_user` VALUES (20, 'abc', NULL, 'dsafd@qq.com', '15928372123', NULL, 'e10adc3949ba59abbe56e057f20f883e', 1, 0, NULL, NULL, '2021-04-25 11:29:47', '2021-05-20 06:36:00');
-INSERT INTO `t_user` VALUES (21, 'abc1', NULL, 'dsafd@qq.com', '15928372123', NULL, 'e10adc3949ba59abbe56e057f20f883e', 1, 0, NULL, NULL, '2021-04-25 11:31:43', '2021-05-20 06:35:57');
-INSERT INTO `t_user` VALUES (22, 'abc2', NULL, 'dsafd@qq.com', '15928372123', NULL, 'e10adc3949ba59abbe56e057f20f883e', 1, 0, NULL, NULL, '2021-04-25 11:31:47', '2021-05-20 06:35:55');
-INSERT INTO `t_user` VALUES (24, 'abc3', NULL, 'dsafd@qq.com', '15928372123', NULL, 'e10adc3949ba59abbe56e057f20f883e', 1, 0, NULL, NULL, '2021-04-25 11:34:01', '2021-05-20 06:35:53');
-INSERT INTO `t_user` VALUES (25, 'abc31', NULL, 'dsafd@qq.com', '15928372123', NULL, '202cb962ac59075b964b07152d234b70', 1, 0, NULL, NULL, '2021-04-25 18:33:28', '2021-05-20 06:35:50');
-INSERT INTO `t_user` VALUES (26, '43212321', NULL, '3243@qq.com', '3543', NULL, '96e79218965eb72c92a549dd5a330112', 1, 0, NULL, NULL, '2021-05-22 11:52:28', '2021-05-22 17:08:13');
-INSERT INTO `t_user` VALUES (27, '12345', NULL, '232@qq.com', '123', NULL, '96e79218965eb72c92a549dd5a330112', 1, 0, NULL, NULL, '2021-05-22 12:29:42', '2021-05-22 17:08:05');
-INSERT INTO `t_user` VALUES (28, 'TEST1', NULL, 'TEST1@163.com', '142', NULL, '96e79218965eb72c92a549dd5a330112', 1, 0, '2021-05-22 17:07:36', NULL, '2021-05-22 17:07:15', '2021-05-22 17:08:16');
+INSERT INTO `t_user` VALUES (1, 'admin', '4@qq.com', '32', '/src/assets/images/header.jpg', 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-06-09 06:19:43', '这家伙很懒，没有留下什么介绍', '2021-03-24 16:11:45', '2021-06-09 06:46:33');
+INSERT INTO `t_user` VALUES (8, 'admin1', '4', '32', NULL, '96e79218965eb72c92a549dd5a330112', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-05-22 18:30:38');
+INSERT INTO `t_user` VALUES (9, 'admin2', '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
+INSERT INTO `t_user` VALUES (10, 'admin3', '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
+INSERT INTO `t_user` VALUES (11, 'admin4', '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
+INSERT INTO `t_user` VALUES (12, 'admin5', '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
+INSERT INTO `t_user` VALUES (13, 'admin6', '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
+INSERT INTO `t_user` VALUES (14, 'admin7', '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
+INSERT INTO `t_user` VALUES (15, 'admin8', '4', '32', NULL, '96e79218965eb72c92a549dd5a330112', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-05-22 18:33:19');
+INSERT INTO `t_user` VALUES (18, 'admin11', '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
+INSERT INTO `t_user` VALUES (20, 'abc', 'dsafd@qq.com', '15928372123', NULL, 'e10adc3949ba59abbe56e057f20f883e', 1, 0, NULL, NULL, '2021-04-25 11:29:47', '2021-05-20 06:36:00');
+INSERT INTO `t_user` VALUES (21, 'abc1', 'dsafd@qq.com', '15928372123', NULL, 'e10adc3949ba59abbe56e057f20f883e', 1, 0, NULL, NULL, '2021-04-25 11:31:43', '2021-05-20 06:35:57');
+INSERT INTO `t_user` VALUES (22, 'abc2', 'dsafd@qq.com', '15928372123', NULL, 'e10adc3949ba59abbe56e057f20f883e', 1, 0, NULL, NULL, '2021-04-25 11:31:47', '2021-05-20 06:35:55');
+INSERT INTO `t_user` VALUES (24, 'abc3', 'dsafd@qq.com', '15928372123', NULL, 'e10adc3949ba59abbe56e057f20f883e', 1, 0, NULL, NULL, '2021-04-25 11:34:01', '2021-05-20 06:35:53');
+INSERT INTO `t_user` VALUES (25, 'abc31', 'dsafd@qq.com', '15928372123', NULL, '202cb962ac59075b964b07152d234b70', 1, 0, NULL, NULL, '2021-04-25 18:33:28', '2021-05-20 06:35:50');
+INSERT INTO `t_user` VALUES (26, '43212321', '3243@qq.com', '3543', NULL, '96e79218965eb72c92a549dd5a330112', 1, 0, NULL, NULL, '2021-05-22 11:52:28', '2021-05-22 17:08:13');
+INSERT INTO `t_user` VALUES (27, '12345', '232@qq.com', '123', NULL, '96e79218965eb72c92a549dd5a330112', 1, 0, NULL, NULL, '2021-05-22 12:29:42', '2021-05-22 17:08:05');
+INSERT INTO `t_user` VALUES (28, 'TEST1', 'TEST1@163.com', '142', NULL, '96e79218965eb72c92a549dd5a330112', 1, 0, '2021-05-22 17:07:36', NULL, '2021-05-22 17:07:15', '2021-05-22 17:08:16');
 
 -- ----------------------------
 -- Table structure for t_user_role
@@ -180,7 +177,8 @@ CREATE TABLE `t_user_role`  (
 -- ----------------------------
 INSERT INTO `t_user_role` VALUES (27, 8, 1, '2021-04-25 15:23:15', '2021-04-25 15:23:15');
 INSERT INTO `t_user_role` VALUES (28, 8, 2, '2021-04-25 15:23:15', '2021-04-25 15:23:15');
-INSERT INTO `t_user_role` VALUES (42, 1, 1, NULL, NULL);
-INSERT INTO `t_user_role` VALUES (43, 1, 2, NULL, NULL);
+INSERT INTO `t_user_role` VALUES (44, 29, 1, NULL, NULL);
+INSERT INTO `t_user_role` VALUES (48, 1, 1, NULL, NULL);
+INSERT INTO `t_user_role` VALUES (49, 1, 2, NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
