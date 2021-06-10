@@ -9,7 +9,7 @@ import lombok.Data;
  * @Date: 2021/5/29
  */
 @Data
-public class MenuSearchDTO extends PageBaseRequest {
+public class MenuSearchDTO {
 
     /**
      * 菜单名称 menu_name

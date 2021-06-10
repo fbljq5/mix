@@ -45,7 +45,7 @@ public class MenuController {
 
     @PostMapping("/page")
     @ApiOperation("分页获得菜单信息")
-    public R<PageResponse<MenuPageDTO>> pageRoleInfo(@Valid @RequestBody MenuSearchDTO searchDTO) {
+    public R<List<MenuPageDTO>> pageRoleInfo(@Valid @RequestBody MenuSearchDTO searchDTO) {
         return menuService.pageMenu(searchDTO);
     }
 

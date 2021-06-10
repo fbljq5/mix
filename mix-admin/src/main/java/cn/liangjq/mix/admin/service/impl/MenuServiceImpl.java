@@ -50,17 +50,13 @@ public class MenuServiceImpl implements IMenuService {
     }
 
     @Override
-    public R<PageResponse<MenuPageDTO>> pageMenu(MenuSearchDTO searchDTO) {
-        PageResponse<Menu> pageResponse = PageUtils.setPageResult(searchDTO, () ->
-                menuMapper.selectByMenuSearchDTO(searchDTO));
-        if (null == pageResponse) {
+    public R<List<MenuPageDTO>> pageMenu(MenuSearchDTO searchDTO) {
+        List<Menu> menus = menuMapper.selectByMenuSearchDTO(searchDTO);
+        if (null == menus) {
             return null;
         }
-        List<MenuPageDTO> menuPageDTOList = pageResponse.getList().stream().map(this::toPageDTO).collect(Collectors.toList());
-        PageResponse<MenuPageDTO> res = new PageResponse<>();
-        BeanUtils.copyProperties(pageResponse, res);
-        res.setList(menuPageDTOList);
-        return R.ok(res);
+        List<MenuPageDTO> menuPageDTOList = menus.stream().map(this::toPageDTO).collect(Collectors.toList());
+        return R.ok(menuPageDTOList);
     }
 
     @Override
@@ -168,7 +164,7 @@ public class MenuServiceImpl implements IMenuService {
         }
         MenuPageDTO menuPageDTO = MenuPageDTO.builder().build();
         BeanUtils.copyProperties(menu, menuPageDTO);
-        menuPageDTO.setGmtCreate(menu.getGmtCreate()==null?"":DateFormatUtils.format(menu.getGmtCreate(),"yyyy-MM-dd HH:mm:ss"));
+        menuPageDTO.setGmtCreate(menu.getGmtCreate() == null ? "" : DateFormatUtils.format(menu.getGmtCreate(), "yyyy-MM-dd HH:mm:ss"));
         return menuPageDTO;
     }
 

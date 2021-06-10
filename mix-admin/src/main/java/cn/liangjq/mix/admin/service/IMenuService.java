@@ -39,7 +39,7 @@ public interface IMenuService {
      * @param searchDTO
      * @return
      */
-    R<PageResponse<MenuPageDTO>> pageMenu(MenuSearchDTO searchDTO);
+    R<List<MenuPageDTO>> pageMenu(MenuSearchDTO searchDTO);
 
     /**
      * 新增菜单
