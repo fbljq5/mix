@@ -62,7 +62,7 @@ public class MenuController {
     }
 
     @DeleteMapping("/delete/{menuId}")
-    @ApiOperation("修改菜单信息")
+    @ApiOperation("删除菜单信息")
     public R<String> deleteMenu(@Valid @PathVariable("menuId") Long menuId) {
         return menuService.deleteMenu(menuId);
     }

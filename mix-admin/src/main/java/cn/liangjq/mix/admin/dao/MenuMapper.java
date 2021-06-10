@@ -94,4 +94,12 @@ public interface MenuMapper {
      * @return
      */
     Boolean checkMenuExistByNameAndId(String menuName, Long menuId);
+
+    /**
+     * 删除菜单（包括子菜单）
+     *
+     * @param menuId
+     * @return
+     */
+    Integer cycleDeleteMenu(Long menuId);
 }

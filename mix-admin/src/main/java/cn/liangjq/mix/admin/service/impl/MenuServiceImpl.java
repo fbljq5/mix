@@ -148,8 +148,12 @@ public class MenuServiceImpl implements IMenuService {
 
     @Override
     public R<String> deleteMenu(Long menuId) {
-
-        return null;
+        // 如果包含子菜单，则一起删除
+        Integer count = menuMapper.cycleDeleteMenu(menuId);
+        if (count <= 0) {
+            throw new OperationException("删除菜单失败");
+        }
+        return R.ok();
     }
 
     /**

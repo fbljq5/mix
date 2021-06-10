@@ -231,4 +231,10 @@
           and id = #{menuId}
     </select>
 
+    <delete id="cycleDeleteMenu">
+        delete
+        from t_menu
+        where id = #{menuId}
+           or parent_id = #{menuId}
+    </delete>
 </mapper>
