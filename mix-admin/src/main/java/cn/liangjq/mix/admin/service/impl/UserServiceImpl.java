@@ -53,7 +53,7 @@ public class UserServiceImpl implements IUserService {
     private final IRoleService roleService;
 
     @Override
-    public R<String> checkLoginVO(LoginDTO loginDTO) {
+    public R<LoginResultDTO> checkLoginVO(LoginDTO loginDTO) {
         if (null == loginDTO || StringUtils.isBlank(loginDTO.getUsername())
                 || StringUtils.isBlank(loginDTO.getPassword())) {
             return R.fail();
@@ -84,7 +84,10 @@ public class UserServiceImpl implements IUserService {
         user.setLoginDate(new Date());
         user.login();
         userMapper.updateByPrimaryKeySelective(user);
-        return R.ok(token);
+        LoginResultDTO dto  = new LoginResultDTO();
+        dto.setToken(token);
+        dto.setUserId(user.getId());
+        return R.ok(dto);
     }
 
     @Override
