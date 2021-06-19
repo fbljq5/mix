@@ -42,11 +42,8 @@ public class PageUtils {
     }
 
     private static PageResponse setPageResponse(PageInfo<?> pageInfo, PageResponse pageResponse) {
-        pageResponse.setPage(pageInfo.getPageNum());
-        pageResponse.setSize(pageInfo.getPageSize());
-        pageResponse.setTotalSize(pageInfo.getTotal());
-        pageResponse.setTotalPages(pageInfo.getPages());
-        pageResponse.setList(pageInfo.getList());
+        pageResponse.setTotal(pageInfo.getTotal());
+        pageResponse.setItems(pageInfo.getList());
         return pageResponse;
     }
 }

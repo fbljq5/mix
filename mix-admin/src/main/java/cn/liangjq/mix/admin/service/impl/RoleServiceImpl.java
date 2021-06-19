@@ -64,10 +64,10 @@ public class RoleServiceImpl implements IRoleService {
         if (null == pageResponse) {
             return null;
         }
-        List<RolePageDTO> rolePageDTOList = pageResponse.getList().stream().map(this::toRoleVO).collect(Collectors.toList());
+        List<RolePageDTO> rolePageDTOList = pageResponse.getItems().stream().map(this::toRoleVO).collect(Collectors.toList());
         PageResponse<RolePageDTO> res = new PageResponse<>();
         BeanUtils.copyProperties(pageResponse, res);
-        res.setList(rolePageDTOList);
+        res.setItems(rolePageDTOList);
         return R.ok(res);
     }
 

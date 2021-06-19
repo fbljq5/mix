@@ -11,26 +11,14 @@ import java.util.List;
  */
 @Data
 public class PageResponse<T> {
-
-    /**
-     * 当前页码
-     */
-    private int page;
-    /**
-     * 每页数量
-     */
-    private int size;
     /**
      * 记录总数
      */
-    private long totalSize;
-    /**
-     * 页码总数
-     */
-    private int totalPages;
+    private long total;
+
     /**
      * 数据模型
      */
-    private List<T> list;
+    private List<T> items;
 
 }

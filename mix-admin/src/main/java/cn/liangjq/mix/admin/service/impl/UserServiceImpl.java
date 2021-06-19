@@ -117,9 +117,9 @@ public class UserServiceImpl implements IUserService {
     public R<PageResponse> pageUser(UserSearchDTO request) {
         PageResponse pageResponse = PageUtils.setPageResult(request, () ->
                 userMapper.selectByUserRequest(request));
-        List<User> userList = (List<User>) pageResponse.getList();
+        List<User> userList = (List<User>) pageResponse.getItems();
         List<UserPageDTO> userPageDTOList = userList.stream().map(this::toUserVO).collect(Collectors.toList());
-        pageResponse.setList(userPageDTOList);
+        pageResponse.setItems(userPageDTOList);
         return R.ok(pageResponse);
     }
 

@@ -53,9 +53,9 @@ public class UserController {
         return userService.checkToken(tokenStr);
     }
 
-    @PostMapping("/list")
+    @GetMapping("/list")
     @ApiOperation("分页获得用户信息")
-    public R<PageResponse> pageUserInfo(@RequestBody UserSearchDTO request) {
+    public R<PageResponse> pageUserInfo(UserSearchDTO request) {
         return userService.pageUser(request);
     }
 
