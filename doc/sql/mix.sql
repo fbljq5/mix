@@ -11,7 +11,7 @@
  Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 09/06/2021 06:47:42
+ Date: 21/06/2021 06:32:16
 */
 
 SET NAMES utf8mb4;
@@ -36,7 +36,7 @@ CREATE TABLE `t_menu`  (
   `gmt_create` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `gmt_modified` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_menu
@@ -74,9 +74,8 @@ CREATE TABLE `t_role`  (
 -- Records of t_role
 -- ----------------------------
 INSERT INTO `t_role` VALUES (1, '管理员', 'ADMIN', 1, NULL, 1, '管理员', '2021-03-25 11:41:23', '2021-05-26 22:50:15');
-INSERT INTO `t_role` VALUES (2, '普通用户', 'USER', 2, NULL, 1, '普通用户', '2021-03-25 11:41:43', '2021-03-25 11:41:46');
+INSERT INTO `t_role` VALUES (2, '普通用户', 'USER', 2, NULL, 1, '普通用户1', '2021-03-25 11:41:43', '2021-06-10 06:34:13');
 INSERT INTO `t_role` VALUES (3, '游客', 'GUEST', 4, NULL, 0, 'TTT1213', '2021-04-25 17:05:48', '2021-05-27 06:39:06');
-INSERT INTO `t_role` VALUES (8, '游客2', 'GUEST2', 1, 0, 0, '游客第二角色', '2021-05-27 06:39:39', NULL);
 
 -- ----------------------------
 -- Table structure for t_role_menu
@@ -111,11 +110,6 @@ INSERT INTO `t_role_menu` VALUES (61, 3, 8, '2021-05-28 00:05:53', '2021-05-28 0
 INSERT INTO `t_role_menu` VALUES (62, 3, 9, '2021-05-28 00:05:53', '2021-05-28 00:05:53');
 INSERT INTO `t_role_menu` VALUES (63, 3, 10, '2021-05-28 00:05:53', '2021-05-28 00:05:53');
 INSERT INTO `t_role_menu` VALUES (64, 3, 11, '2021-05-28 00:05:53', '2021-05-28 00:05:53');
-INSERT INTO `t_role_menu` VALUES (72, 8, 1, '2021-05-28 07:09:10', '2021-05-28 07:09:10');
-INSERT INTO `t_role_menu` VALUES (73, 8, 2, '2021-05-28 07:09:10', '2021-05-28 07:09:10');
-INSERT INTO `t_role_menu` VALUES (74, 8, 3, '2021-05-28 07:09:10', '2021-05-28 07:09:10');
-INSERT INTO `t_role_menu` VALUES (75, 8, 4, '2021-05-28 07:09:10', '2021-05-28 07:09:10');
-INSERT INTO `t_role_menu` VALUES (76, 8, 7, '2021-05-28 07:09:10', '2021-05-28 07:09:10');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -124,6 +118,7 @@ DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user`  (
   `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户名称',
+  `nickname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '昵称',
   `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '邮箱',
   `phone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '电话号码',
   `avatar` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '头像',
@@ -135,29 +130,28 @@ CREATE TABLE `t_user`  (
   `gmt_create` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `gmt_modified` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES (1, 'admin', '4@qq.com', '32', '/src/assets/images/header.jpg', 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-06-09 06:19:43', '这家伙很懒，没有留下什么介绍', '2021-03-24 16:11:45', '2021-06-09 06:46:33');
-INSERT INTO `t_user` VALUES (8, 'admin1', '4', '32', NULL, '96e79218965eb72c92a549dd5a330112', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-05-22 18:30:38');
-INSERT INTO `t_user` VALUES (9, 'admin2', '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
-INSERT INTO `t_user` VALUES (10, 'admin3', '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
-INSERT INTO `t_user` VALUES (11, 'admin4', '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
-INSERT INTO `t_user` VALUES (12, 'admin5', '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
-INSERT INTO `t_user` VALUES (13, 'admin6', '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
-INSERT INTO `t_user` VALUES (14, 'admin7', '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
-INSERT INTO `t_user` VALUES (15, 'admin8', '4', '32', NULL, '96e79218965eb72c92a549dd5a330112', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-05-22 18:33:19');
-INSERT INTO `t_user` VALUES (18, 'admin11', '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
-INSERT INTO `t_user` VALUES (20, 'abc', 'dsafd@qq.com', '15928372123', NULL, 'e10adc3949ba59abbe56e057f20f883e', 1, 0, NULL, NULL, '2021-04-25 11:29:47', '2021-05-20 06:36:00');
-INSERT INTO `t_user` VALUES (21, 'abc1', 'dsafd@qq.com', '15928372123', NULL, 'e10adc3949ba59abbe56e057f20f883e', 1, 0, NULL, NULL, '2021-04-25 11:31:43', '2021-05-20 06:35:57');
-INSERT INTO `t_user` VALUES (22, 'abc2', 'dsafd@qq.com', '15928372123', NULL, 'e10adc3949ba59abbe56e057f20f883e', 1, 0, NULL, NULL, '2021-04-25 11:31:47', '2021-05-20 06:35:55');
-INSERT INTO `t_user` VALUES (24, 'abc3', 'dsafd@qq.com', '15928372123', NULL, 'e10adc3949ba59abbe56e057f20f883e', 1, 0, NULL, NULL, '2021-04-25 11:34:01', '2021-05-20 06:35:53');
-INSERT INTO `t_user` VALUES (25, 'abc31', 'dsafd@qq.com', '15928372123', NULL, '202cb962ac59075b964b07152d234b70', 1, 0, NULL, NULL, '2021-04-25 18:33:28', '2021-05-20 06:35:50');
-INSERT INTO `t_user` VALUES (26, '43212321', '3243@qq.com', '3543', NULL, '96e79218965eb72c92a549dd5a330112', 1, 0, NULL, NULL, '2021-05-22 11:52:28', '2021-05-22 17:08:13');
-INSERT INTO `t_user` VALUES (27, '12345', '232@qq.com', '123', NULL, '96e79218965eb72c92a549dd5a330112', 1, 0, NULL, NULL, '2021-05-22 12:29:42', '2021-05-22 17:08:05');
-INSERT INTO `t_user` VALUES (28, 'TEST1', 'TEST1@163.com', '142', NULL, '96e79218965eb72c92a549dd5a330112', 1, 0, '2021-05-22 17:07:36', NULL, '2021-05-22 17:07:15', '2021-05-22 17:08:16');
+INSERT INTO `t_user` VALUES (1, 'admin', '2', '4@qq.com', '32', '/src/assets/images/header.jpg', 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-06-20 21:26:27', '这家伙很懒，没有留下什么介绍1', '2021-03-24 16:11:45', '2021-06-10 06:33:42');
+INSERT INTO `t_user` VALUES (8, 'admin1', '3', '4', '32', NULL, '96e79218965eb72c92a549dd5a330112', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-05-22 18:30:38');
+INSERT INTO `t_user` VALUES (9, 'admin2', '1', '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
+INSERT INTO `t_user` VALUES (10, 'admin3', '4', '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
+INSERT INTO `t_user` VALUES (11, 'admin4', '5', '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
+INSERT INTO `t_user` VALUES (12, 'admin5', '6', '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
+INSERT INTO `t_user` VALUES (13, 'admin6', '7', '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
+INSERT INTO `t_user` VALUES (14, 'admin7', '8', '4', '32', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-03-24 16:11:47');
+INSERT INTO `t_user` VALUES (15, 'admin8', '9', '4', '32', NULL, '96e79218965eb72c92a549dd5a330112', 0, 1, '2021-03-24 16:11:52', NULL, '2021-03-24 16:11:45', '2021-05-22 18:33:19');
+INSERT INTO `t_user` VALUES (20, 'abc', '12', 'dsafd@qq.com', '15928372123', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, NULL, NULL, '2021-04-25 11:29:47', '2021-05-20 06:36:00');
+INSERT INTO `t_user` VALUES (21, 'abc1', '11', 'dsafd@qq.com', '15928372123', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, NULL, NULL, '2021-04-25 11:31:43', '2021-05-20 06:35:57');
+INSERT INTO `t_user` VALUES (22, 'abc2', '13', 'dsafd@qq.com', '15928372123', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, NULL, NULL, '2021-04-25 11:31:47', '2021-05-20 06:35:55');
+INSERT INTO `t_user` VALUES (24, 'abc3', '14', 'dsafd@qq.com', '15928372123', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, 1, NULL, NULL, '2021-04-25 11:34:01', '2021-05-20 06:35:53');
+INSERT INTO `t_user` VALUES (25, 'abc31', '15', 'dsafd@qq.com', '15928372123', NULL, '202cb962ac59075b964b07152d234b70', 0, 1, NULL, NULL, '2021-04-25 18:33:28', '2021-05-20 06:35:50');
+INSERT INTO `t_user` VALUES (26, '43212321', '16', '3243@qq.com', '3543', NULL, '96e79218965eb72c92a549dd5a330112', 0, 1, NULL, NULL, '2021-05-22 11:52:28', '2021-05-22 17:08:13');
+INSERT INTO `t_user` VALUES (27, '12345', '17', '232@qq.com', '123', NULL, '96e79218965eb72c92a549dd5a330112', 0, 1, NULL, NULL, '2021-05-22 12:29:42', '2021-05-22 17:08:05');
+INSERT INTO `t_user` VALUES (28, 'TEST1', '18', 'TEST1@163.com', '142', NULL, '96e79218965eb72c92a549dd5a330112', 0, 1, '2021-05-22 17:07:36', NULL, '2021-05-22 17:07:15', '2021-05-22 17:08:16');
 
 -- ----------------------------
 -- Table structure for t_user_role
@@ -170,7 +164,7 @@ CREATE TABLE `t_user_role`  (
   `gmt_create` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `gmt_modified` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 53 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_role
@@ -178,7 +172,7 @@ CREATE TABLE `t_user_role`  (
 INSERT INTO `t_user_role` VALUES (27, 8, 1, '2021-04-25 15:23:15', '2021-04-25 15:23:15');
 INSERT INTO `t_user_role` VALUES (28, 8, 2, '2021-04-25 15:23:15', '2021-04-25 15:23:15');
 INSERT INTO `t_user_role` VALUES (44, 29, 1, NULL, NULL);
-INSERT INTO `t_user_role` VALUES (48, 1, 1, NULL, NULL);
-INSERT INTO `t_user_role` VALUES (49, 1, 2, NULL, NULL);
+INSERT INTO `t_user_role` VALUES (51, 1, 1, NULL, NULL);
+INSERT INTO `t_user_role` VALUES (52, 1, 2, NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
