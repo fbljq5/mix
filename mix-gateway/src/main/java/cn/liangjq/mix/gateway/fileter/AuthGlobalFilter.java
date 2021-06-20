@@ -76,7 +76,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
     private Mono<Void> out(ServerHttpResponse response) {
         JSONObject message = new JSONObject();
         message.put("result", null);
-        message.put("code", 28004);
+        message.put("code", 402);
         message.put("message", "鉴权失败，请检查token是否有效");
         byte[] bits = message.toString().getBytes(StandardCharsets.UTF_8);
         DataBuffer buffer = response.bufferFactory().wrap(bits);
