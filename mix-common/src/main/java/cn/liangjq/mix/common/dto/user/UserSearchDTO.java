@@ -15,4 +15,9 @@ public class UserSearchDTO extends PageBaseRequest {
      * 查询用户名
      */
     private String username;
+
+    /**
+     * 昵称
+     */
+    private String nickname;
 }

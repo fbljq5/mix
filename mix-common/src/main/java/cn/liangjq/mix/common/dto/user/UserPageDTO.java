@@ -23,6 +23,11 @@ public class UserPageDTO {
     private String username;
 
     /**
+     * 昵称 nickname
+     */
+    private String nickname;
+
+    /**
      * 头像 avatar
      */
     private String avatar;

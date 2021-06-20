@@ -25,6 +25,11 @@ public class User extends BaseEntity {
     private String username;
 
     /**
+     * 昵称 nickname
+     */
+    private String nickname;
+
+    /**
      * 邮箱 emailjju
      */
     private String email;

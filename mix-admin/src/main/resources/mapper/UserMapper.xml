@@ -4,6 +4,7 @@
     <resultMap id="BaseResultMap" type="cn.liangjq.mix.common.entity.User">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
         <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
@@ -17,7 +18,7 @@
     </resultMap>
     <sql id="Base_Column_List">
         id
-        , username, email, phone, avatar, password, is_delete, status, login_date,
+        , username,nickname, email, phone, avatar, password, is_delete, status, login_date,
     remark, gmt_create, gmt_modified
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -32,6 +33,9 @@
         <set>
             <if test="username != null">
                 username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                username = #{nickname,jdbcType=VARCHAR},
             </if>
             <if test="email != null">
                 email = #{email,jdbcType=VARCHAR},
@@ -69,6 +73,7 @@
     <update id="updateByPrimaryKey" parameterType="cn.liangjq.mix.common.entity.User">
         update t_user
         set username     = #{username,jdbcType=VARCHAR},
+            nickname     = #{nickname,jdbcType=VARCHAR},
             email        = #{email,jdbcType=VARCHAR},
             phone        = #{phone,jdbcType=VARCHAR},
             avatar       = #{avatar,jdbcType=VARCHAR},
@@ -84,12 +89,12 @@
 
     <!--自定义-->
     <insert id="insert" parameterType="cn.liangjq.mix.common.entity.User" useGeneratedKeys="true" keyProperty="id">
-        insert into t_user (id, username,
+        insert into t_user (id, username, nickname,
                             email, phone, avatar,
                             password, is_delete, status,
                             login_date, remark, gmt_create,
                             gmt_modified)
-        values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR},
+        values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR},
                 #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR},
                 #{password,jdbcType=VARCHAR}, #{isDelete,jdbcType=TINYINT}, #{status,jdbcType=TINYINT},
                 #{loginDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
@@ -104,6 +109,9 @@
             </if>
             <if test="username != null">
                 username,
+            </if>
+            <if test="nickname != null">
+                nickname,
             </if>
             <if test="email != null">
                 email,
@@ -142,6 +150,9 @@
             </if>
             <if test="username != null">
                 #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
             </if>
             <if test="email != null">
                 #{email,jdbcType=VARCHAR},
@@ -191,6 +202,9 @@
         <trim prefix="where" prefixOverrides="and">
             <if test="username!=null">
                 username LIKE CONCAT('%',#{username},'%')
+            </if>
+            <if test="nickname!=null">
+                and nickname LIKE CONCAT('%',#{nickname},'%')
             </if>
             and is_delete = 0 and status = 1
         </trim>
